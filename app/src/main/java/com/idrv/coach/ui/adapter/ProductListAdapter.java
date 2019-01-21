@@ -26,7 +26,7 @@ import java.io.File;
 import java.util.Locale;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/7/13
@@ -100,25 +100,25 @@ public class ProductListAdapter extends AbsRecycleAdapter<SpreadTool, RecyclerVi
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.content_iv)
+        @BindView(R.id.content_iv)
         DynamicHeightImageView mContentIv;
-        @InjectView(R.id.free_membership)
+        @BindView(R.id.free_membership)
         ImageView mMemberFreeIv;
-        @InjectView(R.id.pay_status)
+        @BindView(R.id.pay_status)
         ImageView mPayStatusIv;
-        @InjectView(R.id.tool_type_iv)
+        @BindView(R.id.tool_type_iv)
         ImageView mToolTypeIv;
-        @InjectView(R.id.title_tv)
+        @BindView(R.id.title_tv)
         TextView mTitleTv;
-        @InjectView(R.id.price_integral)
+        @BindView(R.id.price_integral)
         TextView mPriceIntegralTv;
-        @InjectView(R.id.price_tv)
+        @BindView(R.id.price_tv)
         TextView mPriceTv;
 
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

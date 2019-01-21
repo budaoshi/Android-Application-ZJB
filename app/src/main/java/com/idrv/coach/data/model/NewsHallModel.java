@@ -13,9 +13,9 @@ import com.zjb.volley.core.request.RequestBuilder;
 import com.zjb.volley.core.response.HttpResponse;
 import com.zjb.volley.utils.GsonUtil;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
 
@@ -76,7 +76,7 @@ public class NewsHallModel extends BaseModel {
                     Task task = GsonUtil.fromJson(taskStr, Task.class);
                     this.task = task;
                     subscriber.onNext(task);
-                    subscriber.onCompleted();
+                    subscriber.onComplete();
                 }
             } catch (Exception e) {
                 subscriber.onError(e);

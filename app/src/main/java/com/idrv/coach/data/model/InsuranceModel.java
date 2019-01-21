@@ -12,9 +12,9 @@ import com.zjb.volley.core.response.HttpResponse;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
 
@@ -34,10 +34,10 @@ public class InsuranceModel {
      * @param clearAdapter
      * @return
      */
-    public Observable<List<InsuranceInfo>> refresh(Action0 clearAdapter) {
+    public Observable<List<InsuranceInfo>> refresh(Action clearAdapter) {
         currentPage = 0;
         return request()
-                .doOnNext(__ -> clearAdapter.call());
+                .doOnNext(__ -> clearAdapter.run());
     }
 
     public Observable<List<InsuranceInfo>> loadMore() {

@@ -24,13 +24,15 @@ import com.idrv.coach.utils.PictureUtil;
 import com.idrv.coach.utils.SystemUtil;
 import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.UIHelper;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import org.reactivestreams.Subscription;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/19
@@ -41,27 +43,27 @@ import rx.android.schedulers.AndroidSchedulers;
 public class ApplyInsuranceActivity extends BaseActivity<ApplyInsuranceModel> implements
         MasterItemView.OnMasterItemClickListener, SelectPhotoDialog.OnButtonClickListener,
         MasterItemView.onMasterItemRightIvClickListener {
-    @InjectView(R.id.item_owner_name)
+    @BindView(R.id.item_owner_name)
     InputItemView mItemNameView;
-    @InjectView(R.id.item_tel)
+    @BindView(R.id.item_tel)
     InputItemView mItemTelView;
-    @InjectView(R.id.item_card)
+    @BindView(R.id.item_card)
     InputItemView mItemCardView;
 
-    @InjectView(R.id.item_positive_identification)
+    @BindView(R.id.item_positive_identification)
     MasterItemView mItemCardPositiveView;
-    @InjectView(R.id.item_negative_identification)
+    @BindView(R.id.item_negative_identification)
     MasterItemView mItemCardNegativeView;
-    @InjectView(R.id.item_driving_license_first_page)
+    @BindView(R.id.item_driving_license_first_page)
     MasterItemView mItemDrivingLicenseFirstView;
-    @InjectView(R.id.item_driving_license_second_page)
+    @BindView(R.id.item_driving_license_second_page)
     MasterItemView mItemDrivingLicenseSecondView;
-    @InjectView(R.id.radio_btn_new_car)
+    @BindView(R.id.radio_btn_new_car)
     RadioButton mNewCarRadioBtn;
-    @InjectView(R.id.radio_btn_old_car)
+    @BindView(R.id.radio_btn_old_car)
     RadioButton mOldCarRadioBtn;
 
-    @InjectView(R.id.tips_description)
+    @BindView(R.id.tips_description)
     TextView mTipsDesTv;
 
     private SelectPhotoDialog mDialog;
@@ -76,7 +78,7 @@ public class ApplyInsuranceActivity extends BaseActivity<ApplyInsuranceModel> im
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_apply_for_insurance);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initView();
         initViewModel();
@@ -204,7 +206,7 @@ public class ApplyInsuranceActivity extends BaseActivity<ApplyInsuranceModel> im
                 .progressText(getResources().getString(R.string.commit_now))
                 .onDismissListener(__ -> {
                     if (mCompositeSubscription != null) {
-                        mCompositeSubscription.unsubscribe();
+                        mCompositeSubscription.clear();
                     }
                 }).show();
     }
@@ -239,7 +241,7 @@ public class ApplyInsuranceActivity extends BaseActivity<ApplyInsuranceModel> im
     }
 
     private void openCamera() {
-        RxPermissions.getInstance(this)
+        new RxPermissions(this)
                 .request(Manifest.permission.CAMERA)
                 .subscribe(granted -> {
                     if (granted) {
@@ -386,7 +388,7 @@ public class ApplyInsuranceActivity extends BaseActivity<ApplyInsuranceModel> im
     }
 
     private void onUploadSuccess(String s) {
-        Subscription subscription = mViewModel.postInsuranceInfo()
+        Disposable subscription = mViewModel.postInsuranceInfo()
                 .subscribe(this::onCommitSuccess, this::onCommitError);
         addSubscription(subscription);
     }

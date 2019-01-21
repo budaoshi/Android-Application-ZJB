@@ -40,14 +40,16 @@ import com.idrv.coach.wxapi.WXEntryActivity;
 import com.zjb.loader.ZjbImageLoader;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import java.util.Arrays;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/14
@@ -60,15 +62,15 @@ public class NewsHallActivity extends BaseActivity<NewsHallModel> implements Vie
     private static final String NEWS_DEFAULT_URL = "{HOST}/news/{DATE}?taskId={TASKID}&uid={uid}&appName={appName}";
     private static final String NEWS_SHARE_DEFAULT_URL = "{HOST}/news/{DATE}?taskId={TASKID}&uid={uid}";
 
-    @InjectView(R.id.news_time)
+    @BindView(R.id.news_time)
     TextView mNewsTimeTv;
-    @InjectView(R.id.news_title)
+    @BindView(R.id.news_title)
     TextView mNewsTitleTv;
-    @InjectView(R.id.news_short_desc)
+    @BindView(R.id.news_short_desc)
     TextView mNewsDescTv;
-    @InjectView(R.id.tags_layout)
+    @BindView(R.id.tags_layout)
     LinearLayout mTagsLayout;
-    @InjectView(R.id.how_to_use)
+    @BindView(R.id.how_to_use)
     TextView mHelpTv;
     //资讯帮助弹窗
     private PopupWindow mPopupWindow;
@@ -82,7 +84,7 @@ public class NewsHallActivity extends BaseActivity<NewsHallModel> implements Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_news_hall);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initModel();
         registerEvent();
@@ -145,7 +147,7 @@ public class NewsHallActivity extends BaseActivity<NewsHallModel> implements Vie
 
         //如果是星期五,才会弹出教育对话框
         if (week == 5 && !TimeUtil.isSameDay(time)) {
-            Subscription subscription = mViewModel.getVisitInfo()
+            Disposable subscription = mViewModel.getVisitInfo()
                     .subscribe(this::showEducateDialog, Logger::e);
             addSubscription(subscription);
         }
@@ -155,7 +157,7 @@ public class NewsHallActivity extends BaseActivity<NewsHallModel> implements Vie
      * 获取缓存
      */
     private void getCache() {
-        Subscription subscription = mViewModel.getTaskCache()
+        Disposable subscription = mViewModel.getTaskCache()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onNext, this::onCacheError, this::onCacheComplete);
         addSubscription(subscription);
@@ -165,7 +167,7 @@ public class NewsHallActivity extends BaseActivity<NewsHallModel> implements Vie
      * 获取最新任务
      */
     private void refresh() {
-        Subscription subscription = mViewModel.getNewTask()
+        Disposable subscription = mViewModel.getNewTask()
                 .subscribe(this::onNext, this::onRefreshError, this::showContentView);
         addSubscription(subscription);
     }
@@ -180,7 +182,7 @@ public class NewsHallActivity extends BaseActivity<NewsHallModel> implements Vie
         //2.先通知首页增加打广告的次数
         RxBusManager.post(EventConstant.KEY_NEWS_OR_WEBSITE_SHARE_COMPLETE, "");
         //3.回调服务器
-        Subscription subscription = mViewModel.shareComplete(channel)
+        Disposable subscription = mViewModel.shareComplete(channel)
                 .subscribe(this::onCallBackComplete, Logger::e);
         addSubscription(subscription);
 

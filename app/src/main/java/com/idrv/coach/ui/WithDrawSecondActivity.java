@@ -20,13 +20,15 @@ import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.bean.ErrorCode;
 import com.zjb.volley.core.exception.NetworkError;
 
+import org.reactivestreams.Subscription;
+
 import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/11
@@ -36,17 +38,17 @@ import rx.Subscription;
  */
 public class WithDrawSecondActivity extends BaseActivity<WithDrawModel> implements View.OnClickListener {
     private static final String KEY_PARAM = "param";
-    @InjectView(R.id.item_name)
+    @BindView(R.id.item_name)
     InputItemView mNameItemView;
-    @InjectView(R.id.item_card)
+    @BindView(R.id.item_card)
     InputItemView mCardIdItemView;
-    @InjectView(R.id.item_tel)
+    @BindView(R.id.item_tel)
     InputItemView mTelItemView;
-    @InjectView(R.id.bank_name_tv)
+    @BindView(R.id.bank_name_tv)
     TextView mBankNameTv;
-    @InjectView(R.id.bank_id_tv)
+    @BindView(R.id.bank_id_tv)
     TextView mBankIdTv;
-    @InjectView(R.id.money_sum_tv)
+    @BindView(R.id.money_sum_tv)
     TextView mMoneySumTv;
 
     public static void launch(Context context, WithDrawBean bean) {
@@ -59,7 +61,7 @@ public class WithDrawSecondActivity extends BaseActivity<WithDrawModel> implemen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_withdraw_next_step);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initViewModel();
         initView();
@@ -111,7 +113,7 @@ public class WithDrawSecondActivity extends BaseActivity<WithDrawModel> implemen
     private void commit() {
         if (isInputValid()) {
             showDialog();
-            Subscription subscription = mViewModel.commitInfo()
+            Disposable subscription = mViewModel.commitInfo()
                     .subscribe(this::onNext, this::onError);
             addSubscription(subscription);
         }
@@ -127,7 +129,7 @@ public class WithDrawSecondActivity extends BaseActivity<WithDrawModel> implemen
                 .progressText(getResources().getString(R.string.commit_now))
                 .onDismissListener(__ -> {
                     if (mCompositeSubscription != null) {
-                        mCompositeSubscription.unsubscribe();
+                        mCompositeSubscription.clear();
                     }
                 }).show();
     }

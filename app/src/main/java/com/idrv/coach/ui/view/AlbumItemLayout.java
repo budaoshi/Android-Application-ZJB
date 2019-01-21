@@ -14,7 +14,7 @@ import com.idrv.coach.R;
 import com.zjb.loader.ZjbImageLoader;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/5/23
@@ -23,11 +23,11 @@ import butterknife.InjectView;
  * @author sunjianfei
  */
 public class AlbumItemLayout extends FrameLayout {
-    @InjectView(R.id.image_view)
+    @BindView(R.id.image_view)
     ImageView mImageView;
-    @InjectView(R.id.title)
+    @BindView(R.id.title)
     TextView mTitleTv;
-    @InjectView(R.id.pic_num)
+    @BindView(R.id.pic_num)
     TextView mPicNumTv;
 
     public AlbumItemLayout(Context context) {
@@ -47,7 +47,7 @@ public class AlbumItemLayout extends FrameLayout {
 
     private void initView() {
         inflate(getContext(), R.layout.vw_album_item, this);
-        ButterKnife.inject(this, this);
+        ButterKnife.bind(this, this);
     }
 
     public void setImage(String url,@DrawableRes int emptyResId) {

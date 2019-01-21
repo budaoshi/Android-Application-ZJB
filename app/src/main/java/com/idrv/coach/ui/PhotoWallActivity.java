@@ -30,14 +30,16 @@ import com.idrv.coach.utils.helper.UIHelper;
 import com.idrv.coach.utils.helper.ViewUtils;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/8/9
@@ -48,11 +50,11 @@ import rx.android.schedulers.AndroidSchedulers;
 public class PhotoWallActivity extends BaseActivity<PhotoWallModel> {
     private static final int CAMERA_REQUEST_CODE = 0x001;
 
-    @InjectView(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     EmptyRecyclerView mRecyclerView;
-    @InjectView(R.id.refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @InjectView(R.id.title_bar_layout)
+    @BindView(R.id.title_bar_layout)
     View mTitleBarLayout;
 
     PhotoWallAdapter mAdapter;
@@ -88,7 +90,7 @@ public class PhotoWallActivity extends BaseActivity<PhotoWallModel> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_photowall);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initView();
         initViewModel();
         registerEvent();
@@ -192,7 +194,7 @@ public class PhotoWallActivity extends BaseActivity<PhotoWallModel> {
      * 图片上传七牛成功,提交到服务器
      */
     private void submit() {
-        Subscription subscription = mViewModel.onUploadSuccess()
+        Disposable subscription = mViewModel.onUploadSuccess()
                 .subscribe(this::onUploadSuccess, e -> onUploadFailed(true));
         addSubscription(subscription);
     }
@@ -257,7 +259,7 @@ public class PhotoWallActivity extends BaseActivity<PhotoWallModel> {
             mAdapter.setPictures(pictures);
         }
         mAdapter.notifyDataSetChanged();
-        Subscription subscription = mViewModel.photoDelete(picture.getId())
+        Disposable subscription = mViewModel.photoDelete(picture.getId())
                 .subscribe(this::onPhotoDeleteSuccess, Logger::e);
         addSubscription(subscription);
     }
@@ -276,13 +278,13 @@ public class PhotoWallActivity extends BaseActivity<PhotoWallModel> {
     }
 
     private void refresh() {
-        Subscription subscription = mViewModel.refresh(mAdapter::clear)
+        Disposable subscription = mViewModel.refresh(mAdapter::clear)
                 .subscribe(this::onRefreshNext, this::onError, this::onComplete);
         addSubscription(subscription);
     }
 
     private void loadMore() {
-        Subscription subscription = mViewModel.loadMore()
+        Disposable subscription = mViewModel.loadMore()
                 .subscribe(this::onLoadMoreNext, this::onError, this::onComplete);
         addSubscription(subscription);
     }

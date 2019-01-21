@@ -9,7 +9,7 @@ import com.idrv.coach.BuildConfig;
 import com.idrv.coach.R;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/8/24
@@ -18,7 +18,7 @@ import butterknife.InjectView;
  * @author sunjianfei
  */
 public class SettingAboutUsActivity extends BaseActivity {
-    @InjectView(R.id.version_tv)
+    @BindView(R.id.version_tv)
     TextView mVersionTv;
 
     public static void launch(Context context) {
@@ -30,7 +30,7 @@ public class SettingAboutUsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_about_us);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initView();
     }

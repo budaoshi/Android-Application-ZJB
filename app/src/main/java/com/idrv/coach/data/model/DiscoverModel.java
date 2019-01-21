@@ -15,9 +15,9 @@ import com.zjb.volley.core.request.RequestBuilder;
 import com.zjb.volley.core.response.HttpResponse;
 import com.zjb.volley.utils.GsonUtil;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
 
@@ -47,7 +47,7 @@ public class DiscoverModel {
                 try {
                     DiscoverPage page = GsonUtil.fromJson(json, DiscoverPage.class);
                     subscriber.onNext(page);
-                    subscriber.onCompleted();
+                    subscriber.onComplete();
                 } catch (Exception e) {
                     e.printStackTrace();
                     subscriber.onError(e);

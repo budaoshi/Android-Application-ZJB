@@ -36,11 +36,11 @@ import com.idrv.coach.utils.helper.ViewUtils;
 import com.idrv.coach.wxapi.WXEntryActivity;
 import com.zjb.volley.utils.NetworkUtil;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/11
@@ -49,32 +49,32 @@ import rx.android.schedulers.AndroidSchedulers;
  * @author sunjianfei
  */
 public class PersonalInfoFragment extends BaseFragment<CoachInfoModel> implements View.OnClickListener {
-    @InjectView(R.id.item_user_info)
+    @BindView(R.id.item_user_info)
     MasterItemView mUserInfoItemView;
-    @InjectView(R.id.item_my_wallet)
+    @BindView(R.id.item_my_wallet)
     MasterItemView mMyWalletItemView;
-    @InjectView(R.id.item_plan_setting)
+    @BindView(R.id.item_plan_setting)
     MasterItemView mPlanSettingItem;
-    @InjectView(R.id.item_settings)
+    @BindView(R.id.item_settings)
     MasterItemView mSettingsItem;
-    @InjectView(R.id.item_share)
+    @BindView(R.id.item_share)
     MasterItemView mShareItem;
 
-    @InjectView(R.id.avatar)
+    @BindView(R.id.avatar)
     ImageView mAvatarIv;
-    @InjectView(R.id.personal_name_tv)
+    @BindView(R.id.personal_name_tv)
     TextView mPersonalNameTv;
-    @InjectView(R.id.personal_tel_tv)
+    @BindView(R.id.personal_tel_tv)
     TextView mPersonalTelTv;
-    @InjectView(R.id.personal_school_tv)
+    @BindView(R.id.personal_school_tv)
     TextView mPersonalSchoolTv;
-    @InjectView(R.id.pic_num_tv)
+    @BindView(R.id.pic_num_tv)
     TextView mPicNumTv;
-    @InjectView(R.id.comment_num_tv)
+    @BindView(R.id.comment_num_tv)
     TextView mCommentNumTv;
-    @InjectView(R.id.coach_auth_status_iv)
+    @BindView(R.id.coach_auth_status_iv)
     ImageView mCoachAuthStatusIv;
-    @InjectView(R.id.member_iv)
+    @BindView(R.id.member_iv)
     ImageView mMemberIv;
 
 
@@ -85,7 +85,7 @@ public class PersonalInfoFragment extends BaseFragment<CoachInfoModel> implement
 
     @Override
     public void initView(View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         mUserInfoItemView.setLeftDrawableRes(R.drawable.icon_user_info);
         mUserInfoItemView.setText(R.string.item_profile);
 
@@ -222,7 +222,7 @@ public class PersonalInfoFragment extends BaseFragment<CoachInfoModel> implement
     }
 
     private void getPicAndCommentNum() {
-        Subscription subscription = mViewModel.getPicNum()
+        Disposable subscription = mViewModel.getPicNum()
                 .subscribe(__ -> setPhotoAndCommentNum(), Logger::e);
         addSubscription(subscription);
     }
@@ -232,13 +232,13 @@ public class PersonalInfoFragment extends BaseFragment<CoachInfoModel> implement
      */
     private void refresh() {
         //获取教练信息
-        Subscription subscription = mViewModel.getCoachInfo()
+        Disposable subscription = mViewModel.getCoachInfo()
                 .subscribe(this::onNext, this::onError);
         addSubscription(subscription);
     }
 
     private void getAuthenticationState() {
-        Subscription subscription = mViewModel.getAuthenticationState()
+        Disposable subscription = mViewModel.getAuthenticationState()
                 .subscribe(status -> setCoachAuthStatus(status.getAuthenticationState()), Logger::e);
         addSubscription(subscription);
     }

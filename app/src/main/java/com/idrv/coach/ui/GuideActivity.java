@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/3/8
@@ -24,9 +24,9 @@ import butterknife.InjectView;
  * @author sunjianfei
  */
 public class GuideActivity extends BaseActivity {
-    @InjectView(R.id.guide_viewpager)
+    @BindView(R.id.guide_viewpager)
     ViewPager mViewPager;
-    @InjectView(R.id.guide_indicator)
+    @BindView(R.id.guide_indicator)
     CircleIndicator mCircleIndicator;
 
     public static void launch(Context context) {
@@ -38,7 +38,7 @@ public class GuideActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_guide);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initView();
     }
 

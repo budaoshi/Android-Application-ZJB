@@ -22,11 +22,13 @@ import com.idrv.coach.utils.ValidateUtil;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
+import butterknife.BindView;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/8/8
@@ -35,9 +37,9 @@ import rx.Subscription;
  * @author sunjianfei
  */
 public class CommentActivity extends BaseActivity<CommentModel> implements CommentListAdapter.DeleteCommentListener {
-    @InjectView(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    @InjectView(R.id.refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     CommentListAdapter mAdapter;
@@ -51,7 +53,7 @@ public class CommentActivity extends BaseActivity<CommentModel> implements Comme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_comment);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initView();
         initViewModel();
@@ -115,7 +117,7 @@ public class CommentActivity extends BaseActivity<CommentModel> implements Comme
      * 刷新
      */
     private void refresh() {
-        Subscription subscription = mViewModel.refresh(mAdapter::clear)
+        Disposable subscription = mViewModel.refresh(mAdapter::clear)
                 .subscribe(this::onRefreshNext, this::onError, this::onComplete);
         addSubscription(subscription);
     }
@@ -124,7 +126,7 @@ public class CommentActivity extends BaseActivity<CommentModel> implements Comme
      * 加载更多
      */
     private void loadMore() {
-        Subscription subscription = mViewModel.loadMore()
+        Disposable subscription = mViewModel.loadMore()
                 .subscribe(this::onLoadMoreNext, this::onError, this::onComplete);
         addSubscription(subscription);
     }
@@ -162,7 +164,7 @@ public class CommentActivity extends BaseActivity<CommentModel> implements Comme
     @Override
     public void onCommentDelete(Comment comment, int position) {
         showProgressDialog(comment.getMessageType() == 4 ? R.string.delete_access_now : R.string.delete_comment_now);
-        Subscription subscription = mViewModel.deleteComment(comment.getMessageType(), comment.getId())
+        Disposable subscription = mViewModel.deleteComment(comment.getMessageType(), comment.getId())
                 .doOnTerminate(this::dismissProgressDialog)
                 .subscribe(s -> {
                     //更新照片数量

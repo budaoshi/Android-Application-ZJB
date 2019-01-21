@@ -20,12 +20,14 @@ import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.core.exception.NetworkError;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/7/13
@@ -34,9 +36,9 @@ import rx.android.schedulers.AndroidSchedulers;
  * @author sunjianfei
  */
 public class ProductListActivity extends BaseActivity<SpreadModel> {
-    @InjectView(R.id.refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mRefreshLayout;
-    @InjectView(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
     ProductListAdapter mAdapter;
@@ -50,7 +52,7 @@ public class ProductListActivity extends BaseActivity<SpreadModel> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_product_list);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         registerEvent();
         initToolBar();
         initView();
@@ -111,7 +113,7 @@ public class ProductListActivity extends BaseActivity<SpreadModel> {
      * 获取传播工具
      */
     private void refresh() {
-        Subscription subscription = mViewModel.refresh(mAdapter::clear)
+        Disposable subscription = mViewModel.refresh(mAdapter::clear)
                 .subscribe(this::onNext, this::onError, this::onComplete);
         addSubscription(subscription);
     }
@@ -120,7 +122,7 @@ public class ProductListActivity extends BaseActivity<SpreadModel> {
      * 加载更多
      */
     private void loadMore() {
-        Subscription subscription = mViewModel.loadMore()
+        Disposable subscription = mViewModel.loadMore()
                 .subscribe(this::onLoadMoreNext, this::onError, this::onComplete);
         addSubscription(subscription);
     }

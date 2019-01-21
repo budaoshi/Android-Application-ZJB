@@ -26,10 +26,11 @@ import com.zjb.loader.ZjbImageLoader;
 import com.zjb.volley.core.exception.NetworkError;
 
 import org.json.JSONObject;
+import org.reactivestreams.Subscription;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
+import butterknife.BindView;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time: 2016/3/28
@@ -41,7 +42,7 @@ public class AvatarActivity extends BaseActivity<AvatarModel> {
 
     private static final String KEY_IMAGE_PATH = "path";
 
-    @InjectView(R.id.avatar_avatarIv)
+    @BindView(R.id.avatar_avatarIv)
     ImageView mAvatarIv;
 
     public static void launch(Activity activity, String path) {
@@ -54,7 +55,7 @@ public class AvatarActivity extends BaseActivity<AvatarModel> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_avatar);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         Logger.i(UIHelper.getScreenSize(this)[0] + " " + UIHelper.getScreenSize(this)[1]);
         //2.初始化ViewModel
         mViewModel = new AvatarModel();
@@ -111,7 +112,7 @@ public class AvatarActivity extends BaseActivity<AvatarModel> {
 
         mProgressDialog = DialogHelper.create(DialogHelper.TYPE_PROGRESS)
                 .progressText(getString(R.string.dialog_uploading)).show();
-        Subscription subscription = mViewModel.getToken()
+        Disposable subscription = mViewModel.getToken()
                 .subscribe(__ -> isFileExit(), this::onError);
         addSubscription(subscription);
     }
@@ -120,7 +121,7 @@ public class AvatarActivity extends BaseActivity<AvatarModel> {
      * 判断网上该文件是否存在
      */
     private void isFileExit() {
-        Subscription subscription = mViewModel.isFileExit()
+        Disposable subscription = mViewModel.isFileExit()
                 .subscribe(__ -> httpUserInfo(), __ -> imgUpload());
         addSubscription(subscription);
     }
@@ -148,7 +149,7 @@ public class AvatarActivity extends BaseActivity<AvatarModel> {
      * 将图片地址上传到服务器
      */
     private void httpUserInfo() {
-        Subscription subscription = mViewModel.putUserInfo("headimgurl", mViewModel.mImgUrl)
+        Disposable subscription = mViewModel.putUserInfo("headimgurl", mViewModel.mImgUrl)
                 .subscribe(__ -> onUpLoadSuccess(), this::onError);
         addSubscription(subscription);
     }

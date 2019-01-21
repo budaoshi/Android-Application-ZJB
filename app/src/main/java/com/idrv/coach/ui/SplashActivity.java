@@ -25,14 +25,14 @@ import com.zjb.loader.ZjbImageLoader;
 import com.zjb.volley.utils.GsonUtil;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * Created by sunjianfei on 2016/3/7.
  * 闪屏页面
  */
 public class SplashActivity extends BaseActivity<SplashModel> {
-    @InjectView(R.id.splash_image)
+    @BindView(R.id.splash_image)
     FrameLayout mSplashImage;
 
     WeakHandler mHandler;
@@ -45,7 +45,7 @@ public class SplashActivity extends BaseActivity<SplashModel> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_splash);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         //1.解决安装后直接打开，home键切换到后台再启动重复出现闪屏页面的问题
         // http://stackoverflow.com/questions/2280361/app-always-starts-fresh-from-root-activity-instead-of-resuming-background-state
         if (!isTaskRoot()) {

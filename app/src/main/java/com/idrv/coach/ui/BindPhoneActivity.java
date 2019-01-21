@@ -22,10 +22,12 @@ import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.bean.ErrorCode;
 import com.zjb.volley.core.exception.NetworkError;
 
+import org.reactivestreams.Subscription;
+
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time: 2016/3/28
@@ -38,15 +40,15 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneModel> {
 
     private static final String KEY_IS_AFTER_LOGIN = "isAfterLogin";
 
-    @InjectView(R.id.bindPhone_phoneEt)
+    @BindView(R.id.bindPhone_phoneEt)
     EditText mPhoneEt;
-    @InjectView(R.id.bindPhone_verifycodeEt)
+    @BindView(R.id.bindPhone_verifycodeEt)
     EditText mVerifyEt;
-    @InjectView(R.id.bindPhone_verifyTv)
+    @BindView(R.id.bindPhone_verifyTv)
     TextView mVerifyTv;
-    @InjectView(R.id.invite_code_layout)
+    @BindView(R.id.invite_code_layout)
     View mInviteCodeLayout;
-    @InjectView(R.id.item_invite_code)
+    @BindView(R.id.item_invite_code)
     InputItemView mInviteCodeItemView;
 
     /**
@@ -63,7 +65,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneModel> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_bind_phone);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         // 1. 初始化ViewModel
         mViewModel = new BindPhoneModel();
@@ -112,7 +114,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneModel> {
         }
         mProgressDialog = DialogHelper.create(DialogHelper.TYPE_PROGRESS)
                 .progressText(getString(R.string.dialog_verify_code)).show();
-        Subscription subscription = mViewModel.getPhoneVerifyCode()
+        Disposable subscription = mViewModel.getPhoneVerifyCode()
                 .subscribe(__ -> downTimeStart(), this::onError);
         addSubscription(subscription);
     }
@@ -150,7 +152,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhoneModel> {
                 .create(DialogHelper.TYPE_PROGRESS)
                 .progressText(getString(R.string.dialog_bingding))
                 .show();
-        Subscription subscription = mViewModel.bindPhone(code)
+        Disposable subscription = mViewModel.bindPhone(code)
                 .subscribe(__ -> onPostSuccess(), this::onError);
         addSubscription(subscription);
     }

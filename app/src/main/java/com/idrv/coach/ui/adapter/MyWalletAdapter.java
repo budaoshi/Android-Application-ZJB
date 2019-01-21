@@ -19,7 +19,7 @@ import com.zjb.loader.ZjbImageLoader;
 import com.zjb.loader.internal.core.assist.ImageScaleType;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/5/19
@@ -147,46 +147,46 @@ public class MyWalletAdapter extends AbsRecycleAdapter<PurseDetails, RecyclerVie
     }
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.balance_tv)
+        @BindView(R.id.balance_tv)
         TextView mBalanceTv;
-        @InjectView(R.id.with_draw_tv)
+        @BindView(R.id.with_draw_tv)
         View mWithDrawView;
-        @InjectView(R.id.current_credit_tv)
+        @BindView(R.id.current_credit_tv)
         TextView mCreditTv;
-        @InjectView(R.id.btn_redeem)
+        @BindView(R.id.btn_redeem)
         TextView mRedeemBtn;
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
     class GroupViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.group_name)
+        @BindView(R.id.group_name)
         TextView mGroupNameTv;
 
         public GroupViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
     class DefaultViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.left_icon)
+        @BindView(R.id.left_icon)
         ImageView mLeftImage;
-        @InjectView(R.id.title_tv)
+        @BindView(R.id.title_tv)
         TextView mTitleTv;
-        @InjectView(R.id.name_tv)
+        @BindView(R.id.name_tv)
         TextView mNameTv;
-        @InjectView(R.id.time_tv)
+        @BindView(R.id.time_tv)
         TextView mTimeTv;
-        @InjectView(R.id.added_money_tv)
+        @BindView(R.id.added_money_tv)
         TextView mMoneyTv;
 
         public DefaultViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

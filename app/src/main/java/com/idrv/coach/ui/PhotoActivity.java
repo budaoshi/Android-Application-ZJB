@@ -9,7 +9,7 @@ import com.idrv.coach.R;
 import com.idrv.coach.utils.helper.ViewUtils;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
@@ -22,7 +22,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  */
 public class PhotoActivity extends BaseActivity {
     private static final String KEY_IMAGE_PATH = "path";
-    @InjectView(R.id.image_view)
+    @BindView(R.id.image_view)
     PhotoView mImageView;
 
     public static void launch(Activity activity, String path) {
@@ -36,7 +36,7 @@ public class PhotoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_photo_view);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initView();
     }
 

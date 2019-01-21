@@ -19,8 +19,11 @@ import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.zjb.volley.core.exception.NetworkError;
 import com.zjb.volley.utils.NetworkUtil;
 
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import org.reactivestreams.Subscription;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * time:2016/7/12
@@ -81,7 +84,7 @@ public abstract class AbsPayActivity extends AbsWebActivity<SpreadModel> {
      */
     private void getOrder() {
         showProgressDialog(R.string.get_order_info_now);
-        Subscription subscription = mViewModel.getOrder()
+        Disposable subscription = mViewModel.getOrder()
                 .subscribe(__ -> Logger.e("success"), this::onBuyError, () -> {
                     //获取订单成功,微信支付
                     dismissProgressDialog();
@@ -97,7 +100,7 @@ public abstract class AbsPayActivity extends AbsWebActivity<SpreadModel> {
      */
     private void buySpreadTool(int type) {
         showProgressDialog(R.string.buy_now_pls_waite);
-        Subscription subscription = mViewModel.buySpreadTool(type)
+        Disposable subscription = mViewModel.buySpreadTool(type)
                 .subscribe(s -> onBuyNext(type), this::onBuyError);
         addSubscription(subscription);
     }

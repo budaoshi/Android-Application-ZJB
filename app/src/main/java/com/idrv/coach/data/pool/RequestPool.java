@@ -12,8 +12,8 @@ import com.zjb.volley.core.stack.HttpUrlStack;
 
 import java.util.Hashtable;
 
-import rx.Observable;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * time: 2015/8/19
@@ -52,7 +52,7 @@ public class RequestPool {
                     //2.发出事件
                     if (200 == httpResponse.status) {
                         subscriber.onNext(httpResponse);
-                        subscriber.onCompleted();
+                        subscriber.onComplete();
                     } else {
                         //token 过期
                         if (httpResponse.status == 453) {
@@ -85,7 +85,7 @@ public class RequestPool {
         error.setErrorCode(code);
         return Observable.<HttpResponse<T>>create(subscriber -> {
             subscriber.onError(error);
-            subscriber.onCompleted();
+            subscriber.onComplete();
         }).subscribeOn(Schedulers.computation());
     }
 

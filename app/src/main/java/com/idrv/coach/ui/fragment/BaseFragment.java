@@ -14,8 +14,11 @@ import com.idrv.coach.ui.BaseActivity;
 import com.idrv.coach.ui.widget.BaseLayout;
 import com.idrv.coach.utils.helper.DialogHelper;
 
-import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
+import org.reactivestreams.Subscription;
+
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * time: 15/6/9
@@ -35,7 +38,7 @@ public abstract class BaseFragment<ViewModel> extends Fragment implements BaseLa
     protected ViewModel mViewModel;
 
     protected boolean mIsDestroyed;
-    protected CompositeSubscription mSubscription;
+    protected CompositeDisposable mSubscription;
 
     public abstract View createView(LayoutInflater inflater, ViewGroup container,
                                     Bundle savedInstanceState);
@@ -58,7 +61,7 @@ public abstract class BaseFragment<ViewModel> extends Fragment implements BaseLa
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mSubscription = new CompositeSubscription();
+        mSubscription = new CompositeDisposable();
     }
 
     /**
@@ -153,10 +156,10 @@ public abstract class BaseFragment<ViewModel> extends Fragment implements BaseLa
         return false;
     }
 
-    public void addSubscription(Subscription subscription) {
+    public void addSubscription(Disposable subscription) {
         if (subscription != null) {
-            if (mSubscription == null || mSubscription.isUnsubscribed()) {
-                mSubscription = new CompositeSubscription();
+            if (mSubscription == null || mSubscription.isDisposed()) {
+                mSubscription = new CompositeDisposable();
             }
             mSubscription.add(subscription);
         }
@@ -166,7 +169,7 @@ public abstract class BaseFragment<ViewModel> extends Fragment implements BaseLa
     public void onDestroy() {
         RxBusManager.unregister(this);
         if (mSubscription != null) {
-            mSubscription.unsubscribe();
+            mSubscription.clear();
             mSubscription = null;
         }
         if (mViewModel != null) {

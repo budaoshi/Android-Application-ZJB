@@ -38,9 +38,11 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.open.utils.SystemUtils;
 import com.tencent.tauth.Tencent;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.idrv.coach.ZjbApplication.gContext;
 
@@ -169,7 +171,7 @@ public class ShareModel {
             Observable<String> observable = getShareImagePath(bean);
             //2.接收消息
             observable
-                    .doOnSubscribe(this::showProgressDialog)
+                    .doOnSubscribe(disposable -> ShareModel.this.showProgressDialog())
                     .subscribe(path -> {
                         if (TextUtils.isEmpty(path)) return;
                         WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
@@ -236,7 +238,7 @@ public class ShareModel {
         ShareBean bean = shareProvider.createWeixinShareBean();
         if (IShareProvider.SHARE_CONTENT_TYPE_IMAGE == shareProvider.getShareType()) {
             getShareImagePath(bean)
-                    .doOnSubscribe(this::showProgressDialog)
+                    .doOnSubscribe(disposable -> ShareModel.this.showProgressDialog())
                     .subscribe(path -> {
                         WXImageObject imgObj = new WXImageObject();
                         imgObj.setImagePath(path);
@@ -353,7 +355,7 @@ public class ShareModel {
 
     private void shareImage2QQ(WXEntryActivity activity, ShareBean bean, int type) {
         getShareImagePath(bean)
-                .doOnSubscribe(this::showProgressDialog)
+                .doOnSubscribe(disposable -> ShareModel.this.showProgressDialog())
                 .subscribe(path -> {
                     // extarFlag ==1 会弹出发送到QQ控件的对话框，为0则不会弹出
                     int extarFlag = 0;
@@ -411,7 +413,7 @@ public class ShareModel {
                 subscriber.onError(e);
                 e.printStackTrace();
             } finally {
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         }).subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread());

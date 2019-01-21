@@ -21,12 +21,14 @@ import com.idrv.coach.utils.ValidateUtil;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/30
@@ -35,9 +37,9 @@ import rx.android.schedulers.AndroidSchedulers;
  * @author sunjianfei
  */
 public class DrivingTestInsListActivity extends BaseActivity<DrivingTestInsModel> {
-    @InjectView(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    @InjectView(R.id.refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     private DrivingTestInsListAdapter mAdapter;
@@ -51,7 +53,7 @@ public class DrivingTestInsListActivity extends BaseActivity<DrivingTestInsModel
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_insurance_list);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initView();
         initViewModel();
@@ -108,13 +110,13 @@ public class DrivingTestInsListActivity extends BaseActivity<DrivingTestInsModel
     }
 
     private void refresh() {
-        Subscription subscription = mViewModel.refresh(mAdapter::clear)
+        Disposable subscription = mViewModel.refresh(mAdapter::clear)
                 .subscribe(this::onRefreshNext, this::onError, this::onComplete);
         addSubscription(subscription);
     }
 
     private void loadMore() {
-        Subscription subscription = mViewModel.loadMore()
+        Disposable subscription = mViewModel.loadMore()
                 .subscribe(this::onLoadMoreNext, this::onError, this::onComplete);
         addSubscription(subscription);
     }

@@ -25,9 +25,9 @@ import com.idrv.coach.utils.handler.WeakHandler;
 import com.igexin.sdk.PushManager;
 import com.zjb.volley.utils.GsonUtil;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.idrv.coach.ZjbApplication.gContext;
 

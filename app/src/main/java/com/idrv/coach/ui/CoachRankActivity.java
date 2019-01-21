@@ -15,11 +15,13 @@ import com.idrv.coach.utils.PixelUtil;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/6/24
@@ -28,7 +30,7 @@ import rx.Subscription;
  * @author sunjianfei
  */
 public class CoachRankActivity extends BaseActivity<CoachRankModel> {
-    @InjectView(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
     CoachRankAdapter mAdapter;
@@ -42,7 +44,7 @@ public class CoachRankActivity extends BaseActivity<CoachRankModel> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_coach_rank);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initView();
         initViewModel();
@@ -94,7 +96,7 @@ public class CoachRankActivity extends BaseActivity<CoachRankModel> {
     }
 
     private void refresh() {
-        Subscription subscription = mViewModel.getCoachRank()
+        Disposable subscription = mViewModel.getCoachRank()
                 .subscribe(this::onNext, this::onError, this::onComplete);
         addSubscription(subscription);
     }

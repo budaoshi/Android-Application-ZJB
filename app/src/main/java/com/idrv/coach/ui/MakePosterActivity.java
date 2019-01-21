@@ -47,17 +47,19 @@ import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.ResHelper;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.idrv.coach.utils.helper.ViewUtils;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zjb.loader.ZjbImageLoader;
+
+import org.reactivestreams.Subscription;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -73,9 +75,9 @@ public class MakePosterActivity extends AbsPayActivity {
     //是否是重新制作
     private static final String KEY_PARAM_IS_REMAKE = "param_is_remake";
 
-    @InjectView(R.id.poster_layout)
+    @BindView(R.id.poster_layout)
     FrameLayout mContentLayout;
-    @InjectView(R.id.buy_or_make_tv)
+    @BindView(R.id.buy_or_make_tv)
     TextView mBuyOrMakeTv;
 
     private View mBaseLayout;
@@ -101,7 +103,7 @@ public class MakePosterActivity extends AbsPayActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_customize_poster);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         isRemake = getIntent().getBooleanExtra(KEY_PARAM_IS_REMAKE, false);
     }
 
@@ -132,7 +134,7 @@ public class MakePosterActivity extends AbsPayActivity {
 
     @Override
     protected void refresh() {
-        Subscription subscription = mViewModel.getCommission()
+        Disposable subscription = mViewModel.getCommission()
                 .doOnTerminate(this::getPosterData)
                 .subscribe(__ -> {
                 }, Logger::e);
@@ -184,7 +186,7 @@ public class MakePosterActivity extends AbsPayActivity {
     }
 
     private void getPosterData() {
-        Subscription subscription = mViewModel.getPoster()
+        Disposable subscription = mViewModel.getPoster()
                 .subscribe(this::initView, e -> showErrorView());
         addSubscription(subscription);
     }
@@ -479,7 +481,7 @@ public class MakePosterActivity extends AbsPayActivity {
         }
         //先保存图片到本地
         Bitmap bitmap = BitmapUtil.getBitmap(mBaseLayout);
-        RxPermissions.getInstance(this)
+        new RxPermissions(this)
                 .request(Manifest.permission.WRITE_EXTERNAL_STORAGE
                         , Manifest.permission.READ_EXTERNAL_STORAGE)
                 .subscribe(granted -> {

@@ -27,10 +27,12 @@ import com.idrv.coach.utils.ScrollUtils;
 import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.UIHelper;
 
+import org.reactivestreams.Subscription;
+
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/24
@@ -41,13 +43,13 @@ import rx.Subscription;
 public class DynamicActivity extends BaseActivity<DynamicModel> implements DynamicAdapter.LikeListener {
     public static final String KEY_FIRST_USE_DYNAMIC = "first_use_dynamic";
 
-    @InjectView(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     EmptyRecyclerView mRecyclerView;
-    @InjectView(R.id.refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @InjectView(R.id.title_bar_layout)
+    @BindView(R.id.title_bar_layout)
     View mTitleBarLayout;
-    @InjectView(R.id.empty_layout)
+    @BindView(R.id.empty_layout)
     View mEmptyView;
 
     DynamicAdapter mAdapter;
@@ -65,7 +67,7 @@ public class DynamicActivity extends BaseActivity<DynamicModel> implements Dynam
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_dynamic);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initView();
         initViewModel();
         registerEvent();
@@ -128,13 +130,13 @@ public class DynamicActivity extends BaseActivity<DynamicModel> implements Dynam
     }
 
     private void refresh() {
-        Subscription subscription = mViewModel.refresh(mAdapter::clear)
+        Disposable subscription = mViewModel.refresh(mAdapter::clear)
                 .subscribe(this::onRefreshNext, this::onError, this::onComplete);
         addSubscription(subscription);
     }
 
     private void loadMore() {
-        Subscription subscription = mViewModel.loadMore()
+        Disposable subscription = mViewModel.loadMore()
                 .subscribe(this::onLoadMoreNext, this::onError, this::onComplete);
         addSubscription(subscription);
     }
@@ -190,7 +192,7 @@ public class DynamicActivity extends BaseActivity<DynamicModel> implements Dynam
 
     private void joinTeam(String teamId) {
         showDialog();
-        Subscription subscription = mViewModel.joinTeam(teamId)
+        Disposable subscription = mViewModel.joinTeam(teamId)
                 .subscribe(__ -> {
                     dismissProgressDialog();
                     mAdapter.setTeamInvite(null);
@@ -220,7 +222,7 @@ public class DynamicActivity extends BaseActivity<DynamicModel> implements Dynam
 
     @Override
     public void onLike(String targetId, String coachId, int type) {
-        Subscription subscription = mViewModel.like(targetId, coachId, type)
+        Disposable subscription = mViewModel.like(targetId, coachId, type)
                 .subscribe(Logger::e, Logger::e);
         addSubscription(subscription);
     }

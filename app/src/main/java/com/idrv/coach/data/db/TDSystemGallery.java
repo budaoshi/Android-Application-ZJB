@@ -15,9 +15,9 @@ import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * time: 2015/9/23
@@ -114,7 +114,7 @@ public class TDSystemGallery extends TDBase {
                 }
 
                 if (null != subscriber) {
-                    subscriber.onCompleted();
+                    subscriber.onComplete();
                 }
             }
 
@@ -136,7 +136,7 @@ public class TDSystemGallery extends TDBase {
                     MediaStore.Images.Media.DATA,
                     MediaStore.Images.Media.BUCKET_ID,
                     MediaStore.Images.Media.BUCKET_DISPLAY_NAME
-                /*, "COUNT(1) AS count"*/};
+                    /*, "COUNT(1) AS count"*/};
             //String selection = "0==0) GROUP BY (" + MediaStore.Images.Media.BUCKET_ID;
             String sortOrder = MediaStore.Images.Media.DATE_MODIFIED;
             Cursor cursor = resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
@@ -205,7 +205,7 @@ public class TDSystemGallery extends TDBase {
                     cursor.close();
                 }
                 if (null != subscriber) {
-                    subscriber.onCompleted();
+                    subscriber.onComplete();
                 }
             }
 

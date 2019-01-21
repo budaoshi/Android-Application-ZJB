@@ -22,10 +22,12 @@ import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.core.exception.NetworkError;
 
+import org.reactivestreams.Subscription;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/22
@@ -37,11 +39,11 @@ import rx.Subscription;
  */
 public class UserReviseActivity extends BaseActivity<UserReviseModel> {
 
-    @InjectView(R.id.user_textRivse_et)
+    @BindView(R.id.user_textRivse_et)
     EditText mEditText;
-    @InjectView(R.id.user_textRivse_showTv)
+    @BindView(R.id.user_textRivse_showTv)
     TextView mLeftNumberTv;
-    @InjectView(R.id.user_textRivse_clearIv)
+    @BindView(R.id.user_textRivse_clearIv)
     ImageView mClearIv;
 
     public static void launch(Context context, String key, String text) {
@@ -60,7 +62,7 @@ public class UserReviseActivity extends BaseActivity<UserReviseModel> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_user_revise);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         //1.初始化标题栏
         initToolBar();
@@ -168,7 +170,7 @@ public class UserReviseActivity extends BaseActivity<UserReviseModel> {
         }
         mProgressDialog = DialogHelper.create(DialogHelper.TYPE_PROGRESS)
                 .progressText(getString(R.string.dialog_revising)).show();
-        Subscription subscription = mViewModel.putUserInfo(nickname)
+        Disposable subscription = mViewModel.putUserInfo(nickname)
                 .subscribe(this::onSuccess, this::onError);
         addSubscription(subscription);
     }
@@ -183,7 +185,7 @@ public class UserReviseActivity extends BaseActivity<UserReviseModel> {
         }
         mProgressDialog = DialogHelper.create(DialogHelper.TYPE_PROGRESS)
                 .progressText(getString(R.string.dialog_revising)).show();
-        Subscription subscription = mViewModel.putCoachInfo(text)
+        Disposable subscription = mViewModel.putCoachInfo(text)
                 .subscribe(this::onSuccess, this::onError);
         addSubscription(subscription);
     }
@@ -198,7 +200,7 @@ public class UserReviseActivity extends BaseActivity<UserReviseModel> {
         }
         mProgressDialog = DialogHelper.create(DialogHelper.TYPE_PROGRESS)
                 .progressText(getString(R.string.dialog_revising)).show();
-        Subscription subscription = mViewModel.putCoachInfo(school)
+        Disposable subscription = mViewModel.putCoachInfo(school)
                 .subscribe(this::onSuccess, this::onError);
         addSubscription(subscription);
     }
@@ -213,7 +215,7 @@ public class UserReviseActivity extends BaseActivity<UserReviseModel> {
         }
         mProgressDialog = DialogHelper.create(DialogHelper.TYPE_PROGRESS)
                 .progressText(getString(R.string.dialog_revising)).show();
-        Subscription subscription = mViewModel.putCoachInfo(text)
+        Disposable subscription = mViewModel.putCoachInfo(text)
                 .subscribe(this::onSuccess, this::onError);
         addSubscription(subscription);
     }

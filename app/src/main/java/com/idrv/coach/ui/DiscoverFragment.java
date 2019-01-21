@@ -21,11 +21,13 @@ import com.idrv.coach.utils.ValidateUtil;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
+import butterknife.BindView;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/10
@@ -34,7 +36,7 @@ import rx.Subscription;
  * @author sunjianfei
  */
 public class DiscoverFragment extends BaseFragment<DiscoverModel> {
-    @InjectView(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
     DiscoverAdapter mAdapter;
@@ -57,7 +59,7 @@ public class DiscoverFragment extends BaseFragment<DiscoverModel> {
 
     @Override
     public void initView(View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         mAdapter = new DiscoverAdapter(getActivity().getSupportFragmentManager());
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -89,7 +91,7 @@ public class DiscoverFragment extends BaseFragment<DiscoverModel> {
      * 获取教练空间开通状态
      */
     private void getWebSiteStatus() {
-        Subscription subscription = mViewModel.getWebsiteOpenStatus()
+        Disposable subscription = mViewModel.getWebsiteOpenStatus()
                 .subscribe(Logger::e, Logger::e);
         addSubscription(subscription);
     }
@@ -98,7 +100,7 @@ public class DiscoverFragment extends BaseFragment<DiscoverModel> {
      * 获取缓存数据
      */
     private void getDiscoverPageCache() {
-        Subscription subscription = mViewModel.getDiscoverPageCache()
+        Disposable subscription = mViewModel.getDiscoverPageCache()
                 .doOnTerminate(this::refresh)
                 .subscribe(this::onNext, Logger::e);
         addSubscription(subscription);
@@ -108,7 +110,7 @@ public class DiscoverFragment extends BaseFragment<DiscoverModel> {
      * 刷新最新数据
      */
     private void refresh() {
-        Subscription subscription = mViewModel.getDiscoverPage()
+        Disposable subscription = mViewModel.getDiscoverPage()
                 .subscribe(this::onNext, this::onError, this::showContentView);
         addSubscription(subscription);
     }

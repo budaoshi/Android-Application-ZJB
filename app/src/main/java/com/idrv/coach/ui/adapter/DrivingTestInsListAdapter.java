@@ -15,7 +15,7 @@ import com.idrv.coach.ui.DrivingTestInsPayActivity;
 import com.idrv.coach.ui.InsReViewsActivity;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/3/30
@@ -88,28 +88,28 @@ public class DrivingTestInsListAdapter extends AbsRecycleAdapter<DrivingTestInsu
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.name_tv)
+        @BindView(R.id.name_tv)
         TextView mNameTv;
-        @InjectView(R.id.insurance_tel_tv)
+        @BindView(R.id.insurance_tel_tv)
         TextView mPhone;
-        @InjectView(R.id.apply_time)
+        @BindView(R.id.apply_time)
         TextView mApplyTimeTv;
-        @InjectView(R.id.padding_view)
+        @BindView(R.id.padding_view)
         View mPaddingView;
-        @InjectView(R.id.reviews_layout)
+        @BindView(R.id.reviews_layout)
         View mReviewsLayout;
-        @InjectView(R.id.reviews_tv)
+        @BindView(R.id.reviews_tv)
         TextView mReviewsTv;
-        @InjectView(R.id.failed_layout)
+        @BindView(R.id.failed_layout)
         View mFailedLayout;
-        @InjectView(R.id.failure_causes_tv)
+        @BindView(R.id.failure_causes_tv)
         TextView mFailureCausesTv;
-        @InjectView(R.id.right_image)
+        @BindView(R.id.right_image)
         ImageView mImageView;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time: 2015/10/23
@@ -60,14 +60,14 @@ public class GalleryNameAdapter extends RecyclerView.Adapter<GalleryNameAdapter.
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.list_item_text)
+        @BindView(R.id.list_item_text)
         public TextView tv;
-        @InjectView(R.id.list_item_line)
+        @BindView(R.id.list_item_line)
         public View line;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

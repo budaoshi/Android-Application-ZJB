@@ -135,10 +135,10 @@
 -keep class butterknife.** { *; }
 -keep class **$$ViewInjector { *; }
 -keepclasseswithmembernames class * {
-    @butterknife.InjectView <fields>;
+    @butterknife.BindView <fields>;
 }
 -keepclasseswithmembernames class * {
-    @butterknife.InjectViews <fields>;
+    @butterknife.BindViews <fields>;
 }
 -keepclasseswithmembernames class * {
     @butterknife.OnClick <methods>;

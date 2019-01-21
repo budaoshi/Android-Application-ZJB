@@ -9,8 +9,8 @@ import com.zjb.volley.core.request.Request;
 import com.zjb.volley.core.request.RequestBuilder;
 import com.zjb.volley.core.response.HttpResponse;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
 
@@ -19,6 +19,7 @@ import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
  * description:
  * 教练证和微信二维码共用，
  * 原理上都是上传图片，然后修改教练信息
+ *
  * @author bigflower
  */
 public class QrCodeCoachCardModel extends UpLoadModel {
@@ -28,6 +29,7 @@ public class QrCodeCoachCardModel extends UpLoadModel {
     public QrCodeCoachCardModel() {
         gCoach = LoginManager.getInstance().getCoach();
     }
+
     /**
      * 修改教练信息，
      *
@@ -47,7 +49,6 @@ public class QrCodeCoachCardModel extends UpLoadModel {
                 .map(HttpResponse::getData)
                 .observeOn(AndroidSchedulers.mainThread());
     }
-
 
 
 }

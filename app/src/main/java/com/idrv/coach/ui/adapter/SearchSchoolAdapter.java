@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.Optional;
 
 /**
@@ -138,13 +138,13 @@ public class SearchSchoolAdapter extends AbsRecycleAdapter<String, SearchSchoolA
     };
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
-        @Optional
-        @InjectView(R.id.city_name_tv)
+
+        @BindView(R.id.city_name_tv)
         TextView mSchoolNameTv;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

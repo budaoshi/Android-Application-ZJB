@@ -20,10 +20,12 @@ import com.idrv.coach.ui.adapter.SelectCityAdapter;
 import com.idrv.coach.utils.Logger;
 import com.idrv.coach.utils.helper.DialogHelper;
 
+import org.reactivestreams.Subscription;
+
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/5/25
@@ -32,7 +34,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * @author sunjianfei
  */
 public class SelectCityActivity extends BaseActivity<SchoolModel> implements SearchSchoolAdapter.OnSchoolSelectListener {
-    @InjectView(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     SelectCityAdapter mAdapter;
 
@@ -45,7 +47,7 @@ public class SelectCityActivity extends BaseActivity<SchoolModel> implements Sea
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_city_select);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initView();
         initViewModel();
@@ -87,7 +89,7 @@ public class SelectCityActivity extends BaseActivity<SchoolModel> implements Sea
                 .cancelable(false)
                 .canceledOnTouchOutside(false)
                 .show();
-        Subscription subscription = mViewModel.getCityList()
+        Disposable subscription = mViewModel.getCityList()
                 .subscribe(mAdapter::addData, __ -> showErrorView(), () -> {
                     dialog.dismiss();
                     mAdapter.notifyDataSetChanged();

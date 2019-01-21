@@ -21,17 +21,19 @@ import com.idrv.coach.utils.helper.UIHelper;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.zjb.volley.core.exception.NetworkError;
 
+import org.reactivestreams.Subscription;
+
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.Subscription;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by sunjianfei on 2016/3/7.
  */
 public class LoginActivity extends BaseActivity<LoginModel> implements View.OnClickListener {
-    @InjectView(R.id.btn_wx_login)
+    @BindView(R.id.btn_wx_login)
     Button mWxLoginBtn;
 
     public static void launch(Context context) {
@@ -43,7 +45,7 @@ public class LoginActivity extends BaseActivity<LoginModel> implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_login);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         //1.初始化model
         mViewModel = new LoginModel();
         //2.注册RxBus(请求Oauth_code时候的回调)
@@ -52,7 +54,7 @@ public class LoginActivity extends BaseActivity<LoginModel> implements View.OnCl
                     SendAuth.Resp response = resp.getData();
                     if (SendAuth.Resp.ErrCode.ERR_OK == response.errCode) {
                         Observable<WChatLoginInfo> observable = WChatManager.getInstance().login(response.code);
-                        Subscription subscription = observable.subscribe(this::onWChatAuthorizeNext, this::onWChatError);
+                        Disposable subscription = observable.subscribe(this::onWChatAuthorizeNext, this::onWChatError);
                         addSubscription(subscription);
                     } else {
                         setLoginBtnStatus(false);
@@ -119,7 +121,7 @@ public class LoginActivity extends BaseActivity<LoginModel> implements View.OnCl
      * 微信授权完成后的下一步动作.
      */
     private void onWChatAuthorizeNext(WChatLoginInfo info) {
-        Subscription subscription = mViewModel.getWChatUserInfo(info)
+        Disposable subscription = mViewModel.getWChatUserInfo(info)
                 .subscribe(this::onWChatNext, this::onWChatError);
         addSubscription(subscription);
     }
@@ -130,7 +132,7 @@ public class LoginActivity extends BaseActivity<LoginModel> implements View.OnCl
      * @param info
      */
     private void onWChatNext(WChatUserInfo info) {
-        Subscription subscription = mViewModel.logIn(info)
+        Disposable subscription = mViewModel.logIn(info)
                 .subscribe(this::onLoginNext, this::onWChatError);
         addSubscription(subscription);
     }

@@ -29,11 +29,13 @@ import com.idrv.coach.utils.helper.ViewUtils;
 import com.idrv.coach.wxapi.WXEntryActivity;
 import com.zjb.loader.ZjbImageLoader;
 
+import org.reactivestreams.Subscription;
+
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/6/27
@@ -44,17 +46,17 @@ import rx.android.schedulers.AndroidSchedulers;
 public class SpreadToolsActivity extends AbsPayActivity implements View.OnClickListener {
     private static final String KEY_PARAM = "param";
 
-    @InjectView(R.id.content_iv)
+    @BindView(R.id.content_iv)
     ImageView mContentIv;
-    @InjectView(R.id.content_layout)
+    @BindView(R.id.content_layout)
     LinearLayout mContentLayout;
-    @InjectView(R.id.desc)
+    @BindView(R.id.desc)
     TextView mDescTv;
-    @InjectView(R.id.btn_preview)
+    @BindView(R.id.btn_preview)
     TextView mPreviewBtn;
-    @InjectView(R.id.countdown_tv)
+    @BindView(R.id.countdown_tv)
     TextView mCountDownTv;
-    @InjectView(R.id.btn_activation)
+    @BindView(R.id.btn_activation)
     Button mActivationBtn;
 
     public static void launch(Context context, SpreadTool tool) {
@@ -67,14 +69,14 @@ public class SpreadToolsActivity extends AbsPayActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_spread_tools);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         registerEvent();
     }
 
     @Override
     protected void refresh() {
-        Subscription subscription = mViewModel.getCommission()
+        Disposable subscription = mViewModel.getCommission()
                 .subscribe(__ -> onNext(mViewModel.getTool()),
                         e -> showErrorView(), this::showContentView);
         addSubscription(subscription);

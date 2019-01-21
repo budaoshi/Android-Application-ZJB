@@ -15,14 +15,16 @@ import com.idrv.coach.ui.adapter.VoiceToolsAdapter;
 import com.idrv.coach.utils.Logger;
 import com.idrv.coach.utils.PlayerUtil;
 import com.idrv.coach.utils.helper.UIHelper;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zjb.volley.utils.NetworkUtil;
+
+import org.reactivestreams.Subscription;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
+import butterknife.BindView;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/8/16
@@ -31,7 +33,7 @@ import rx.Subscription;
  * @author sunjianfei
  */
 public class VoiceToolsActivity extends BaseActivity<VoiceToolModel> implements VoiceToolsAdapter.OnVoicePlayListener {
-    @InjectView(R.id.business_recycler_view)
+    @BindView(R.id.business_recycler_view)
     RecyclerView mRecyclerView;
     private PlayerUtil mPlayerUtil;
 
@@ -47,7 +49,7 @@ public class VoiceToolsActivity extends BaseActivity<VoiceToolModel> implements 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_voice_tools);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initView();
         initViewModel();
@@ -125,7 +127,7 @@ public class VoiceToolsActivity extends BaseActivity<VoiceToolModel> implements 
     }
 
     private void refresh() {
-        Subscription subscription = mViewModel.getVoiceToolList()
+        Disposable subscription = mViewModel.getVoiceToolList()
                 .subscribe(this::onNext, e -> showErrorView(), this::showContentView);
         addSubscription(subscription);
     }
@@ -139,7 +141,7 @@ public class VoiceToolsActivity extends BaseActivity<VoiceToolModel> implements 
      * 设置熄屏时间
      */
     private void setScreenOffTime(long time) {
-        RxPermissions.getInstance(this)
+        new RxPermissions(this)
                 .request(Manifest.permission.WRITE_SETTINGS)
                 .subscribe(granted -> {
                     if (granted) {

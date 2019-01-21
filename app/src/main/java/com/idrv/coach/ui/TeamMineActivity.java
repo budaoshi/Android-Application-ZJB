@@ -28,13 +28,15 @@ import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.core.exception.NetworkError;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import java.util.Iterator;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -45,11 +47,11 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class TeamMineActivity extends BaseActivity<TeamMineModel> {
 
-    @InjectView(R.id.myteam_item_teamName)
+    @BindView(R.id.myteam_item_teamName)
     MasterItemView mMyItemItemView;
-    @InjectView(R.id.myteam_numberSumTv)
+    @BindView(R.id.myteam_numberSumTv)
     TextView munberTv;
-    @InjectView(R.id.myteam_recyclerView)
+    @BindView(R.id.myteam_recyclerView)
     RecyclerView mRecyclerView;
 
     private TeamMemberAdapter mAdapter;
@@ -68,7 +70,7 @@ public class TeamMineActivity extends BaseActivity<TeamMineModel> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_team_mine);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         // 0.初始化ViewModel
         mViewModel = new TeamMineModel();
@@ -106,15 +108,15 @@ public class TeamMineActivity extends BaseActivity<TeamMineModel> {
     private void initRecyclerView() {
         final GridLayoutManager mLayoutManager = new GridLayoutManager(this, 5);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new TeamMemberAdapter(this,() -> {
-                    if (mViewModel.gTeamInfo.getInviteUsers() == null
-                            || mViewModel.gTeamInfo.getInviteUsers().size() == 0) {
-                        noInviterShow();
-                    } else {
-                        TeamInviteActivity.launch(this, mViewModel.gTeamInfo.getInviteUsers()
-                                , mViewModel.gTeamInfo.getTeam().getId());
-                    }
-                });
+        mAdapter = new TeamMemberAdapter(this, () -> {
+            if (mViewModel.gTeamInfo.getInviteUsers() == null
+                    || mViewModel.gTeamInfo.getInviteUsers().size() == 0) {
+                noInviterShow();
+            } else {
+                TeamInviteActivity.launch(this, mViewModel.gTeamInfo.getInviteUsers()
+                        , mViewModel.gTeamInfo.getTeam().getId());
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -122,7 +124,7 @@ public class TeamMineActivity extends BaseActivity<TeamMineModel> {
      * 获取是否是签约教练
      */
     private void getSignState() {
-        Subscription subscription = mViewModel.getSignState()
+        Disposable subscription = mViewModel.getSignState()
                 .subscribe(__ -> getMyTeam(), this::onTeamInfoError);
         addSubscription(subscription);
     }
@@ -131,7 +133,7 @@ public class TeamMineActivity extends BaseActivity<TeamMineModel> {
      * 获取我的团队
      */
     private void getMyTeam() {
-        Subscription subscription = mViewModel.getMyTeam()
+        Disposable subscription = mViewModel.getMyTeam()
                 .subscribe(this::onNext, this::onTeamInfoError);
         addSubscription(subscription);
     }

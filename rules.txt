@@ -126,7 +126,7 @@
     4.1 类当中的属性声明，只起声明作用, 不起初始化的作用，如果需要在对象创建之前做相应的初始化，那么就在静态/动态 初始化
         代码块当中进行，比如
         public class CameraFragment extends BaseFragment {
-            @InjectView(R.id.camera_gallery_btn)
+            @BindView(R.id.camera_gallery_btn)
             public ImageView mCameraGallery;
             private SimpleCameraHost mCustomCameraHost;
             private MediaScannerConnection.OnScanCompletedListener mScanCompletedListener;

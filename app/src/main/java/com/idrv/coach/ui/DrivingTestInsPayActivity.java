@@ -22,10 +22,12 @@ import com.idrv.coach.utils.helper.UIHelper;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/30
@@ -36,19 +38,19 @@ import rx.android.schedulers.AndroidSchedulers;
 public class DrivingTestInsPayActivity extends BaseActivity<DrivingTestInsPayModel> {
     private static final String KEY_PARAM = "param";
 
-    @InjectView(R.id.apply_time)
+    @BindView(R.id.apply_time)
     TextView mApplyTimeTv;
-    @InjectView(R.id.name)
+    @BindView(R.id.name)
     TextView mNameTv;
-    @InjectView(R.id.id_card_tv)
+    @BindView(R.id.id_card_tv)
     TextView mIdCardTv;
-    @InjectView(R.id.tel_tv)
+    @BindView(R.id.tel_tv)
     TextView mTelTv;
-    @InjectView(R.id.item_wx_pay)
+    @BindView(R.id.item_wx_pay)
     MasterItemView mWxPayItemView;
-    @InjectView(R.id.total_price_tv)
+    @BindView(R.id.total_price_tv)
     TextView mPriceTv;
-    @InjectView(R.id.ins_num_tv)
+    @BindView(R.id.ins_num_tv)
     TextView mInsNumTv;
 
 
@@ -62,7 +64,7 @@ public class DrivingTestInsPayActivity extends BaseActivity<DrivingTestInsPayMod
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_driving_test_ins_reviews);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initViewModel();
         initView();
@@ -138,7 +140,7 @@ public class DrivingTestInsPayActivity extends BaseActivity<DrivingTestInsPayMod
     }
 
     private void refresh() {
-        Subscription subscription = mViewModel.getOrder()
+        Disposable subscription = mViewModel.getOrder()
                 .subscribe(this::onNext, e -> showErrorView());
         addSubscription(subscription);
     }

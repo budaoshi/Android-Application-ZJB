@@ -2,7 +2,6 @@ package com.idrv.coach.data.model;
 
 import android.text.TextUtils;
 
-import com.google.gson.JsonSyntaxException;
 import com.idrv.coach.bean.DrivingTestIns;
 import com.idrv.coach.bean.DrivingTestInsDetail;
 import com.idrv.coach.bean.DrivingTestInsurance;
@@ -22,9 +21,9 @@ import com.zjb.volley.utils.GsonUtil;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
 
@@ -66,21 +65,18 @@ public class DrivingTestInsModel extends BaseModel {
     public boolean checkUserInfoInValid() {
         String userJson = PreferenceUtil.getString(SPConstant.KEY_USER);
         User mUser;
-        try {
-            if (!TextUtils.isEmpty(userJson)) {
-                mUser = GsonUtil.fromJson(userJson, User.class);
+        if (!TextUtils.isEmpty(userJson)) {
+            mUser = GsonUtil.fromJson(userJson, User.class);
 
-                String tel = mUser.getPhone();
+            String tel = mUser.getPhone();
 
-                if (!TextUtils.isEmpty(tel)) {
-                    return false;
-                }
-            } else {
-                return true;
+            if (!TextUtils.isEmpty(tel)) {
+                return false;
             }
-        } catch (JsonSyntaxException e) {
-            e.printStackTrace();
+        } else {
+            return true;
         }
+
         return true;
     }
 
@@ -90,10 +86,10 @@ public class DrivingTestInsModel extends BaseModel {
      * @param clearAdapter
      * @return
      */
-    public Observable<List<DrivingTestInsurance>> refresh(Action0 clearAdapter) {
+    public Observable<List<DrivingTestInsurance>> refresh(Action clearAdapter) {
         currentPage = 0;
         return request()
-                .doOnNext(__ -> clearAdapter.call());
+                .doOnNext(__ -> clearAdapter.run());
     }
 
     public Observable<List<DrivingTestInsurance>> loadMore() {

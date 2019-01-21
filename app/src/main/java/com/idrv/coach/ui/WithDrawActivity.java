@@ -21,11 +21,13 @@ import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/10
@@ -34,13 +36,13 @@ import rx.android.schedulers.AndroidSchedulers;
  * @author sunjianfei
  */
 public class WithDrawActivity extends BaseActivity<WithDrawModel> implements View.OnClickListener {
-    @InjectView(R.id.item_bank_name)
+    @BindView(R.id.item_bank_name)
     InputItemView mBankNameItemView;
-    @InjectView(R.id.item_bank_num)
+    @BindView(R.id.item_bank_num)
     InputItemView mBankNumItemView;
-    @InjectView(R.id.money_sum_edit)
+    @BindView(R.id.money_sum_edit)
     ClearEditText mMoneySumEditTv;
-    @InjectView(R.id.balance_tv)
+    @BindView(R.id.balance_tv)
     TextView mBalanceTv;
 
 
@@ -55,7 +57,7 @@ public class WithDrawActivity extends BaseActivity<WithDrawModel> implements Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_withdraw);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initView();
         initViewModel();
@@ -132,7 +134,7 @@ public class WithDrawActivity extends BaseActivity<WithDrawModel> implements Vie
     }
 
     private void getData() {
-        Subscription subscription = mViewModel.getCommission()
+        Disposable subscription = mViewModel.getCommission()
                 .subscribe(this::onNext, __ -> showErrorView());
         addSubscription(subscription);
     }

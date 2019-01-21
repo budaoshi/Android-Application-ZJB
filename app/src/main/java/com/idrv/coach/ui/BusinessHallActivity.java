@@ -21,10 +21,12 @@ import com.idrv.coach.utils.ScrollUtils;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/14
@@ -35,9 +37,9 @@ import rx.Subscription;
 public class BusinessHallActivity extends BaseActivity<BusinessHallModel> {
     public static final String KEY_FIRST_USE_BUSINESS = "first_use_business";
 
-    @InjectView(R.id.business_recycler_view)
+    @BindView(R.id.business_recycler_view)
     RecyclerView mRecyclerView;
-    @InjectView(R.id.title_bar_layout)
+    @BindView(R.id.title_bar_layout)
     View mTitleBarLayout;
 
     private TextView mSumNumTv;
@@ -58,7 +60,7 @@ public class BusinessHallActivity extends BaseActivity<BusinessHallModel> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_business_hall);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initView();
         initViewModel();
     }
@@ -124,7 +126,7 @@ public class BusinessHallActivity extends BaseActivity<BusinessHallModel> {
     }
 
     private void refresh() {
-        Subscription subscription = mViewModel.getBusinessHall()
+        Disposable subscription = mViewModel.getBusinessHall()
                 .subscribe(this::onNext, this::onError, this::showContentView);
         addSubscription(subscription);
     }

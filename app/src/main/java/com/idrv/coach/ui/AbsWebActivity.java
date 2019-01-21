@@ -35,9 +35,8 @@ import com.zjb.volley.utils.GsonUtil;
 
 import org.json.JSONObject;
 
-import butterknife.InjectView;
-import butterknife.Optional;
-import rx.android.schedulers.AndroidSchedulers;
+import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * time:2016/7/15
@@ -52,11 +51,9 @@ public abstract class AbsWebActivity<ViewModel> extends BaseActivity<ViewModel> 
     protected WebParamBuilder mParamBuilder;
     private String mWxPrePayId;
 
-    @Optional
-    @InjectView(R.id.web_view)
+    @BindView(R.id.web_view)
     public ProgressWebView mWebView;
-    @Optional
-    @InjectView(R.id.progress_bar)
+    @BindView(R.id.progress_bar)
     public ProgressBar mProgressBar;
 
 

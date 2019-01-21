@@ -44,13 +44,15 @@ import com.idrv.coach.utils.helper.ViewUtils;
 import com.idrv.coach.wxapi.WXEntryActivity;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/6/3
@@ -59,15 +61,15 @@ import rx.android.schedulers.AndroidSchedulers;
  * @author sunjianfei
  */
 public class MyWebSiteActivity extends BaseActivity<WebSiteModel> implements View.OnClickListener {
-    @InjectView(R.id.list_view)
+    @BindView(R.id.list_view)
     ListView mListView;
-    @InjectView(R.id.refresh_layout)
+    @BindView(R.id.refresh_layout)
     public SwipeRefreshLayout mRefreshLayout;
-    @InjectView(R.id.title_tv)
+    @BindView(R.id.title_tv)
     TextView mTitleTv;
-    @InjectView(R.id.bottom_layout)
+    @BindView(R.id.bottom_layout)
     View mBottomLayout;
-    @InjectView(R.id.right_share)
+    @BindView(R.id.right_share)
     ImageView mRightShareBtn;
 
     CheckProfileDialog mCheckProfileDialog;
@@ -113,7 +115,7 @@ public class MyWebSiteActivity extends BaseActivity<WebSiteModel> implements Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_my_web_site);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initViewModel();
         initView();
         registerEvent();
@@ -284,7 +286,7 @@ public class MyWebSiteActivity extends BaseActivity<WebSiteModel> implements Vie
     }
 
     private void refresh() {
-        Subscription subscription = mViewModel.refresh()
+        Disposable subscription = mViewModel.refresh()
                 .subscribe(this::onRefreshNext, this::onError, this::onComplete);
         addSubscription(subscription);
     }
@@ -293,7 +295,7 @@ public class MyWebSiteActivity extends BaseActivity<WebSiteModel> implements Vie
      * 加载更多
      */
     private void loadMore() {
-        Subscription subscription = null;
+        Disposable subscription = null;
         switch (currentTag) {
             case TAG_PHOTO:
                 subscription = mViewModel.loadPhoto()
@@ -317,7 +319,7 @@ public class MyWebSiteActivity extends BaseActivity<WebSiteModel> implements Vie
         //先通知首页增加打广告的次数
         RxBusManager.post(EventConstant.KEY_NEWS_OR_WEBSITE_SHARE_COMPLETE, "");
         //回调服务器
-        Subscription subscription = mViewModel.shareComplete()
+        Disposable subscription = mViewModel.shareComplete()
                 .subscribe(Logger::e, Logger::e);
         addSubscription(subscription);
     }
@@ -326,7 +328,7 @@ public class MyWebSiteActivity extends BaseActivity<WebSiteModel> implements Vie
         Picture picture = mPhotoAdapter.getResources().remove(pos);
         mPhotoAdapter.setData(WebSitePage.changePhoto(mPhotoAdapter.getResources()));
         mPhotoAdapter.notifyDataSetChanged();
-        Subscription subscription = mViewModel.photoDelete(picture.getId())
+        Disposable subscription = mViewModel.photoDelete(picture.getId())
                 .subscribe(this::onPhotoDeleteSuccess, Logger::e);
         addSubscription(subscription);
 

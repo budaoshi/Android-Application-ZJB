@@ -19,7 +19,7 @@
 //import java.util.List;
 //
 //import butterknife.ButterKnife;
-//import butterknife.InjectView;
+//import butterknife.BindView;
 //import butterknife.OnClick;
 //import rx.Subscription;
 //import rx.android.schedulers.AndroidSchedulers;
@@ -31,9 +31,9 @@
 // * @author sunjianfei
 // */
 //public class AlbumActivity extends BaseActivity<AlbumModel> implements View.OnClickListener {
-//    @InjectView(R.id.album_mine)
+//    @BindView(R.id.album_mine)
 //    AlbumItemLayout mAlbumViewMine;
-//    @InjectView(R.id.album_student)
+//    @BindView(R.id.album_student)
 //    AlbumItemLayout mAlbumViewStudent;
 //
 //    boolean hasShow = false;
@@ -47,7 +47,7 @@
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.act_my_album);
-//        ButterKnife.inject(this);
+//        ButterKnife.bind(this);
 //        initToolBar();
 //        initViewModel();
 //        registerEvent();

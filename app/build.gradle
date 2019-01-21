@@ -1,18 +1,18 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
+//apply plugin: 'me.tatarka.retrolambda'
 
 def releaseTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getDefault())
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "com.idrv.coach"
         minSdkVersion 14
-        targetSdkVersion 24
+        targetSdkVersion 27
         versionCode 400
         versionName "4.0.0"
     }
@@ -67,41 +67,57 @@ android {
         }
     }
 
+    flavorDimensions "default"
     productFlavors {
-        alpha {}
         //360渠道
-        _360 {}
+        qh360 {
+            dimension "default"
+        }
         //小米渠道
-        xiaomi {}
+        xiaomi {
+            dimension "default"
+        }
         //豌豆荚
-        wandoujia {}
-        oppo {}
+        wandoujia {
+            dimension "default"
+        }
+        oppo {
+            dimension "default"
+        }
         //应用宝
-        yingyongbao {}
+        yingyongbao {
+            dimension "default"
+        }
         //魅族
-        meizu {}
-        vivo {}
+        meizu {
+            dimension "default"
+        }
+        vivo {
+            dimension "default"
+        }
         //华为
-        huawei {}
+        huawei {
+            dimension "default"
+        }
     }
 
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [TD_CHANNEL_ID: flavor.name]
     }
 
-    applicationVariants.all {
-        variant ->
-            variant.outputs.each {
-                output ->
-                    def outputFile = output.outputFile
-                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        def flavorName = variant.productFlavors.get(0).name;
-                        def developV = variant.buildType.name;
-                        def fileName = "zjb_v${defaultConfig.versionName}_${flavorName}_${releaseTime()}_${developV}.apk"
-                        output.outputFile = new File(outputFile.parent, fileName)
-                    }
-            }
-    }
+//    applicationVariants.all {
+//        variant ->
+//            variant.outputs.each {
+//                output ->
+//                    def outputFile = output.outputFile
+//                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+//                        def flavorName = variant.productFlavors.get(0).name
+//                        def developV = variant.buildType.name;
+//                        def fileName = "zjb_v${defaultConfig.versionName}_${flavorName}_${releaseTime()}_${developV}.apk"
+//                        output.outputFile = new File(outputFile.parent, fileName)
+//                    }
+//            }
+//    }
 
     compileOptions {
         encoding "UTF-8"
@@ -132,26 +148,27 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.android.support:cardview-v7:24.1.1'
-    compile 'com.android.support:recyclerview-v7:24.1.1'
-    compile project(':extras:zjb-image-loader')
-    compile project(':extras:zjb-sync-volley')
-    compile project(':extras:zjb-mp3recorder')
-    compile project(':extras:zjb-js-bridge')
-    compile 'io.reactivex:rxjava:1.0.14'
-    compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'com.jakewharton:butterknife:5.1.1'
-    compile 'com.android.support:design:24.1.1'
-    compile 'com.joooonho:selectableroundedimageview:1.0.1'
-    compile 'com.commit451:PhotoView:1.2.5'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation project(':extras:zjb-image-loader')
+    implementation project(':extras:zjb-sync-volley')
+    implementation project(':extras:zjb-mp3recorder')
+    implementation project(':extras:zjb-js-bridge')
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.joooonho:selectableroundedimageview:1.0.1'
+    implementation 'com.commit451:PhotoView:1.2.5'
     // 年份选择器aar canvas画的，该库20k大小
-    compile(name: 'wheellib-release', ext: 'aar')
+    implementation(name: 'wheellib-release', ext: 'aar')
     // 七牛上传
-    compile 'com.qiniu:qiniu-android-sdk:7.1.2'
-    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
-    compile 'com.soundcloud.android:android-crop:1.0.1@aar'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    implementation 'com.qiniu:qiniu-android-sdk:7.3.13'
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+    implementation 'com.soundcloud.android:android-crop:1.0.1@aar'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
 }

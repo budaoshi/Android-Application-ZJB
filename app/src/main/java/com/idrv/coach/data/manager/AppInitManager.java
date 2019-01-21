@@ -3,6 +3,7 @@ package com.idrv.coach.data.manager;
 import android.Manifest;
 import android.content.Context;
 import android.os.Build;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 
 import com.idrv.coach.BuildConfig;
@@ -19,7 +20,7 @@ import com.idrv.coach.utils.FileUtil;
 import com.idrv.coach.utils.Logger;
 import com.idrv.coach.utils.PreferenceUtil;
 import com.idrv.coach.utils.SystemUtil;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tendcloud.tenddata.TCAgent;
 import com.zjb.loader.ZjbImageLoader;
 import com.zjb.loader.internal.utils.L;
@@ -55,8 +56,6 @@ public class AppInitManager {
         if (mIsInitialized) return;
         //1.标志位
         mIsInitialized = true;
-        //1.先申请权限
-        requestPermission(context);
         //1.初始化 Logger（Logger的初始化要放在ZJB-volley的前面)
         Logger.initLog(BuildConfig.DEBUG_ENABLE, FileUtil.getPathByType(FileUtil.DIR_TYPE_LOG));
         //2.初始化ImageLoader
@@ -181,8 +180,8 @@ public class AppInitManager {
      *
      * @param context
      */
-    private void openPhoneStatePerMission(Context context) {
-        RxPermissions.getInstance(context)
+    private void openPhoneStatePerMission(FragmentActivity context) {
+        new RxPermissions(context)
                 .request(Manifest.permission.READ_PHONE_STATE)
                 .subscribe(granted -> {
                     if (granted) {
@@ -200,8 +199,8 @@ public class AppInitManager {
     /**
      * 申请定位权限
      */
-    private void openLocationPermission(Context context) {
-        RxPermissions.getInstance(context)
+    private void openLocationPermission(FragmentActivity context) {
+        new RxPermissions(context)
                 .request(Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION)
                 .subscribe(granted -> {
@@ -213,7 +212,8 @@ public class AppInitManager {
                 }, Logger::e);
     }
 
-    private void requestPermission(Context context) {
+    //TODO 申请权限
+    public void requestPermission(FragmentActivity context) {
         openPhoneStatePerMission(context);
         openLocationPermission(context);
     }

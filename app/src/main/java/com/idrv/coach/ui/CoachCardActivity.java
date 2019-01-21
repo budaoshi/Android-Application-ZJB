@@ -38,7 +38,7 @@
 //import java.io.File;
 //
 //import butterknife.ButterKnife;
-//import butterknife.InjectView;
+//import butterknife.BindView;
 //import butterknife.OnClick;
 //import rx.Subscription;
 //
@@ -54,9 +54,9 @@
 // */
 //public class CoachCardActivity extends BaseActivity<QrCodeCoachCardModel> {
 //
-//    @InjectView(R.id.coachCard_img)
+//    @BindView(R.id.coachCard_img)
 //    ImageView mImageView;
-//    @InjectView(R.id.coachCard_bt)
+//    @BindView(R.id.coachCard_bt)
 //    Button mButton;
 //
 //
@@ -74,7 +74,7 @@
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.act_coach_card);
-//        ButterKnife.inject(this);
+//        ButterKnife.bind(this);
 //
 //        // 1.初始化ViewModel
 //        mViewModel = new QrCodeCoachCardModel();

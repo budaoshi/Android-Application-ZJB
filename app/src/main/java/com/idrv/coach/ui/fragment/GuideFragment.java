@@ -13,7 +13,7 @@ import com.idrv.coach.ui.LoginActivity;
 import com.idrv.coach.utils.PreferenceUtil;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/3/8
@@ -24,9 +24,9 @@ import butterknife.InjectView;
 public class GuideFragment extends BaseFragment {
     private static final String KEY_RES_ID = "key_res_id";
     private static final String KEY_LAST_PAGE = "key_last_page";
-    @InjectView(R.id.guide_img)
+    @BindView(R.id.guide_img)
     ImageView mImageView;
-    @InjectView(R.id.guide_btn)
+    @BindView(R.id.guide_btn)
     Button mButton;
 
     int resId;
@@ -60,7 +60,7 @@ public class GuideFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         mImageView.setImageResource(resId);
         mButton.setVisibility(isLastPage ? View.VISIBLE : View.GONE);
         mButton.setOnClickListener(v -> {

@@ -21,7 +21,7 @@ import com.idrv.coach.utils.PixelUtil;
 import com.zjb.loader.ZjbImageLoader;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/3/14
@@ -83,14 +83,14 @@ public class BusinessHallAdapter extends AbsRecycleAdapter<BusinessHall, Recycle
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.image)
+        @BindView(R.id.image)
         ImageView mTopIv;
-        @InjectView(R.id.text)
+        @BindView(R.id.text)
         TextView mBottomTv;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
             ViewGroup.LayoutParams lp = itemView.getLayoutParams();
             lp.height = ITEM_HEIGHT;
         }

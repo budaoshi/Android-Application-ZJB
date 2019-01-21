@@ -14,9 +14,11 @@ import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/6/2
@@ -38,7 +40,7 @@ public class CreateWebSiteActivity extends BaseActivity<CreateWebSiteModel> impl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_create_web_site);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initViewModel();
     }
@@ -73,21 +75,21 @@ public class CreateWebSiteActivity extends BaseActivity<CreateWebSiteModel> impl
     }
 
     private void refresh() {
-        Subscription subscription = mViewModel.getPicNum()
+        Disposable subscription = mViewModel.getPicNum()
                 .subscribe(__ -> {
                 }, __ -> showErrorView(), this::getShareDays);
         addSubscription(subscription);
     }
 
     private void getShareDays() {
-        Subscription subscription = mViewModel.getContinuousShareDays()
+        Disposable subscription = mViewModel.getContinuousShareDays()
                 .subscribe(__ -> {
                 }, __ -> showErrorView(), this::showContentView);
         addSubscription(subscription);
     }
 
     private void createWebSite() {
-        Subscription subscription = mViewModel.createWebSite()
+        Disposable subscription = mViewModel.createWebSite()
                 .subscribe(this::onNext, this::onError);
         addSubscription(subscription);
     }

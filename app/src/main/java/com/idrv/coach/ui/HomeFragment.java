@@ -41,12 +41,14 @@ import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.loader.ZjbImageLoader;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/8/1
@@ -57,15 +59,15 @@ import rx.android.schedulers.AndroidSchedulers;
 public class HomeFragment extends BaseFragment<HomePageModel> {
     public static final String KEY_FIRST_USE_HOME_PAGE = "first_use_home_page";
 
-    @InjectView(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    @InjectView(R.id.refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @InjectView(R.id.use_time_tv)
+    @BindView(R.id.use_time_tv)
     TextView mUseTimeTv;
-    @InjectView(R.id.header_layout)
+    @BindView(R.id.header_layout)
     FrameLayout mHeaderLayout;
-    @InjectView(R.id.main_layout)
+    @BindView(R.id.main_layout)
     FrameLayout mMainLayout;
 
     HomeAdapter mAdapter;
@@ -89,7 +91,7 @@ public class HomeFragment extends BaseFragment<HomePageModel> {
 
     @Override
     public void initView(View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         mAdapter = new HomeAdapter();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -153,10 +155,10 @@ public class HomeFragment extends BaseFragment<HomePageModel> {
      */
     private void getPopAdv() {
         //1.先从本地获取缓存
-        Subscription cacheSubscription = mViewModel.getAdvCache()
+        Disposable cacheSubscription = mViewModel.getAdvCache()
                 .subscribe(__ -> Logger.e("success"), Logger::e);
         //2.然后再从服务器获取最新的广告数据
-        Subscription subscription = mViewModel.getPopAdv()
+        Disposable subscription = mViewModel.getPopAdv()
                 .subscribe(__ -> Logger.e("success"), Logger::e);
         addSubscription(cacheSubscription);
         addSubscription(subscription);
@@ -166,7 +168,7 @@ public class HomeFragment extends BaseFragment<HomePageModel> {
      * 获取列表缓存数据
      */
     private void getHomePageCache() {
-        Subscription subscription = mViewModel.getHomePageCache()
+        Disposable subscription = mViewModel.getHomePageCache()
                 .doOnTerminate(this::onCacheComplete)
                 .subscribe(this::onNext, Logger::e);
         addSubscription(subscription);
@@ -176,7 +178,7 @@ public class HomeFragment extends BaseFragment<HomePageModel> {
      * 拉去最新的列表数据
      */
     private void refresh() {
-        Subscription subscription = mViewModel.refresh()
+        Disposable subscription = mViewModel.refresh()
                 .doOnTerminate(() -> {
                     //延迟一秒关闭,防止关闭太快.看着很奇怪
                     new Handler().postDelayed(() -> mSwipeRefreshLayout.setRefreshing(false), 1000);
@@ -189,7 +191,7 @@ public class HomeFragment extends BaseFragment<HomePageModel> {
      * 拉取历史记录
      */
     private void loadHistory() {
-        Subscription subscription = mViewModel.loadHistory()
+        Disposable subscription = mViewModel.loadHistory()
                 .doOnTerminate(() -> mSwipeRefreshLayout.setRefreshing(false))
                 .subscribe(this::onLoadHistoryNext, Logger::e);
         addSubscription(subscription);
@@ -259,7 +261,7 @@ public class HomeFragment extends BaseFragment<HomePageModel> {
      */
     private void onNewMessage(Message message) {
         //更新缓存
-        Subscription subscription = mViewModel.updateMessageCache(message)
+        Disposable subscription = mViewModel.updateMessageCache(message)
                 .subscribe(date -> {
                 }, Logger::e);
         addSubscription(subscription);

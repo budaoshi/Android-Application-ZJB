@@ -21,7 +21,7 @@ import com.zjb.volley.utils.GsonUtil;
 import java.util.Calendar;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time: 2016/3/25
@@ -32,11 +32,11 @@ import butterknife.InjectView;
  */
 public class UserInfoAddressActivity extends BaseActivity implements MasterItemView.OnMasterItemClickListener{
 
-    @InjectView(R.id.item_address_driveSchool)
+    @BindView(R.id.item_address_driveSchool)
     MasterItemView mDriveSchoolItemView;
-    @InjectView(R.id.item_address_testSite)
+    @BindView(R.id.item_address_testSite)
     MasterItemView mTestSiteItemView;
-    @InjectView(R.id.item_address_trainSite)
+    @BindView(R.id.item_address_trainSite)
     MasterItemView mTrainSiteItemView;
 
 
@@ -53,7 +53,7 @@ public class UserInfoAddressActivity extends BaseActivity implements MasterItemV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_address);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         //1.初始化标题栏
         initToolBar();

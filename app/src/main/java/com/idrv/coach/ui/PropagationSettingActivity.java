@@ -20,12 +20,14 @@ import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/6/7
@@ -37,11 +39,11 @@ public class PropagationSettingActivity extends BaseActivity<TransmissionModel> 
     private static final String PARAM = "param";
     private static final String KEY_PRO_FIRST_USE = "pro_first_use";
 
-    @InjectView(R.id.viewpager)
+    @BindView(R.id.viewpager)
     ViewPager mViewPager;
-    @InjectView(R.id.indicator)
+    @BindView(R.id.indicator)
     CircleIndicator mCircleIndicator;
-    @InjectView(R.id.guide_image)
+    @BindView(R.id.guide_image)
     ImageView mGuideIv;
 
     public static void launch(Context context, boolean receive) {
@@ -54,7 +56,7 @@ public class PropagationSettingActivity extends BaseActivity<TransmissionModel> 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_pro_setting);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initViewModel();
     }
@@ -92,7 +94,7 @@ public class PropagationSettingActivity extends BaseActivity<TransmissionModel> 
     private void getPicNum() {
         int picNum = mViewModel.getNativePicNum();
         if (picNum == -1) {
-            Subscription subscription = mViewModel.getPicNum()
+            Disposable subscription = mViewModel.getPicNum()
                     .subscribe(__ -> {
                     }, Logger::e);
             addSubscription(subscription);
@@ -100,7 +102,7 @@ public class PropagationSettingActivity extends BaseActivity<TransmissionModel> 
     }
 
     private void refresh() {
-        Subscription subscription = mViewModel.getTransmissionModel()
+        Disposable subscription = mViewModel.getTransmissionModel()
                 .subscribe(this::initView, __ -> showErrorView(), this::showContentView);
         addSubscription(subscription);
 

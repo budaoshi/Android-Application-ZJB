@@ -21,12 +21,12 @@ import com.idrv.coach.utils.helper.UIHelper;
 import com.idrv.coach.utils.helper.ViewUtils;
 import com.zjb.loader.ZjbImageLoader;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * time:2016/7/29
@@ -35,15 +35,15 @@ import rx.schedulers.Schedulers;
  * @author sunjianfei
  */
 public class SettingsActivity extends BaseActivity implements MasterItemView.OnMasterItemClickListener {
-    @InjectView(R.id.item_clear_cache)
+    @BindView(R.id.item_clear_cache)
     MasterItemView mClearCacheItemView;
-    @InjectView(R.id.item_check_update)
+    @BindView(R.id.item_check_update)
     MasterItemView mCheckUpdateItemView;
-    @InjectView(R.id.item_manual)
+    @BindView(R.id.item_manual)
     MasterItemView mManualItemView;
-    @InjectView(R.id.item_contact_customer)
+    @BindView(R.id.item_contact_customer)
     MasterItemView mContactCustomerItemView;
-    @InjectView(R.id.item_about)
+    @BindView(R.id.item_about)
     MasterItemView mAboutItemView;
 
 
@@ -56,7 +56,7 @@ public class SettingsActivity extends BaseActivity implements MasterItemView.OnM
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_settings);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initView();
     }
@@ -128,7 +128,7 @@ public class SettingsActivity extends BaseActivity implements MasterItemView.OnM
                 e.printStackTrace();
                 subscriber.onError(e);
             } finally {
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

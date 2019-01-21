@@ -32,11 +32,11 @@ import com.zjb.loader.ZjbImageLoader;
 
 import java.io.File;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/9
@@ -45,19 +45,19 @@ import rx.android.schedulers.AndroidSchedulers;
  * @author sunjianfei
  */
 public class TaskActivity extends BaseActivity<NewsHallModel> implements View.OnClickListener {
-    @InjectView(R.id.task_slogan)
+    @BindView(R.id.task_slogan)
     ImageView mSloganIv;
-    @InjectView(R.id.oneTask11_card_view)
+    @BindView(R.id.oneTask11_card_view)
     CardView mCardView;
-    @InjectView(R.id.oneTask11_timeDown)
+    @BindView(R.id.oneTask11_timeDown)
     TimeDownHour mTimeDownHour;
-    @InjectView(R.id.oneTask11_shareBt)
+    @BindView(R.id.oneTask11_shareBt)
     Button mShareBtn;
-    @InjectView(R.id.oneTask11_description)
+    @BindView(R.id.oneTask11_description)
     ImageView mDescribeIv;
-    @InjectView(R.id.oneTask11_img)
+    @BindView(R.id.oneTask11_img)
     SelectableRoundedImageView mRoundedIv;
-    @InjectView(R.id.oneTask11_descTv)
+    @BindView(R.id.oneTask11_descTv)
     TextView mDescTv;
 
     PopupWindow mPopupWindow;
@@ -71,7 +71,7 @@ public class TaskActivity extends BaseActivity<NewsHallModel> implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_task);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initModel();
     }
 
@@ -138,7 +138,7 @@ public class TaskActivity extends BaseActivity<NewsHallModel> implements View.On
      * 获取缓存
      */
     private void getCache() {
-        Subscription subscription = mViewModel.getTaskCache()
+        Disposable subscription = mViewModel.getTaskCache()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onNext, this::onCacheError, this::onCacheComplete);
         addSubscription(subscription);
@@ -148,7 +148,7 @@ public class TaskActivity extends BaseActivity<NewsHallModel> implements View.On
      * 获取最新任务
      */
     private void refresh() {
-        Subscription subscription = mViewModel.getNewTask()
+        Disposable subscription = mViewModel.getNewTask()
                 .subscribe(this::onNext, this::onRefreshError, this::showContentView);
         addSubscription(subscription);
     }

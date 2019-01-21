@@ -13,8 +13,8 @@ import com.zjb.volley.core.request.RequestBuilder;
 import com.zjb.volley.core.response.HttpResponse;
 import com.zjb.volley.utils.GsonUtil;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
 
@@ -27,7 +27,7 @@ import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
 public class AvatarModel extends UpLoadModel {
 
     // 缓存老的图片链接，如果上传失败了，就显示这个
-    public String gAvatarUrl ;
+    public String gAvatarUrl;
     // 记录屏幕的宽度
     public int gScreenHeight;
 
@@ -58,6 +58,7 @@ public class AvatarModel extends UpLoadModel {
                 })
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
     /**
      * 保存个人基本信息:头像
      *

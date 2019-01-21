@@ -13,7 +13,7 @@ import com.idrv.coach.R;
 import com.idrv.coach.utils.helper.UIHelper;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/7/14
@@ -22,13 +22,13 @@ import butterknife.InjectView;
  * @author sunjianfei
  */
 public class EditInputDialog extends Dialog {
-    @InjectView(R.id.cancel_btn)
+    @BindView(R.id.cancel_btn)
     TextView mCancelBtn;
-    @InjectView(R.id.save_btn)
+    @BindView(R.id.save_btn)
     TextView mSaveBtn;
-    @InjectView(R.id.edit_text)
+    @BindView(R.id.edit_text)
     EditText mEditText;
-    @InjectView(R.id.largest_length_tv)
+    @BindView(R.id.largest_length_tv)
     TextView mMaxLengthTv;
 
     OnSaveListener mListener;
@@ -41,7 +41,7 @@ public class EditInputDialog extends Dialog {
         setContentView(R.layout.vw_poster_edit_dialog);
         setCanceledOnTouchOutside(false);
         setCancelable(true);
-        ButterKnife.inject(this, this);
+        ButterKnife.bind(this, this);
 
         //设置限制长度
         mMaxLengthTv.setText(getContext().getString(R.string.the_largest_text_length, maxInputLength));

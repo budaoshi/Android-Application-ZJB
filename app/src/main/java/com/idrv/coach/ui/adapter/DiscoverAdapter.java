@@ -30,7 +30,7 @@ import com.idrv.coach.utils.helper.ViewUtils;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.Optional;
 
 /**
@@ -146,24 +146,24 @@ public class DiscoverAdapter extends AbsRecycleAdapter<DiscoverItem, RecyclerVie
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        @Optional
-        @InjectView(R.id.discover_viewpager)
+
+        @BindView(R.id.discover_viewpager)
         LoopViewPager mViewPager;
-        @Optional
-        @InjectView(R.id.default_iv)
+
+        @BindView(R.id.default_iv)
         ImageView mDefaultIv;
-        @Optional
-        @InjectView(R.id.title_tv)
+
+        @BindView(R.id.title_tv)
         TextView mTitleTv;
-        @InjectView(R.id.grid_view)
+        @BindView(R.id.grid_view)
         DiscoverGirdLayout mImageGridLayout;
-        @Optional
-        @InjectView(R.id.bottom_view)
+
+        @BindView(R.id.bottom_view)
         View mBottomView;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

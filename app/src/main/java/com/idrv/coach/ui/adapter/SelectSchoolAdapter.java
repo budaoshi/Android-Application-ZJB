@@ -10,7 +10,7 @@ import com.idrv.coach.R;
 import com.idrv.coach.utils.ValidateUtil;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.Optional;
 
 /**
@@ -87,13 +87,13 @@ public class SelectSchoolAdapter extends AbsRecycleAdapter<String, SelectSchoolA
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
-        @Optional
-        @InjectView(R.id.city_name_tv)
+
+        @BindView(R.id.city_name_tv)
         TextView mSchoolNameTv;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

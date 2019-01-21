@@ -10,7 +10,7 @@ import com.idrv.coach.R;
 import com.zjb.loader.ZjbImageLoader;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -23,7 +23,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 public class PhotoReviewFragment extends BaseFragment {
     private static final String KEY_IMAGE_URL = "url";
 
-    @InjectView(R.id.image_view)
+    @BindView(R.id.image_view)
     PhotoView mImageView;
 
     public static PhotoReviewFragment newInstance(String url) {
@@ -41,7 +41,7 @@ public class PhotoReviewFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         Bundle bundle = getArguments();
         String url = bundle.getString(KEY_IMAGE_URL);
 

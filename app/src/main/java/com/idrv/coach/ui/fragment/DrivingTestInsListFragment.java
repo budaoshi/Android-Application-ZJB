@@ -22,13 +22,15 @@ import com.idrv.coach.utils.ValidateUtil;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/8/18
@@ -37,9 +39,9 @@ import rx.android.schedulers.AndroidSchedulers;
  * @author sunjianfei
  */
 public class DrivingTestInsListFragment extends BaseFragment<DrivingTestInsModel> {
-    @InjectView(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    @InjectView(R.id.refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     private DrivingTestInsListAdapter mAdapter;
@@ -51,7 +53,7 @@ public class DrivingTestInsListFragment extends BaseFragment<DrivingTestInsModel
 
     @Override
     public void initView(View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         mAdapter = new DrivingTestInsListAdapter();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -106,13 +108,13 @@ public class DrivingTestInsListFragment extends BaseFragment<DrivingTestInsModel
     }
 
     private void refresh() {
-        Subscription subscription = mViewModel.refresh(mAdapter::clear)
+        Disposable subscription = mViewModel.refresh(mAdapter::clear)
                 .subscribe(this::onRefreshNext, this::onError, this::onComplete);
         addSubscription(subscription);
     }
 
     private void loadMore() {
-        Subscription subscription = mViewModel.loadMore()
+        Disposable subscription = mViewModel.loadMore()
                 .subscribe(this::onLoadMoreNext, this::onError, this::onComplete);
         addSubscription(subscription);
     }

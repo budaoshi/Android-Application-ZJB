@@ -22,17 +22,19 @@ import com.idrv.coach.utils.PreferenceUtil;
 import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.idrv.coach.utils.helper.ViewUtils;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zjb.volley.core.exception.NetworkError;
 import com.zjb.volley.utils.GsonUtil;
 
+import org.reactivestreams.Subscription;
+
 import java.io.File;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/8/19
@@ -42,11 +44,11 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class CoachAuthenticationActivity extends BaseActivity<CoachAuthModel>
         implements SelectPhotoDialog.OnButtonClickListener {
-    @InjectView(R.id.coach_card_iv)
+    @BindView(R.id.coach_card_iv)
     ImageView mCoachCardIv;
-    @InjectView(R.id.id_card_iv)
+    @BindView(R.id.id_card_iv)
     ImageView mIDCardIv;
-    @InjectView(R.id.auth_failed_tv)
+    @BindView(R.id.auth_failed_tv)
     TextView mAuthFailedTv;
 
     private SelectPhotoDialog mDialog;
@@ -60,7 +62,7 @@ public class CoachAuthenticationActivity extends BaseActivity<CoachAuthModel>
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_coach_authentication);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initViewModel();
     }
@@ -103,7 +105,7 @@ public class CoachAuthenticationActivity extends BaseActivity<CoachAuthModel>
      * 先申请权限,再打开相机
      */
     private void openCamera() {
-        RxPermissions.getInstance(this)
+        new RxPermissions(this)
                 .request(Manifest.permission.CAMERA,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(granted -> {
@@ -136,7 +138,7 @@ public class CoachAuthenticationActivity extends BaseActivity<CoachAuthModel>
     private void uploadImage(String filePath) {
         showProgressDialog(R.string.upload_photo_now);
         //1.压缩图片
-        Subscription subscription = mViewModel.resizeImage(filePath, 600)
+        Disposable subscription = mViewModel.resizeImage(filePath, 600)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::getQiNiuToken, this::onError);
         addSubscription(subscription);
@@ -150,7 +152,7 @@ public class CoachAuthenticationActivity extends BaseActivity<CoachAuthModel>
     private void getQiNiuToken(String filePath) {
         mViewModel.setQiNiuFilePath(filePath);
         //2.获取token
-        Subscription subscription = mViewModel.getToken()
+        Disposable subscription = mViewModel.getToken()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(__ -> uploadToQiNiu(), this::onError);
         addSubscription(subscription);
@@ -175,7 +177,7 @@ public class CoachAuthenticationActivity extends BaseActivity<CoachAuthModel>
      */
     private void authentication() {
         showProgressDialog(R.string.commit_now);
-        Subscription subscription = mViewModel.authentication()
+        Disposable subscription = mViewModel.authentication()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onAuthenticationNext, this::onUploadFailed);
         addSubscription(subscription);

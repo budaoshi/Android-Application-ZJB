@@ -26,10 +26,10 @@ import com.zjb.volley.utils.NetworkUtil;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/6/12
@@ -38,26 +38,26 @@ import rx.Subscription;
  * @author sunjianfei
  */
 public class CreateWebSiteSuccessActivity extends BaseActivity<CreateWebSiteModel> {
-    @InjectView(R.id.avatar)
+    @BindView(R.id.avatar)
     ImageView mAvatarIv;
-    @InjectView(R.id.nick_name)
+    @BindView(R.id.nick_name)
     TextView mNickNameTv;
-    @InjectView(R.id.teach_age)
+    @BindView(R.id.teach_age)
     TextView mTeachAgeTv;
-    @InjectView(R.id.school)
+    @BindView(R.id.school)
     TextView mSchoolTv;
-    @InjectView(R.id.same_school)
+    @BindView(R.id.same_school)
     TextView mSameSchoolTv;
-    @InjectView(R.id.grid_view)
+    @BindView(R.id.grid_view)
     ImageGridLayout mGridLayout;
 
-    @InjectView(R.id.recommend_tv)
+    @BindView(R.id.recommend_tv)
     View mRecommendTv;
-    @InjectView(R.id.recommend_layout)
+    @BindView(R.id.recommend_layout)
     View mRecommendLayout;
-    @InjectView(R.id.btn_reviews)
+    @BindView(R.id.btn_reviews)
     TextView mBtnReviews;
-    @InjectView(R.id.btn_website)
+    @BindView(R.id.btn_website)
     TextView mBtnWebsite;
 
     public static void launch(Context context) {
@@ -69,7 +69,7 @@ public class CreateWebSiteSuccessActivity extends BaseActivity<CreateWebSiteMode
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_create_website_success);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initViewModel();
         registerEvent();
@@ -110,7 +110,7 @@ public class CreateWebSiteSuccessActivity extends BaseActivity<CreateWebSiteMode
     }
 
     public void refresh() {
-        Subscription subscription = mViewModel.getExcellentWebSite()
+        Disposable subscription = mViewModel.getExcellentWebSite()
                 .subscribe(this::initView, __ -> showErrorView(), this::onComplete);
         addSubscription(subscription);
     }

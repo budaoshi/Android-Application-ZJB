@@ -11,7 +11,7 @@ import com.idrv.coach.R;
 import com.idrv.coach.utils.helper.ViewUtils;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -22,7 +22,7 @@ import butterknife.OnClick;
  */
 public class GalleryTitleBar extends RelativeLayout {
 
-    @InjectView(R.id.image_crop_title_txt)
+    @BindView(R.id.image_crop_title_txt)
     public TextView mGalleryName;
 
     private OnClickListener mOnBackClickListener;
@@ -46,7 +46,7 @@ public class GalleryTitleBar extends RelativeLayout {
 
     private void initView() {
         inflate(getContext(), R.layout.vw_gallery_title, this);
-        ButterKnife.inject(this, this);
+        ButterKnife.bind(this, this);
     }
 
     @Override

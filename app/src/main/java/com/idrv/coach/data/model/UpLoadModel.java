@@ -13,8 +13,8 @@ import com.zjb.volley.core.response.HttpResponse;
 
 import java.io.IOException;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
 
@@ -102,7 +102,7 @@ public class UpLoadModel extends BaseModel {
      *
      * @return
      */
-    public Observable<String> resizeImage(String filePath,int size) {
+    public Observable<String> resizeImage(String filePath, int size) {
         try {
             return BitmapUtil.saveBitmapAsync(BitmapUtil.decodeSampledBitmapFromFile(filePath, size, size));
         } catch (IOException e) {

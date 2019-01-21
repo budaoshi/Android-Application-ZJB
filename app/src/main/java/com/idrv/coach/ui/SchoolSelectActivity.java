@@ -26,10 +26,10 @@ import com.zjb.volley.core.exception.NetworkError;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/5/25
@@ -40,11 +40,11 @@ import rx.android.schedulers.AndroidSchedulers;
 public class SchoolSelectActivity extends BaseActivity<SchoolModel> implements SearchSchoolAdapter.OnSchoolSelectListener {
     private static final String PARAM_CID = "cid";
 
-    @InjectView(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    @InjectView(R.id.search_recycler_view)
+    @BindView(R.id.search_recycler_view)
     RecyclerView mSearchRecyclerView;
-    @InjectView(R.id.search_edit)
+    @BindView(R.id.search_edit)
     EditText mSearchEditText;
     SelectSchoolAdapter mAdapter;
     SearchSchoolAdapter mSearchAdapter;
@@ -78,7 +78,7 @@ public class SchoolSelectActivity extends BaseActivity<SchoolModel> implements S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_school_select);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initView();
         initViewModel();
@@ -117,7 +117,7 @@ public class SchoolSelectActivity extends BaseActivity<SchoolModel> implements S
                 .canceledOnTouchOutside(false)
                 .show();
         String cid = getIntent().getStringExtra(PARAM_CID);
-        Subscription subscription = mViewModel.getSchoolList(cid)
+        Disposable subscription = mViewModel.getSchoolList(cid)
                 .subscribe(this::setUp, __ -> showErrorView(), dialog::dismiss);
         addSubscription(subscription);
     }
@@ -148,7 +148,7 @@ public class SchoolSelectActivity extends BaseActivity<SchoolModel> implements S
     private void modifyCoachSchool(final String value) {
         mProgressDialog = DialogHelper.create(DialogHelper.TYPE_PROGRESS)
                 .progressText(getString(R.string.dialog_revising)).show();
-        Subscription subscription = mViewModel.modifyCoachInfo(value)
+        Disposable subscription = mViewModel.modifyCoachInfo(value)
                 .subscribe(__ -> onNext(value), this::onError, this::dismissProgressDialog);
         addSubscription(subscription);
     }

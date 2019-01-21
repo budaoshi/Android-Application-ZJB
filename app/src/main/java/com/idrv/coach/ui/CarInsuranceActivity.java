@@ -28,7 +28,7 @@ public class CarInsuranceActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_car_insurance);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
     }
 

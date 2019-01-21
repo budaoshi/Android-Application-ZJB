@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -32,11 +32,11 @@ public class PhotoReviewActivity extends BaseActivity implements View.OnClickLis
     private static final String KEY_PAGE_NUM = "page_num";
     private static final String KEY_CAN_EDIT = "can_edit";
 
-    @InjectView(R.id.photo_viewpager)
+    @BindView(R.id.photo_viewpager)
     ViewPager mViewPager;
-    @InjectView(R.id.page_indicator)
+    @BindView(R.id.page_indicator)
     TextView mPageIndicatorTv;
-    @InjectView(R.id.photo_delete)
+    @BindView(R.id.photo_delete)
     View mBtnDelete;
 
     PhotoReviewPagerAdapter mPagerAdapter;
@@ -55,7 +55,7 @@ public class PhotoReviewActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_photo_review);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initView();
     }
 

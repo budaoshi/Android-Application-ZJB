@@ -16,9 +16,11 @@ import com.idrv.coach.utils.BitmapUtil;
 import com.idrv.coach.wxapi.WXEntryActivity;
 import com.zjb.loader.ZjbImageLoader;
 
+import org.reactivestreams.Subscription;
+
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
+import butterknife.BindView;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/6/30
@@ -27,7 +29,7 @@ import rx.Subscription;
  * @author sunjianfei
  */
 public class SpreadToolPreviewActivity extends AbsPayActivity {
-    @InjectView(R.id.bottom_btn)
+    @BindView(R.id.bottom_btn)
     TextView mBottomBtn;
 
     public static void launch(Context context, WebParamBuilder builder, SpreadTool tool) {
@@ -41,7 +43,7 @@ public class SpreadToolPreviewActivity extends AbsPayActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_spread_tool_preview);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initView();
         loadShareIcon();
     }
@@ -58,7 +60,7 @@ public class SpreadToolPreviewActivity extends AbsPayActivity {
 
     @Override
     protected void refresh() {
-        Subscription subscription = mViewModel.getCommission()
+        Disposable subscription = mViewModel.getCommission()
                 .subscribe(__ -> setBottomViewStatus(mViewModel.getTool()),
                         e -> showErrorView(), this::showContentView);
         addSubscription(subscription);

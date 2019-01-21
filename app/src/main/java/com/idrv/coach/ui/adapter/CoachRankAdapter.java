@@ -16,7 +16,7 @@ import com.idrv.coach.utils.helper.ViewUtils;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/6/23
@@ -90,12 +90,12 @@ public class CoachRankAdapter extends AbsRecycleAdapter<Rank, RecyclerView.ViewH
     }
 
     class DefaultViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.rank_item)
+        @BindView(R.id.rank_item)
         RankItemLayout mRankItemLayout;
 
         public DefaultViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

@@ -18,7 +18,7 @@ import com.idrv.coach.utils.helper.UIHelper;
 import java.util.Calendar;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -35,7 +35,7 @@ public class UserTextDialog extends Dialog {
 
     private OnDialogSure mInterface;
 
-    @InjectView(R.id.dialogUserText_edit)
+    @BindView(R.id.dialogUserText_edit)
     EditText mEditText;
 
     private String hintTextStr;
@@ -79,7 +79,7 @@ public class UserTextDialog extends Dialog {
         getWindow().setAttributes(lp);
         getWindow().setContentView(view);
         setCancelable(false);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     /**

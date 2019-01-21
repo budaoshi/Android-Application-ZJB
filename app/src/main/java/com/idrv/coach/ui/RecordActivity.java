@@ -24,7 +24,7 @@ import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tencent.open.utils.Util;
 import com.zjb.loader.internal.utils.L;
 import com.zjb.volley.core.exception.NetworkError;
@@ -37,10 +37,10 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time: 2016/3/28
@@ -57,19 +57,19 @@ public class RecordActivity extends BaseActivity<RecordModel> implements Recorde
     private PlayerUtil mPlayerUtil;
     private TimeCount timer;
 
-    @InjectView(R.id.record_longBt)
+    @BindView(R.id.record_longBt)
     RecorderClickBt mRecorderLongBt;
-    @InjectView(R.id.record_recordLayout)
+    @BindView(R.id.record_recordLayout)
     RecordLayout mRecordLayout;
-    @InjectView(R.id.record_voice)
+    @BindView(R.id.record_voice)
     ImageView voiceIv;
-    @InjectView(R.id.record_imgMicro)
+    @BindView(R.id.record_imgMicro)
     ImageView microIv;
-    @InjectView(R.id.record_notice)
+    @BindView(R.id.record_notice)
     TextView noticeTv;
-    @InjectView(R.id.record_time)
+    @BindView(R.id.record_time)
     TextView timeTv;
-    @InjectView(R.id.record_save)
+    @BindView(R.id.record_save)
     TextView saveTv;
 
     DownloadTask mDownloadTask;
@@ -89,7 +89,7 @@ public class RecordActivity extends BaseActivity<RecordModel> implements Recorde
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_record);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         //1.初始化
         mViewModel = new RecordModel();
@@ -381,7 +381,7 @@ public class RecordActivity extends BaseActivity<RecordModel> implements Recorde
         }
         mProgressDialog = DialogHelper.create(DialogHelper.TYPE_PROGRESS)
                 .progressText(getString(R.string.dialog_uploading)).show();
-        Subscription subscription = mViewModel.getToken()
+        Disposable subscription = mViewModel.getToken()
                 .subscribe(__ -> isFileExit(), this::onError);
         addSubscription(subscription);
     }
@@ -390,7 +390,7 @@ public class RecordActivity extends BaseActivity<RecordModel> implements Recorde
      * 判断网上该文件是否存在
      */
     private void isFileExit() {
-        Subscription subscription = mViewModel.isFileExit()
+        Disposable subscription = mViewModel.isFileExit()
                 .subscribe(__ -> httpCoachInfo(), __ -> imgUpload());
         addSubscription(subscription);
     }
@@ -418,7 +418,7 @@ public class RecordActivity extends BaseActivity<RecordModel> implements Recorde
      * 将文件地址上传到服务器
      */
     private void httpCoachInfo() {
-        Subscription subscription = mViewModel.putCoachInfo()
+        Disposable subscription = mViewModel.putCoachInfo()
                 .subscribe(__ -> onUpLoadSuccess(), this::onError);
         addSubscription(subscription);
     }
@@ -548,7 +548,7 @@ public class RecordActivity extends BaseActivity<RecordModel> implements Recorde
      * 先获取录音权限
      */
     private void getPerMission() {
-        RxPermissions.getInstance(this)
+        new RxPermissions(this)
                 .request(Manifest.permission.RECORD_AUDIO
                         , Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(granted -> {
@@ -561,7 +561,7 @@ public class RecordActivity extends BaseActivity<RecordModel> implements Recorde
     }
 
     public boolean onRecordBtnLongClick() {
-        RxPermissions.getInstance(this)
+        new RxPermissions(this)
                 .request(Manifest.permission.RECORD_AUDIO
                         , Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(granted -> {

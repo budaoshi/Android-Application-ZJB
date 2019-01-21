@@ -19,7 +19,7 @@ import com.idrv.coach.utils.helper.DialogHelper;
 import com.zjb.loader.ZjbImageLoader;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/8/8
@@ -124,26 +124,26 @@ public class CommentListAdapter extends AbsRecycleAdapter<Comment, RecyclerView.
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.avatar)
+        @BindView(R.id.avatar)
         ImageView mAvatarIv;
-        @InjectView(R.id.nick_name)
+        @BindView(R.id.nick_name)
         TextView mNicknameTv;
-        @InjectView(R.id.image_type)
+        @BindView(R.id.image_type)
         ImageView mCommentTypeIv;
-        @InjectView(R.id.delete_tv)
+        @BindView(R.id.delete_tv)
         TextView mDeleteTv;
-        @InjectView(R.id.content_tv)
+        @BindView(R.id.content_tv)
         TextView mContentTv;
-        @InjectView(R.id.contact_layout)
+        @BindView(R.id.contact_layout)
         View mContactLayout;
-        @InjectView(R.id.call_tv)
+        @BindView(R.id.call_tv)
         TextView mCallTv;
-        @InjectView(R.id.message_tv)
+        @BindView(R.id.message_tv)
         TextView mMessageTv;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

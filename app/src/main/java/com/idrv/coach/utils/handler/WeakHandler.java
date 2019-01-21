@@ -163,7 +163,6 @@ public class WeakHandler {
             this.prev = null;
             this.runnable = null;
             this.wrapper = null;
-            Class var1 = ChainedRef.class;
             synchronized (ChainedRef.class) {
                 if (sPoolSize <= 15) {
                     this.next = sPool;
@@ -200,7 +199,6 @@ public class WeakHandler {
 
         public static ChainedRef obtain(Runnable r) {
             ChainedRef result = null;
-            Class var2 = ChainedRef.class;
             synchronized (ChainedRef.class) {
                 if (sPool != null) {
                     result = sPool;
@@ -228,8 +226,8 @@ public class WeakHandler {
         }
 
         public void run() {
-            Runnable delegate = (Runnable) this.mDelegate.get();
-            ChainedRef reference = (ChainedRef) this.mReference.get();
+            Runnable delegate = this.mDelegate.get();
+            ChainedRef reference = this.mReference.get();
             if (reference != null) {
                 reference.remove();
             }
@@ -264,7 +262,7 @@ public class WeakHandler {
 
         public void handleMessage(Message msg) {
             if (this.mCallback != null) {
-                Callback callback = (Callback) this.mCallback.get();
+                Callback callback = this.mCallback.get();
                 if (callback != null) {
                     callback.handleMessage(msg);
                 }

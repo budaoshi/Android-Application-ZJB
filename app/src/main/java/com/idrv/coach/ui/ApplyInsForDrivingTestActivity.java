@@ -19,10 +19,12 @@ import com.idrv.coach.utils.SystemUtil;
 import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.UIHelper;
 
+import org.reactivestreams.Subscription;
+
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/29
@@ -31,11 +33,11 @@ import rx.Subscription;
  * @author sunjianfei
  */
 public class ApplyInsForDrivingTestActivity extends BaseActivity<DrivingTestInsModel> implements View.OnClickListener {
-    @InjectView(R.id.item_owner_name)
+    @BindView(R.id.item_owner_name)
     InputItemView mItemNameView;
-    @InjectView(R.id.item_tel)
+    @BindView(R.id.item_tel)
     InputItemView mItemTelView;
-    @InjectView(R.id.item_card)
+    @BindView(R.id.item_card)
     InputItemView mItemCardView;
 
     public static void launch(Context context) {
@@ -47,7 +49,7 @@ public class ApplyInsForDrivingTestActivity extends BaseActivity<DrivingTestInsM
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_apply_driving_test_ins);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initView();
         initViewModel();
@@ -105,7 +107,7 @@ public class ApplyInsForDrivingTestActivity extends BaseActivity<DrivingTestInsM
 
     private void commit() {
         showDialog();
-        Subscription subscription = mViewModel.commit()
+        Disposable subscription = mViewModel.commit()
                 .subscribe(this::onCommitNext, this::onCommitError);
         addSubscription(subscription);
     }
@@ -153,7 +155,7 @@ public class ApplyInsForDrivingTestActivity extends BaseActivity<DrivingTestInsM
                 .progressText(getResources().getString(R.string.commit_now))
                 .onDismissListener(__ -> {
                     if (mCompositeSubscription != null) {
-                        mCompositeSubscription.unsubscribe();
+                        mCompositeSubscription.clear();
                     }
                 }).show();
     }

@@ -11,7 +11,7 @@ import com.idrv.coach.R;
 import com.idrv.coach.utils.helper.ViewUtils;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/6/3
@@ -20,15 +20,15 @@ import butterknife.InjectView;
  * @author sunjianfei
  */
 public class ServiceItemView extends RelativeLayout {
-    @InjectView(R.id.left_image)
+    @BindView(R.id.left_image)
     ImageView mLeftImageView;
-    @InjectView(R.id.service_name)
+    @BindView(R.id.service_name)
     TextView mServiceNameTv;
-    @InjectView(R.id.service_desc)
+    @BindView(R.id.service_desc)
     TextView mServiceDescTv;
-    @InjectView(R.id.right_btn)
+    @BindView(R.id.right_btn)
     ImageView mRightBtn;
-    @InjectView(R.id.h_divider_line)
+    @BindView(R.id.h_divider_line)
     View mLine;
 
 
@@ -49,7 +49,7 @@ public class ServiceItemView extends RelativeLayout {
 
     private void initView() {
         inflate(getContext(), R.layout.vw_my_service_item, this);
-        ButterKnife.inject(this, this);
+        ButterKnife.bind(this, this);
     }
 
     public void setLineStatus(boolean status) {

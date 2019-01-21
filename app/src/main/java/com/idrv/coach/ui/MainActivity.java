@@ -24,18 +24,18 @@ import com.idrv.coach.ui.adapter.TabSelectedAdapter;
 import com.idrv.coach.utils.Logger;
 import com.idrv.coach.utils.helper.DialogHelper;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by sunjianfei on 2016/3/7.
  * 主导航页面
  */
 public class MainActivity extends BaseActivity {
-    @InjectView(R.id.navigate_view_pager)
+    @BindView(R.id.navigate_view_pager)
     ViewPager mViewPager;
-    @InjectView(R.id.navigate_tab_layout)
+    @BindView(R.id.navigate_tab_layout)
     TabLayout mTabLayout;
 
     private TabLayout.OnTabSelectedListener mOnTabSelectedListener;
@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         schemaJump();
         setContentView(R.layout.act_main);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         //1.再次防止push跳转没有被初始化
         AppInitManager.getInstance().initializeApp(this);
         //2.初始化View

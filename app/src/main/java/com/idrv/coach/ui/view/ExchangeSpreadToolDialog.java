@@ -16,7 +16,7 @@ import com.idrv.coach.R;
 import com.idrv.coach.utils.PixelUtil;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/6/28
@@ -25,19 +25,19 @@ import butterknife.InjectView;
  * @author sunjianfei
  */
 public class ExchangeSpreadToolDialog extends Dialog {
-    @InjectView(R.id.title_tv)
+    @BindView(R.id.title_tv)
     TextView mTitleTv;
-    @InjectView(R.id.subtitle_tv)
+    @BindView(R.id.subtitle_tv)
     TextView mSubtitleTv;
-    @InjectView(R.id.btn_integral)
+    @BindView(R.id.btn_integral)
     Button mIntegralBtn;
-    @InjectView(R.id.btn_member)
+    @BindView(R.id.btn_member)
     Button mMemberBtn;
-    @InjectView(R.id.btn_other)
+    @BindView(R.id.btn_other)
     TextView mOtherBtn;
 
 
-    @InjectView(R.id.other_layout)
+    @BindView(R.id.other_layout)
     View mOtherLayout;
 
     //正常情况,只有两项
@@ -58,7 +58,7 @@ public class ExchangeSpreadToolDialog extends Dialog {
         setCanceledOnTouchOutside(true);
         setCancelable(true);
 
-        ButterKnife.inject(this, this);
+        ButterKnife.bind(this, this);
     }
 
     public void setTitle(int res) {

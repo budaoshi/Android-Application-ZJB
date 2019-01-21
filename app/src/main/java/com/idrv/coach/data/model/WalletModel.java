@@ -18,9 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
 
@@ -77,12 +77,12 @@ public class WalletModel {
         return null;
     }
 
-    public Observable<WalletPage> refresh(Action0 clearAdapter) {
+    public Observable<WalletPage> refresh(Action clearAdapter) {
         sp = "";
         //刷新,先清除数据
         dataSource.clear();
         return request()
-                .doOnNext(__ -> clearAdapter.call());
+                .doOnNext(__ -> clearAdapter.run());
     }
 
     public Observable<WalletPage> loadMore() {

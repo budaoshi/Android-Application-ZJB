@@ -11,9 +11,9 @@ import com.zjb.volley.core.response.HttpResponse;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
 
@@ -33,9 +33,9 @@ public class CommentModel {
      * @param clearAdapter
      * @return
      */
-    public Observable<List<Comment>> refresh(Action0 clearAdapter) {
+    public Observable<List<Comment>> refresh(Action clearAdapter) {
         sp = "";
-        return loadComment().doOnNext(__ -> clearAdapter.call());
+        return loadComment().doOnNext(__ -> clearAdapter.run());
     }
 
     /**

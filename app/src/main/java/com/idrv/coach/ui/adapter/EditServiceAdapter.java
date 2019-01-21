@@ -16,7 +16,7 @@ import com.idrv.coach.utils.helper.ResHelper;
 import com.zjb.loader.ZjbImageLoader;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/4/19
@@ -75,14 +75,14 @@ public class EditServiceAdapter extends AbsRecycleAdapter<Services, EditServiceA
     }
 
     public class EditServiceViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.image)
+        @BindView(R.id.image)
         ImageView mImageView;
-        @InjectView(R.id.edit_btn)
+        @BindView(R.id.edit_btn)
         ImageView mEditImageView;
 
         public EditServiceViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

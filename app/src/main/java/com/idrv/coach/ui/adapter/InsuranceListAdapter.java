@@ -14,7 +14,7 @@ import com.idrv.coach.bean.IsPrice;
 import com.idrv.coach.ui.InsReViewsActivity;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/3/23
@@ -135,30 +135,30 @@ public class InsuranceListAdapter extends AbsRecycleAdapter<InsuranceInfo, Recyc
     }
 
     class InsViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.car_owner_name_tv)
+        @BindView(R.id.car_owner_name_tv)
         TextView mNameTv;
-        @InjectView(R.id.insurance_price_tv)
+        @BindView(R.id.insurance_price_tv)
         TextView mPriceTv;
-        @InjectView(R.id.price_layout)
+        @BindView(R.id.price_layout)
         View mPriceLayout;
-        @InjectView(R.id.insurance_company_tv)
+        @BindView(R.id.insurance_company_tv)
         TextView mCompanyTv;
-        @InjectView(R.id.company_layout)
+        @BindView(R.id.company_layout)
         View mCompanyLayout;
-        @InjectView(R.id.insurance_tel_tv)
+        @BindView(R.id.insurance_tel_tv)
         TextView mTelTv;
-        @InjectView(R.id.tel_layout)
+        @BindView(R.id.tel_layout)
         View mTelLayout;
-        @InjectView(R.id.right_image)
+        @BindView(R.id.right_image)
         ImageView mRightIv;
-        @InjectView(R.id.bottom_layout)
+        @BindView(R.id.bottom_layout)
         View mBottomLayout;
-        @InjectView(R.id.ins_reviews)
+        @BindView(R.id.ins_reviews)
         TextView mReviewsTv;
 
         public InsViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

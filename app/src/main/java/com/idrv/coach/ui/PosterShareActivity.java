@@ -17,7 +17,7 @@ import com.zjb.loader.ZjbImageLoader;
 import java.io.File;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
 import uk.co.senab.photoview.PhotoView;
 
@@ -31,7 +31,7 @@ public class PosterShareActivity extends BaseActivity {
     private static final String KEY_IMAGE_PATH = "image_path";
     private static final String KEY_PARAM_TOOL = "param_tool";
 
-    @InjectView(R.id.image_view)
+    @BindView(R.id.image_view)
     PhotoView mImageView;
 
     String imagePath;
@@ -49,7 +49,7 @@ public class PosterShareActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_poster_share);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initView();
     }
 

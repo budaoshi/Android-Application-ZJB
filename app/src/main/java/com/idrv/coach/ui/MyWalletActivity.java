@@ -23,11 +23,11 @@ import com.idrv.coach.utils.helper.UIHelper;
 import com.idrv.coach.utils.helper.ViewUtils;
 import com.zjb.volley.utils.NetworkUtil;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/5/19
@@ -36,11 +36,11 @@ import rx.android.schedulers.AndroidSchedulers;
  * @author sunjianfei
  */
 public class MyWalletActivity extends BaseActivity<WalletModel> {
-    @InjectView(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     EmptyRecyclerView mRecyclerView;
-    @InjectView(R.id.refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @InjectView(R.id.title_bar_layout)
+    @BindView(R.id.title_bar_layout)
     View mTitleBarLayout;
 
     MyWalletAdapter mAdapter;
@@ -60,7 +60,7 @@ public class MyWalletActivity extends BaseActivity<WalletModel> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_my_wallet);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initView();
         initViewModel();
         registerEvent();
@@ -129,13 +129,13 @@ public class MyWalletActivity extends BaseActivity<WalletModel> {
     }
 
     private void refresh() {
-        Subscription subscription = mViewModel.refresh(mAdapter::clear)
+        Disposable subscription = mViewModel.refresh(mAdapter::clear)
                 .subscribe(this::onRefreshNext, this::onError, this::onComplete);
         addSubscription(subscription);
     }
 
     private void loadMore() {
-        Subscription subscription = mViewModel.loadMore()
+        Disposable subscription = mViewModel.loadMore()
                 .subscribe(this::onLoadMoreNext, this::onError, this::onComplete);
         addSubscription(subscription);
     }

@@ -17,13 +17,15 @@ import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.core.exception.NetworkError;
 
+import org.reactivestreams.Subscription;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/24
@@ -36,9 +38,9 @@ public class TeamInviteActivity extends BaseActivity<TeamInviteModel> implements
     private static final String INTENT_EXTRA_MEMBERS = "teamMembers";
     private static final String INTENT_EXTRA_ID = "teamId";
 
-    @InjectView(R.id.team_invite_recyclerView)
+    @BindView(R.id.team_invite_recyclerView)
     RecyclerView mRecyclerView;
-    @InjectView(R.id.team_invite_bottomBt)
+    @BindView(R.id.team_invite_bottomBt)
     Button mBottomBt;
 
     private TeamCreateAdapter mAdapter;
@@ -59,7 +61,7 @@ public class TeamInviteActivity extends BaseActivity<TeamInviteModel> implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_team_invite);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         //0.model
         mViewModel = new TeamInviteModel();
@@ -109,7 +111,7 @@ public class TeamInviteActivity extends BaseActivity<TeamInviteModel> implements
                 .create(DialogHelper.TYPE_PROGRESS)
                 .progressText(getString(R.string.dialog_inviting))
                 .show();
-        Subscription subscription = mViewModel.inviteMumber(inviteMembers)
+        Disposable subscription = mViewModel.inviteMumber(inviteMembers)
                 .subscribe(__ -> onNext(), this::onTeamInfoError);
         addSubscription(subscription);
     }

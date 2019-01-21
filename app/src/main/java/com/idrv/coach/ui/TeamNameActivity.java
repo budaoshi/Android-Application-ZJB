@@ -16,9 +16,11 @@ import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.core.exception.NetworkError;
 
+import org.reactivestreams.Subscription;
+
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
+import butterknife.BindView;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/22
@@ -32,9 +34,9 @@ public class TeamNameActivity extends BaseActivity<TeamNameModel> {
     private static final String INTENT_EXTRA_NAME = "teamName";
     private static final String INTENT_EXTRA_ID = "teamId";
 
-    @InjectView(R.id.team_name_et)
+    @BindView(R.id.team_name_et)
     ClearEditText mTeamNameEt;
-    @InjectView(R.id.team_leftNumber_tv)
+    @BindView(R.id.team_leftNumber_tv)
     TextView mLeftNumberTv;
 
     /**
@@ -58,7 +60,7 @@ public class TeamNameActivity extends BaseActivity<TeamNameModel> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_team_name);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         // 0.初始化ViewModel
         mViewModel = new TeamNameModel();
@@ -117,7 +119,7 @@ public class TeamNameActivity extends BaseActivity<TeamNameModel> {
         // 网络请求
         mProgressDialog = DialogHelper.create(DialogHelper.TYPE_PROGRESS)
                 .progressText(getString(R.string.dialog_revising)).show();
-        Subscription subscription = mViewModel.reviseTeamName(name)
+        Disposable subscription = mViewModel.reviseTeamName(name)
                 .subscribe(this::onNext, this::onTeamNameError);
         addSubscription(subscription);
     }

@@ -13,7 +13,7 @@ import com.idrv.coach.R;
 import com.idrv.coach.bean.VoiceTool;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.Optional;
 
 /**
@@ -92,25 +92,25 @@ public class VoiceToolsAdapter extends AbsRecycleAdapter<VoiceTool, RecyclerView
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        @Optional
-        @InjectView(R.id.image)
+
+        @BindView(R.id.image)
         ImageView mVoiceIconIv;
-        @Optional
-        @InjectView(R.id.text)
+
+        @BindView(R.id.text)
         TextView mVoiceNameTv;
-        @Optional
-        @InjectView(R.id.voice_play_layout)
+
+        @BindView(R.id.voice_play_layout)
         FrameLayout mVoicePlayLayout;
-        @Optional
-        @InjectView(R.id.group_name)
+
+        @BindView(R.id.group_name)
         TextView mGroupNameTv;
-        @Optional
-        @InjectView(R.id.play_iv)
+
+        @BindView(R.id.play_iv)
         ImageView mPlayIv;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

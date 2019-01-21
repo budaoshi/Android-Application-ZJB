@@ -21,7 +21,7 @@
 //import com.idrv.coach.utils.Logger;
 //
 //import butterknife.ButterKnife;
-//import butterknife.InjectView;
+//import butterknife.BindView;
 //import butterknife.OnClick;
 //import rx.Subscription;
 //import rx.android.schedulers.AndroidSchedulers;
@@ -33,17 +33,17 @@
 // * @author sunjianfei
 // */
 //public class WebSiteFragment extends BaseFragment<EnrollmentModel> implements View.OnClickListener {
-//    @InjectView(R.id.item_profile)
+//    @BindView(R.id.item_profile)
 //    WebSiteItemView mProfileItemView;
-//    @InjectView(R.id.item_services)
+//    @BindView(R.id.item_services)
 //    WebSiteItemView mSetServicesItemView;
-//    @InjectView(R.id.item_student_photo)
+//    @BindView(R.id.item_student_photo)
 //    WebSiteItemView mStudentPhotoItemView;
-//    @InjectView(R.id.item_my_photo)
+//    @BindView(R.id.item_my_photo)
 //    WebSiteItemView mMyPhotoItemView;
-//    @InjectView(R.id.news_sub_text_view)
+//    @BindView(R.id.news_sub_text_view)
 //    TextView mNewsSubTv;
-//    @InjectView(R.id.new_msg)
+//    @BindView(R.id.new_msg)
 //    View mRedPointView;
 //
 //
@@ -64,7 +64,7 @@
 //
 //    @Override
 //    public void initView(View view) {
-//        ButterKnife.inject(this, view);
+//        ButterKnife.bind(this, view);
 //        view.getBackground().setAlpha(0);
 //
 //        mProfileItemView.setIcon(R.drawable.icon_profile);

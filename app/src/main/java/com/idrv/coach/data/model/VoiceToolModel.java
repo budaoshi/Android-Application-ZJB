@@ -11,7 +11,7 @@ import com.zjb.volley.utils.GsonUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * time:2016/8/16
@@ -41,7 +41,7 @@ public class VoiceToolModel {
                 String json = FileUtil.getTextFromAssets(ZjbApplication.gContext, "voice.json");
                 VoiceToolPage page = GsonUtil.fromJson(json, VoiceToolPage.class);
                 subscriber.onNext(createVoiceList(page));
-                subscriber.onCompleted();
+                subscriber.onComplete();
             } catch (Exception e) {
                 e.printStackTrace();
                 subscriber.onError(e);

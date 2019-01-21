@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.idrv.coach.R;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/3/9
@@ -17,9 +17,9 @@ import butterknife.InjectView;
  * @author sunjianfei
  */
 public class HomeYesterdayInfluenceLayout extends LinearLayout {
-    @InjectView(R.id.num_text_view)
+    @BindView(R.id.num_text_view)
     TextView mNumTv;
-    @InjectView(R.id.title_tv)
+    @BindView(R.id.title_tv)
     TextView mTitleTv;
 
 
@@ -38,7 +38,7 @@ public class HomeYesterdayInfluenceLayout extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     public void setTitle(int resId) {

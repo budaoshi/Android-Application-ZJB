@@ -18,9 +18,11 @@ import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.utils.NetworkUtil;
 
+import org.reactivestreams.Subscription;
+
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
+import butterknife.BindView;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/4/19
@@ -29,13 +31,13 @@ import rx.Subscription;
  * @author sunjianfei
  */
 public class SetMyServiceActivity extends BaseActivity<SetMyServicesModel> {
-    @InjectView(R.id.added_recycler_view)
+    @BindView(R.id.added_recycler_view)
     EmptyRecyclerView mAddedRecyclerView;
-    @InjectView(R.id.select_recycler_view)
+    @BindView(R.id.select_recycler_view)
     EmptyRecyclerView mSelectRecyclerView;
-    @InjectView(R.id.add_empty_view)
+    @BindView(R.id.add_empty_view)
     View mAddEmptyView;
-    @InjectView(R.id.select_empty_view)
+    @BindView(R.id.select_empty_view)
     View mSelectEmptyView;
 
     EditServiceAdapter mAddedAdapter;
@@ -53,7 +55,7 @@ public class SetMyServiceActivity extends BaseActivity<SetMyServicesModel> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_set_my_service);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initToolBar();
         initView();
         initViewModel();
@@ -142,7 +144,7 @@ public class SetMyServiceActivity extends BaseActivity<SetMyServicesModel> {
     }
 
     private void refresh() {
-        Subscription subscription = mViewModel.getWebsiteServices()
+        Disposable subscription = mViewModel.getWebsiteServices()
                 .subscribe(this::onNext, __ -> showErrorView());
         addSubscription(subscription);
     }
@@ -150,7 +152,7 @@ public class SetMyServiceActivity extends BaseActivity<SetMyServicesModel> {
     private void saveModify() {
         if (mViewModel.getValues() != 0) {
             showDialog();
-            Subscription subscription = mViewModel.updateWebsiteServices()
+            Disposable subscription = mViewModel.updateWebsiteServices()
                     .subscribe(this::onSaveNext, this::onSaveError);
             addSubscription(subscription);
         }
@@ -191,7 +193,7 @@ public class SetMyServiceActivity extends BaseActivity<SetMyServicesModel> {
                 .progressText(getResources().getString(R.string.commit_now))
                 .onDismissListener(__ -> {
                     if (mCompositeSubscription != null) {
-                        mCompositeSubscription.unsubscribe();
+                        mCompositeSubscription.clear();
                     }
                 }).show();
     }

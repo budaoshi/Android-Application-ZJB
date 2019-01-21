@@ -23,9 +23,9 @@ import com.zjb.volley.core.response.HttpResponse;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
 
@@ -107,10 +107,10 @@ public class SpreadModel {
      * @param clearAdapter
      * @return
      */
-    public Observable<List<SpreadTool>> refresh(Action0 clearAdapter) {
+    public Observable<List<SpreadTool>> refresh(Action clearAdapter) {
         sp = "";
         return requestSpreadTool()
-                .doOnNext(__ -> clearAdapter.call());
+                .doOnNext(__ -> clearAdapter.run());
     }
 
     /**

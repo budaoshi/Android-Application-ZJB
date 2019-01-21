@@ -2,8 +2,8 @@ package com.idrv.coach.utils;
 
 import java.util.concurrent.Callable;
 
-import rx.Observable;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * time:2016/7/13
@@ -28,7 +28,7 @@ public class BaseUtil {
                 e.printStackTrace();
                 subscriber.onError(e);
             } finally {
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         }).subscribeOn(Schedulers.io());
     }

@@ -40,8 +40,8 @@ import com.tendcloud.tenddata.TCAgent;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time: 15/6/9
@@ -65,7 +65,7 @@ public abstract class BaseActivity<ViewModel> extends AppCompatActivity implemen
 
     protected ViewModel mViewModel;
 
-    protected CompositeSubscription mCompositeSubscription;
+    protected CompositeDisposable mCompositeSubscription;
 
     protected SwipeBackLayout mSwipeBackLayout;
     protected boolean mIsInitialized;
@@ -81,7 +81,7 @@ public abstract class BaseActivity<ViewModel> extends AppCompatActivity implemen
     protected void onCreate(Bundle savedInstanceState) {
         initWindowView();
         super.onCreate(savedInstanceState);
-        mCompositeSubscription = new CompositeSubscription();
+        mCompositeSubscription = new CompositeDisposable();
         //1.将背景设置为透明
         setOverflowShowingAlways();
         mDestroyed = false;
@@ -318,10 +318,10 @@ public abstract class BaseActivity<ViewModel> extends AppCompatActivity implemen
      *
      * @param subscription
      */
-    public void addSubscription(Subscription subscription) {
+    public void addSubscription(Disposable subscription) {
         if (subscription != null) {
-            if (mCompositeSubscription == null || mCompositeSubscription.isUnsubscribed()) {
-                mCompositeSubscription = new CompositeSubscription();
+            if (mCompositeSubscription == null || mCompositeSubscription.isDisposed()) {
+                mCompositeSubscription = new CompositeDisposable();
             }
             mCompositeSubscription.add(subscription);
         }
@@ -332,7 +332,7 @@ public abstract class BaseActivity<ViewModel> extends AppCompatActivity implemen
     protected void onDestroy() {
         //回收资源
         if (mCompositeSubscription != null) {
-            mCompositeSubscription.unsubscribe();
+            mCompositeSubscription.clear();
         }
         if (mViewModel != null) {
             mViewModel = null;

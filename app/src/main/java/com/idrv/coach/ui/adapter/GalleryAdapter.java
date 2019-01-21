@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.Optional;
 
 /**
@@ -178,8 +178,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
     }
 
     public static class GalleryViewHolder extends RecyclerView.ViewHolder {
-        @Optional
-        @InjectView(R.id.iv)
+
+        @BindView(R.id.iv)
         public OnPressImageView mImageView;
 
         public View view;
@@ -187,7 +187,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
         public GalleryViewHolder(View itemView) {
             super(itemView);
             view = itemView;
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

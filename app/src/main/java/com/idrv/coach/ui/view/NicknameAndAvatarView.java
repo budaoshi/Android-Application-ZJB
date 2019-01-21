@@ -12,7 +12,7 @@ import com.zjb.loader.ZjbImageLoader;
 import com.zjb.loader.internal.core.assist.ImageScaleType;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/8/1
@@ -21,9 +21,9 @@ import butterknife.InjectView;
  * @author sunjianfei
  */
 public class NicknameAndAvatarView extends LinearLayout {
-    @InjectView(R.id.child_avatar)
+    @BindView(R.id.child_avatar)
     ImageView mAvatarIv;
-    @InjectView(R.id.child_nick_name)
+    @BindView(R.id.child_nick_name)
     TextView mNicknameTv;
 
     public NicknameAndAvatarView(Context context) {
@@ -41,7 +41,7 @@ public class NicknameAndAvatarView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     public void setNickname(String nickname) {

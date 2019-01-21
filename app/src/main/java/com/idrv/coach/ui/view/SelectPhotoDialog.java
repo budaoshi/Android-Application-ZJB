@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.idrv.coach.R;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -23,7 +23,7 @@ import butterknife.OnClick;
 public class SelectPhotoDialog extends Dialog implements View.OnClickListener {
     private OnButtonClickListener onButtonClickListener;
 
-    @InjectView(R.id.btn_camera)
+    @BindView(R.id.btn_camera)
     TextView mCameraItemView;
 
 
@@ -32,7 +32,7 @@ public class SelectPhotoDialog extends Dialog implements View.OnClickListener {
 
         //初始化布局
         setContentView(R.layout.vw_select_camera_dialog);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         Window dialogWindow = getWindow();
         dialogWindow.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialogWindow.setGravity(Gravity.BOTTOM);

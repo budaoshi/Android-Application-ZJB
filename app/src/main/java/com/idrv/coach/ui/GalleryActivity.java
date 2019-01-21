@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/4/18
@@ -41,9 +41,9 @@ public class GalleryActivity extends BaseActivity implements GalleryAdapter.OnRe
     public static final String DATA = "data";
     public static final String KEY_NEED_CAMERA = "need_camera";
 
-    @InjectView(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    @InjectView(R.id.gallery_title)
+    @BindView(R.id.gallery_title)
     GalleryTitleBar mTitleBar;
 
     private PopupWindow mPopupWindow;
@@ -63,7 +63,7 @@ public class GalleryActivity extends BaseActivity implements GalleryAdapter.OnRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_gallery);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initView();
     }
 

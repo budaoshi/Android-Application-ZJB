@@ -17,9 +17,9 @@ import com.zjb.volley.utils.GsonUtil;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
 
@@ -44,11 +44,11 @@ public class DynamicModel {
      * @param clearAdapter
      * @return
      */
-    public Observable<DynamicPage> refresh(Action0 clearAdapter) {
+    public Observable<DynamicPage> refresh(Action clearAdapter) {
         time = "";
         return request()
                 .doOnNext(page -> mACache.put(KEY_DYNAMIC, GsonUtil.toJson(page)))
-                .doOnNext(__ -> clearAdapter.call());
+                .doOnNext(__ -> clearAdapter.run());
     }
 
     /**

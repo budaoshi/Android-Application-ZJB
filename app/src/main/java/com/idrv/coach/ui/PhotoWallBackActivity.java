@@ -33,7 +33,7 @@
 //import java.util.List;
 //
 //import butterknife.ButterKnife;
-//import butterknife.InjectView;
+//import butterknife.BindView;
 //import butterknife.OnClick;
 //import rx.Subscription;
 //import rx.android.schedulers.AndroidSchedulers;
@@ -53,13 +53,13 @@
 //    //教练
 //    public static final int TYPE_COACH = 1;
 //
-//    @InjectView(R.id.recycler_view)
+//    @BindView(R.id.recycler_view)
 //    EmptyRecyclerView mRecyclerView;
-//    @InjectView(R.id.refresh_layout)
+//    @BindView(R.id.refresh_layout)
 //    SwipeRefreshLayout mSwipeRefreshLayout;
-//    @InjectView(R.id.title_bar_layout)
+//    @BindView(R.id.title_bar_layout)
 //    View mTitleBarLayout;
-//    @InjectView(R.id.title_tv)
+//    @BindView(R.id.title_tv)
 //    TextView mTitleTv;
 //
 //    PhotoWallBackAdapter mAdapter;
@@ -78,7 +78,7 @@
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.act_photo_wall);
-//        ButterKnife.inject(this);
+//        ButterKnife.bind(this);
 //        initView();
 //        initViewModel();
 //        registerEvent();

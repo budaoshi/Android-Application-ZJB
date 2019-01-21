@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.Optional;
 
 /**
@@ -168,22 +168,22 @@ public class PhotoWallAdapter extends AbsRecycleAdapter<Picture, RecyclerView.Vi
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        @Optional
-        @InjectView(R.id.viewpager)
+
+        @BindView(R.id.viewpager)
         FixedViewPager mViewPager;
-        @Optional
-        @InjectView(R.id.pager_layout)
+
+        @BindView(R.id.pager_layout)
         FrameLayout mPagerLayout;
-        @Optional
-        @InjectView(R.id.photo_image)
+
+        @BindView(R.id.photo_image)
         DynamicHeightImageView mImageView;
-        @Optional
-        @InjectView(R.id.default_image)
+
+        @BindView(R.id.default_image)
         ImageView mDefaultIv;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

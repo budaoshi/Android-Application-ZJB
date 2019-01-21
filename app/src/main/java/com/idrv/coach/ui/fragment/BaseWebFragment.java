@@ -37,10 +37,9 @@ import com.zjb.volley.utils.GsonUtil;
 
 import org.json.JSONObject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.Optional;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * time:2016/8/18
@@ -54,15 +53,15 @@ public abstract class BaseWebFragment extends BaseFragment {
     protected WebParamBuilder mParamBuilder;
     private String mWxPrePayId;
 
-    @Optional
-    @InjectView(R.id.web_view)
+
+    @BindView(R.id.web_view)
     public ProgressWebView mWebView;
-    @Optional
-    @InjectView(R.id.progress_bar)
+
+    @BindView(R.id.progress_bar)
     public ProgressBar mProgressBar;
-    @InjectView(R.id.title_tv)
+    @BindView(R.id.title_tv)
     TextView mTitleTv;
-    @InjectView(R.id.right_btn)
+    @BindView(R.id.right_btn)
     ImageView mRightBtn;
 
     @Override
@@ -72,7 +71,7 @@ public abstract class BaseWebFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-        ButterKnife.inject(this,view);
+        ButterKnife.bind(this, view);
         registerEvent();
         initialize();
     }

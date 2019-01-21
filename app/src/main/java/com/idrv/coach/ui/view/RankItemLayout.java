@@ -14,7 +14,7 @@ import com.idrv.coach.utils.PixelUtil;
 import com.idrv.coach.utils.helper.ViewUtils;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/6/23
@@ -23,21 +23,21 @@ import butterknife.InjectView;
  * @author sunjianfei
  */
 public class RankItemLayout extends LinearLayout {
-    @InjectView(R.id.avatar_iv)
+    @BindView(R.id.avatar_iv)
     ImageView mAvatarIv;
-    @InjectView(R.id.background_iv)
+    @BindView(R.id.background_iv)
     ImageView mBackgroundIv;
-    @InjectView(R.id.circle_tv)
+    @BindView(R.id.circle_tv)
     CircleTextView mTextView;
-    @InjectView(R.id.nick_name)
+    @BindView(R.id.nick_name)
     TextView mNickNameTv;
-    @InjectView(R.id.school_name)
+    @BindView(R.id.school_name)
     TextView mSchoolTv;
-    @InjectView(R.id.num_layout)
+    @BindView(R.id.num_layout)
     FrameLayout mNumLayout;
-    @InjectView(R.id.chassis_iv)
+    @BindView(R.id.chassis_iv)
     ImageView mChassisIv;
-    @InjectView(R.id.teach_age)
+    @BindView(R.id.teach_age)
     TextView mTeachAgeTv;
 
     public RankItemLayout(Context context) {
@@ -68,7 +68,7 @@ public class RankItemLayout extends LinearLayout {
         a.recycle();
 
         inflate(getContext(), R.layout.vw_rank, this);
-        ButterKnife.inject(this, this);
+        ButterKnife.bind(this, this);
 
         if (backgroundRes > 0) {
             mBackgroundIv.setImageResource(backgroundRes);

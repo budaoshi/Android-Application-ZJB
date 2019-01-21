@@ -18,7 +18,7 @@ import com.zjb.loader.ZjbImageLoader;
 import java.io.File;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -33,11 +33,11 @@ public class InsReViewsActivity extends BaseActivity {
     public static final int TYPE_CAR_INS = 0x000;
     public static final int TYPE_DRIVING_INS = 0x001;
 
-    @InjectView(R.id.image)
+    @BindView(R.id.image)
     ImageView mImageView;
-    @InjectView(R.id.ins_tips_tv)
+    @BindView(R.id.ins_tips_tv)
     TextView mInsTipsTv;
-    @InjectView(R.id.share_to_student)
+    @BindView(R.id.share_to_student)
     TextView mShareBtn;
 
     String imageUrl;
@@ -53,7 +53,7 @@ public class InsReViewsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_ins_reviews);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initView();
     }
 

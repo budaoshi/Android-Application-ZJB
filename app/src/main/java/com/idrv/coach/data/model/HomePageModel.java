@@ -25,9 +25,9 @@ import com.zjb.volley.utils.GsonUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
 
@@ -101,7 +101,7 @@ public class HomePageModel {
                 //2.重新存入新的数据
                 mACache.put(KEY_HOME_PAGE_CACHE, GsonUtil.toJson(homePage));
                 subscriber.onNext(mHomePage);
-                subscriber.onCompleted();
+                subscriber.onComplete();
             } catch (Exception e) {
                 subscriber.onError(e);
             }
@@ -125,7 +125,7 @@ public class HomePageModel {
                     AdvBean adv = GsonUtil.fromJson(advStr, AdvBean.class);
                     this.mAdvBean = adv;
                     subscriber.onNext(adv);
-                    subscriber.onCompleted();
+                    subscriber.onComplete();
                 }
             } catch (Exception e) {
                 subscriber.onError(e);
@@ -156,7 +156,7 @@ public class HomePageModel {
 //                    }
 
                     subscriber.onNext(mHomePage);
-                    subscriber.onCompleted();
+                    subscriber.onComplete();
                 }
             } catch (Exception e) {
                 subscriber.onError(e);

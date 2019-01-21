@@ -13,7 +13,7 @@ import com.idrv.coach.utils.helper.ResHelper;
 import com.zjb.loader.ZjbImageLoader;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/8/22
@@ -22,9 +22,9 @@ import butterknife.InjectView;
  * @author sunjianfei
  */
 public class DrivingInsDetailItemView extends LinearLayout {
-    @InjectView(R.id.image)
+    @BindView(R.id.image)
     ImageView mImageView;
-    @InjectView(R.id.text)
+    @BindView(R.id.text)
     TextView mTextView;
 
     public DrivingInsDetailItemView(Context context) {
@@ -42,7 +42,7 @@ public class DrivingInsDetailItemView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     public void setImage(String url) {

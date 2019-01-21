@@ -12,7 +12,7 @@ import com.idrv.coach.utils.helper.ViewUtils;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/6/24
@@ -21,17 +21,17 @@ import butterknife.InjectView;
  * @author sunjianfei
  */
 public class RankHeaderLayout extends LinearLayout {
-    @InjectView(R.id.rank_first)
+    @BindView(R.id.rank_first)
     RankItemLayout mFirst;
-    @InjectView(R.id.rank_second)
+    @BindView(R.id.rank_second)
     RankItemLayout mSecond;
-    @InjectView(R.id.rank_third)
+    @BindView(R.id.rank_third)
     RankItemLayout mThird;
-    @InjectView(R.id.rank_forth)
+    @BindView(R.id.rank_forth)
     RankItemLayout mForth;
-    @InjectView(R.id.rank_fifth)
+    @BindView(R.id.rank_fifth)
     RankItemLayout mFifth;
-    @InjectView(R.id.rank_sixth)
+    @BindView(R.id.rank_sixth)
     RankItemLayout mSixth;
 
     RankItemLayout[] mArrays;
@@ -53,7 +53,7 @@ public class RankHeaderLayout extends LinearLayout {
 
     private void initView() {
         inflate(getContext(), R.layout.vw_rank_header, this);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         mArrays = new RankItemLayout[6];
         mArrays[0] = mFirst;
         mArrays[1] = mSecond;

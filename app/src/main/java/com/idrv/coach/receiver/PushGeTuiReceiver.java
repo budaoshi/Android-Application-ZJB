@@ -14,8 +14,8 @@ import com.idrv.coach.utils.Logger;
 import com.idrv.coach.utils.PreferenceUtil;
 import com.igexin.sdk.PushConsts;
 
-import rx.Observable;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * time:15-9-8
@@ -65,7 +65,7 @@ public class PushGeTuiReceiver extends BroadcastReceiver {
             } catch (Exception e) {
                 subscriber.onError(e);
             } finally {
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         }).subscribeOn(Schedulers.computation());
     }

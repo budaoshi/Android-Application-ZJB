@@ -24,7 +24,7 @@ public abstract class BaseWebActivity<ViewModel> extends AbsWebActivity<ViewMode
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_h5);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initView();
     }
 

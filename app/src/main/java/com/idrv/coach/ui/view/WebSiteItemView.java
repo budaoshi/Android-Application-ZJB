@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.idrv.coach.R;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/4/20
@@ -19,9 +19,9 @@ import butterknife.InjectView;
  * @author sunjianfei
  */
 public class WebSiteItemView extends LinearLayout {
-    @InjectView(R.id.main_text_view)
+    @BindView(R.id.main_text_view)
     TextView mMainTextView;
-    @InjectView(R.id.sub_text_view)
+    @BindView(R.id.sub_text_view)
     TextView mSubTextView;
 
     public WebSiteItemView(Context context) {
@@ -47,7 +47,7 @@ public class WebSiteItemView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     public void setIcon(int resId) {

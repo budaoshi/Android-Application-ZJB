@@ -15,7 +15,7 @@ import com.idrv.coach.data.manager.RxBusManager;
 import com.idrv.coach.utils.helper.ResHelper;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/3/8
@@ -27,11 +27,11 @@ public class TeachGuideFragment extends BaseFragment {
     private static final String KEY_RES_ID = "key_res_id";
     private static final String KEY_LAST_PAGE = "key_last_page";
 
-    @InjectView(R.id.guide_img)
+    @BindView(R.id.guide_img)
     ImageView mImageView;
-    @InjectView(R.id.guide_btn)
+    @BindView(R.id.guide_btn)
     Button mButton;
-    @InjectView(R.id.guide_layout)
+    @BindView(R.id.guide_layout)
     View mGuideLayout;
 
     int resId;
@@ -65,7 +65,7 @@ public class TeachGuideFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         ViewGroup.LayoutParams params = mImageView.getLayoutParams();
         params.width = ResHelper.getScreenWidth() * 5 / 6;
         params.height = ResHelper.getScreenHeight() * 5 / 8;

@@ -41,9 +41,9 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Observable;
-import rx.schedulers.Schedulers;
+import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * time:2016/8/1
@@ -243,54 +243,54 @@ public class HomeAdapter extends AbsRecycleAdapter<Message, HomeAdapter.ItemView
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.avatar)
+        @BindView(R.id.avatar)
         SelectableRoundedImageView mAvatarIv;
-        @InjectView(R.id.nick_name)
+        @BindView(R.id.nick_name)
         TextView mNickNameTv;
-        @InjectView(R.id.sub_nick)
+        @BindView(R.id.sub_nick)
         TextView mSubNickNameTv;
-        @InjectView(R.id.image_1)
+        @BindView(R.id.image_1)
         ImageView mImage1;
-        @InjectView(R.id.text_2)
+        @BindView(R.id.text_2)
         TextView mText2;
-        @InjectView(R.id.text_3)
+        @BindView(R.id.text_3)
         TextView mText3;
-        @InjectView(R.id.image_4)
+        @BindView(R.id.image_4)
         NicknameAndAvatarView mImage4;
-        @InjectView(R.id.image_5)
+        @BindView(R.id.image_5)
         ImageView mImage5;
-        @InjectView(R.id.text_6)
+        @BindView(R.id.text_6)
         TextView mText6;
-        @InjectView(R.id.text_7)
+        @BindView(R.id.text_7)
         TextView mText7;
-        @InjectView(R.id.text_8)
+        @BindView(R.id.text_8)
         TextView mText8;
-        @InjectView(R.id.text_9)
+        @BindView(R.id.text_9)
         TextView mText9;
-        @InjectView(R.id.text10)
+        @BindView(R.id.text10)
         TextView mText10;
-        @InjectView(R.id.image11)
+        @BindView(R.id.image11)
         ImageView mImage11;
-        @InjectView(R.id.text12)
+        @BindView(R.id.text12)
         TextView mText12;
-        @InjectView(R.id.image13)
+        @BindView(R.id.image13)
         ImageView mImage13;
-        @InjectView(R.id.text14)
+        @BindView(R.id.text14)
         TextView mText14;
-        @InjectView(R.id.button_h_divider_line)
+        @BindView(R.id.button_h_divider_line)
         View mHDividerLine;
-        @InjectView(R.id.button_v_divider_line)
+        @BindView(R.id.button_v_divider_line)
         View mVDividerLine;
-        @InjectView(R.id.message_time_tv)
+        @BindView(R.id.message_time_tv)
         TextView mMessageTimeTv;
-        @InjectView(R.id.bubble_layout)
+        @BindView(R.id.bubble_layout)
         View mBubbleLayout;
         View[] mChildViews = new View[14];
 
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
 
             mChildViews[0] = mImage1;
             mChildViews[1] = mText2;
@@ -319,7 +319,7 @@ public class HomeAdapter extends AbsRecycleAdapter<Message, HomeAdapter.ItemView
             NinePatchDrawable drawable = mBubbleMap.get(imageUrl);
             if (null != drawable) {
                 subscriber.onNext("bitmap has cached!");
-                subscriber.onCompleted();
+                subscriber.onComplete();
                 return;
             }
 
@@ -342,14 +342,14 @@ public class HomeAdapter extends AbsRecycleAdapter<Message, HomeAdapter.ItemView
                         mBubbleMap.put(imageUrl, patchDrawable);
                     }
                     subscriber.onNext("complete!");
-                    subscriber.onCompleted();
+                    subscriber.onComplete();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                     subscriber.onError(e);
                 }
             } else {
                 subscriber.onNext("image not download!");
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         }).subscribeOn(Schedulers.io());
     }

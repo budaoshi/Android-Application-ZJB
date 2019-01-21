@@ -20,8 +20,8 @@ import com.idrv.coach.ui.fragment.DrivingTestInsListFragment;
 import com.idrv.coach.utils.Logger;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.android.schedulers.AndroidSchedulers;
+import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * time:2016/8/18
@@ -30,9 +30,9 @@ import rx.android.schedulers.AndroidSchedulers;
  * @author sunjianfei
  */
 public class DrivingTestInsActivity extends BaseActivity {
-    @InjectView(R.id.navigate_view_pager)
+    @BindView(R.id.navigate_view_pager)
     ViewPager mViewPager;
-    @InjectView(R.id.navigate_tab_layout)
+    @BindView(R.id.navigate_tab_layout)
     TabLayout mTabLayout;
 
     private TabLayout.OnTabSelectedListener mOnTabSelectedListener;
@@ -57,7 +57,7 @@ public class DrivingTestInsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_car_ins);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         initView();
         registerEvent();
     }

@@ -8,7 +8,7 @@ import android.widget.ProgressBar;
 import com.idrv.coach.R;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/6/2
@@ -17,7 +17,7 @@ import butterknife.InjectView;
  * @author sunjianfei
  */
 public class CreateWebSiteDialog extends Dialog {
-    @InjectView(R.id.progressBar)
+    @BindView(R.id.progressBar)
     ProgressBar mProgressBar;
 
     onAnimEndListener mAnimEndListener;
@@ -28,7 +28,7 @@ public class CreateWebSiteDialog extends Dialog {
         super(context, R.style.BaseDialog);
         //初始化布局
         setContentView(R.layout.vw_create_web_site_dialog);
-        ButterKnife.inject(this, this);
+        ButterKnife.bind(this, this);
     }
 
     public void startAnim() {

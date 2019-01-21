@@ -10,7 +10,10 @@ import com.idrv.coach.data.manager.RxBusManager;
 import com.idrv.coach.data.model.ToolBoxModel;
 import com.idrv.coach.utils.Logger;
 
-import rx.Subscription;
+import org.reactivestreams.Subscription;
+
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * time:2016/3/18
@@ -49,7 +52,7 @@ public class ToolBoxWebActivity extends BaseWebActivity<ToolBoxModel> {
      * 分享完成之后的服务器回调
      */
     private void shareComplete() {
-        Subscription subscription = mViewModel.shareComplete()
+        Disposable subscription = mViewModel.shareComplete()
                 .subscribe(Logger::e, Logger::e);
         addSubscription(subscription);
     }

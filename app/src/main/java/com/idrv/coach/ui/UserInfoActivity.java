@@ -34,32 +34,33 @@ import com.idrv.coach.utils.helper.ViewUtils;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.soundcloud.android.crop.Crop;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zjb.volley.core.exception.NetworkError;
 
 import org.json.JSONObject;
+import org.reactivestreams.Subscription;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import rx.Subscription;
+import butterknife.BindView;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by bigflower on 2016/03/14
  */
 public class UserInfoActivity extends BaseActivity<UserInfoModel> implements MasterItemView.OnMasterItemClickListener {
 
-    @InjectView(R.id.item_user_photo)
+    @BindView(R.id.item_user_photo)
     MasterItemView mPhotoItemView;
-    @InjectView(R.id.item_user_nickname)
+    @BindView(R.id.item_user_nickname)
     MasterItemView mNicknameItemView;
-    @InjectView(R.id.item_user_teachAge)
+    @BindView(R.id.item_user_teachAge)
     MasterItemView mTeachAgeItemView;
-    @InjectView(R.id.item_user_record)
+    @BindView(R.id.item_user_record)
     MasterItemView mRecordItemView;
 
-    @InjectView(R.id.item_user_contact)
+    @BindView(R.id.item_user_contact)
     MasterItemView mContactItemView;
-    @InjectView(R.id.item_user_address)
+    @BindView(R.id.item_user_address)
     MasterItemView mAddressItemView;
 
     public static void launch(Context context) {
@@ -76,7 +77,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoModel> implements Mas
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_user_info);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         //1.初始化标题栏
         initToolBar();
@@ -212,7 +213,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoModel> implements Mas
     }
 
     private void openCamera() {
-        RxPermissions.getInstance(this)
+        new RxPermissions(this)
                 .request(Manifest.permission.CAMERA)
                 .subscribe(granted -> {
                     if (granted) {
@@ -270,7 +271,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoModel> implements Mas
     private void putCoachInfo(String key, String value) {
         mProgressDialog = DialogHelper.create(DialogHelper.TYPE_PROGRESS)
                 .progressText(getString(R.string.dialog_revising)).show();
-        Subscription subscription = mViewModel.putCoachInfo(key, value)
+        Disposable subscription = mViewModel.putCoachInfo(key, value)
                 .subscribe(this::onCoachNext, this::onError);
         addSubscription(subscription);
     }
@@ -375,7 +376,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoModel> implements Mas
 
         mProgressDialog = DialogHelper.create(DialogHelper.TYPE_PROGRESS)
                 .progressText(getString(R.string.dialog_uploading)).show();
-        Subscription subscription = mViewModel.getToken()
+        Disposable subscription = mViewModel.getToken()
                 .subscribe(__ -> isFileExit(), this::onAvatarError);
         addSubscription(subscription);
     }
@@ -384,7 +385,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoModel> implements Mas
      * 判断网上该文件是否存在
      */
     private void isFileExit() {
-        Subscription subscription = mViewModel.isFileExit()
+        Disposable subscription = mViewModel.isFileExit()
                 .subscribe(__ -> httpUserInfo(), __ -> imgUpload());
         addSubscription(subscription);
     }
@@ -412,7 +413,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoModel> implements Mas
      * 将图片地址上传到服务器
      */
     private void httpUserInfo() {
-        Subscription subscription = mViewModel.putUserInfo()
+        Disposable subscription = mViewModel.putUserInfo()
                 .subscribe(__ -> onUpLoadSuccess(), this::onAvatarError);
         addSubscription(subscription);
     }

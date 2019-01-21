@@ -18,7 +18,7 @@ import com.idrv.coach.utils.ValidateUtil;
 import com.idrv.coach.utils.helper.DialogHelper;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/5/25
@@ -124,26 +124,26 @@ public class SelectCityAdapter extends AbsRecycleAdapter<City, RecyclerView.View
     }
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.location_text)
+        @BindView(R.id.location_text)
         TextView mLocationTv;
-        @InjectView(R.id.location_city)
+        @BindView(R.id.location_city)
         TextView mLocationCityTv;
-        @InjectView(R.id.other_city_tv)
+        @BindView(R.id.other_city_tv)
         TextView mOtherCityTv;
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.city_name_tv)
+        @BindView(R.id.city_name_tv)
         TextView mCityNameTv;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

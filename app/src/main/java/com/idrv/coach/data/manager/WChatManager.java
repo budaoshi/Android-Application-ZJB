@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * time: 15/7/17
@@ -36,7 +36,6 @@ public class WChatManager {
     private static WChatManager INSTANCE;
 
     public IWXAPI WXAPI;
-
     //用来区分是从那个页面调用微信登录
     private String mTransaction = null;
 

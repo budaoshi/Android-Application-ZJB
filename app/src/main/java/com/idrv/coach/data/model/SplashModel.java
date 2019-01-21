@@ -15,7 +15,7 @@ import com.zjb.volley.core.request.HttpGsonRequest;
 import com.zjb.volley.core.request.RequestBuilder;
 import com.zjb.volley.utils.GsonUtil;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
 
@@ -45,7 +45,7 @@ public class SplashModel {
         //1.创建Request
         HttpGsonRequest<AdvBean> mRefreshRequest = RequestBuilder.create(AdvBean.class)
                 .url(ApiConstant.API_SPLASH_ADV)
-                .put("type",0)
+                .put("type", 0)
                 .build();
         //2.进行数据的处理
         return gRequestPool.request(mRefreshRequest)

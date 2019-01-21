@@ -23,10 +23,12 @@ import com.idrv.coach.utils.StatisticsUtil;
 import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.UIHelper;
 
+import org.reactivestreams.Subscription;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/6/7
@@ -46,13 +48,13 @@ public class PropagationSettingFragment extends BaseFragment<TransmissionModel> 
     private static final int ACTION_ALBUM = 0x001;
     private static final int ACTION_RECORD = 0x002;
 
-    @InjectView(R.id.title)
+    @BindView(R.id.title)
     ImageView mTitleIv;
-    @InjectView(R.id.desc)
+    @BindView(R.id.desc)
     TextView mDescTv;
-    @InjectView(R.id.enable_iv)
+    @BindView(R.id.enable_iv)
     ImageView mEnableIv;
-    @InjectView(R.id.content_iv)
+    @BindView(R.id.content_iv)
     ImageView mContentIv;
 
     boolean isEnable;
@@ -77,7 +79,7 @@ public class PropagationSettingFragment extends BaseFragment<TransmissionModel> 
 
     @Override
     public void initView(View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         Bundle bundle = getArguments();
         currentType = bundle.getInt(KEY_PARAM_TYPE);
         isEnable = bundle.getBoolean(KEY_PARAM_ENABLE);
@@ -186,7 +188,7 @@ public class PropagationSettingFragment extends BaseFragment<TransmissionModel> 
     }
 
     private void setTransmissionModel() {
-        Subscription subscription = mViewModel.setTransmissionModel(currentType)
+        Disposable subscription = mViewModel.setTransmissionModel(currentType)
                 .subscribe(this::onNext, this::onError);
         addSubscription(subscription);
     }

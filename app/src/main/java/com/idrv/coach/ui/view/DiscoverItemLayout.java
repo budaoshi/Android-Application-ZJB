@@ -13,7 +13,7 @@ import com.zjb.loader.ZjbImageLoader;
 import com.zjb.loader.internal.core.assist.ImageScaleType;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/8/5
@@ -22,9 +22,9 @@ import butterknife.InjectView;
  * @author sunjianfei
  */
 public class DiscoverItemLayout extends LinearLayout {
-    @InjectView(R.id.top_image)
+    @BindView(R.id.top_image)
     ImageView mTopIv;
-    @InjectView(R.id.bottom_tv)
+    @BindView(R.id.bottom_tv)
     TextView mBottomTv;
 
     public DiscoverItemLayout(Context context) {
@@ -44,7 +44,7 @@ public class DiscoverItemLayout extends LinearLayout {
 
     private void initView() {
         inflate(getContext(), R.layout.vw_discover_item_layout, this);
-        ButterKnife.inject(this, this);
+        ButterKnife.bind(this, this);
     }
 
     @Override

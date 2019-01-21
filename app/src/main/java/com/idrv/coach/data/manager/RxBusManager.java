@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.idrv.coach.data.event.RxBus;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * time: 2015/8/21

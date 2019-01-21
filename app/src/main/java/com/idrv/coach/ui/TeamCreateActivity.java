@@ -22,13 +22,15 @@ import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.core.exception.NetworkError;
 
+import org.reactivestreams.Subscription;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/23
@@ -42,17 +44,17 @@ public class TeamCreateActivity extends BaseActivity<TeamCreateModel> {
 
     private static final String INTENT_EXTRA_MEMBERS = "teamMembers";
 
-    @InjectView(R.id.create_team_nameEt)
+    @BindView(R.id.create_team_nameEt)
     ClearEditText mNameEt;
-    @InjectView(R.id.create_team_bottomBt)
+    @BindView(R.id.create_team_bottomBt)
     Button mBottomBt;
-    @InjectView(R.id.create_team_recyclerView)
+    @BindView(R.id.create_team_recyclerView)
     RecyclerView mRecyclerView;
-    @InjectView(R.id.create_team_layoutName)
+    @BindView(R.id.create_team_layoutName)
     View mNameLayout;
-    @InjectView(R.id.create_team_layoutMumber)
+    @BindView(R.id.create_team_layoutMumber)
     LinearLayout mMemberLayout;
-    @InjectView(R.id.team_name_length_tv)
+    @BindView(R.id.team_name_length_tv)
     TextView mTeamNameLengthTv;
 
     private TeamCreateAdapter mAdapter;
@@ -72,7 +74,7 @@ public class TeamCreateActivity extends BaseActivity<TeamCreateModel> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_team_create);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         //0.model
         mViewModel = new TeamCreateModel();
@@ -134,7 +136,7 @@ public class TeamCreateActivity extends BaseActivity<TeamCreateModel> {
     private void createTeam() {
         mProgressDialog = DialogHelper.create(DialogHelper.TYPE_PROGRESS)
                 .progressText(getString(R.string.dialog_creating)).show();
-        Subscription subscription = mViewModel.createTeam(mViewModel.gTeamName, mAdapter.getChoosedIds())
+        Disposable subscription = mViewModel.createTeam(mViewModel.gTeamName, mAdapter.getChoosedIds())
                 .subscribe(this::onNext, this::onError);
         addSubscription(subscription);
     }

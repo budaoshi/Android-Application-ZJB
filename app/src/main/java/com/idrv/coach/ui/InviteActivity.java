@@ -15,10 +15,12 @@ import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.UIHelper;
 import com.zjb.volley.core.exception.NetworkError;
 
+import org.reactivestreams.Subscription;
+
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/3/8
@@ -27,7 +29,7 @@ import rx.Subscription;
  * @author sunjianfei
  */
 public class InviteActivity extends BaseActivity<InviteModel> implements View.OnClickListener {
-    @InjectView(R.id.invite_edit)
+    @BindView(R.id.invite_edit)
     EditText mInviteEditText;
 
 
@@ -40,7 +42,7 @@ public class InviteActivity extends BaseActivity<InviteModel> implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_invite);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         //1.初始化ViewModel
         mViewModel = new InviteModel();
     }
@@ -74,7 +76,7 @@ public class InviteActivity extends BaseActivity<InviteModel> implements View.On
         }
         UIHelper.hideSoftInput(mInviteEditText);
         showDialog();
-        Subscription subscription = mViewModel.verifyInviteCode(code)
+        Disposable subscription = mViewModel.verifyInviteCode(code)
                 .subscribe(this::onNext, this::onError);
         addSubscription(subscription);
     }
@@ -89,7 +91,7 @@ public class InviteActivity extends BaseActivity<InviteModel> implements View.On
                 .progressText(getResources().getString(R.string.pls_wait))
                 .onDismissListener(__ -> {
                     if (mCompositeSubscription != null) {
-                        mCompositeSubscription.unsubscribe();
+                        mCompositeSubscription.clear();
                     }
                 }).show();
     }

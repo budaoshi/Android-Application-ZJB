@@ -16,7 +16,7 @@ import com.zjb.loader.ZjbImageLoader;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -26,9 +26,9 @@ import butterknife.OnClick;
  * @author sunjianfei
  */
 public class NewsDialog extends Dialog {
-    @InjectView(R.id.num_tv)
+    @BindView(R.id.num_tv)
     TextView mNumTv;
-    @InjectView(R.id.avatar_layout)
+    @BindView(R.id.avatar_layout)
     LinearLayout mAvatarLayout;
 
     int mItemSize = (int) PixelUtil.dp2px(50);
@@ -37,7 +37,7 @@ public class NewsDialog extends Dialog {
         super(context, R.style.BaseDialog);
         //初始化布局
         setContentView(R.layout.vw_news_views_change_dialog);
-        ButterKnife.inject(this, this);
+        ButterKnife.bind(this, this);
     }
 
     public void setAvatar(List<Visitor> avatars) {

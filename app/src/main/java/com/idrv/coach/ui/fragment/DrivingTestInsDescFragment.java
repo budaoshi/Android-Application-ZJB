@@ -16,10 +16,10 @@ import com.zjb.volley.utils.NetworkUtil;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/8/18
@@ -28,9 +28,9 @@ import rx.Subscription;
  * @author sunjianfei
  */
 public class DrivingTestInsDescFragment extends BaseFragment<DrivingTestInsModel> {
-    @InjectView(R.id.item_1)
+    @BindView(R.id.item_1)
     DrivingInsDetailItemView mItem1;
-    @InjectView(R.id.item_2)
+    @BindView(R.id.item_2)
     DrivingInsDetailItemView mItem2;
 
 
@@ -41,7 +41,7 @@ public class DrivingTestInsDescFragment extends BaseFragment<DrivingTestInsModel
 
     @Override
     public void initView(View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         initViewModel();
     }
 
@@ -71,7 +71,7 @@ public class DrivingTestInsDescFragment extends BaseFragment<DrivingTestInsModel
     }
 
     public void refresh() {
-        Subscription subscription = mViewModel.getInsDetail()
+        Disposable subscription = mViewModel.getInsDetail()
                 .subscribe(this::onNext, this::onError);
         addSubscription(subscription);
     }

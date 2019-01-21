@@ -33,7 +33,7 @@ import com.zjb.loader.internal.core.assist.ImageScaleType;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 import static com.idrv.coach.ZjbApplication.gContext;
 
@@ -452,113 +452,113 @@ public class DynamicAdapter extends AbsRecycleAdapter<Trend, RecyclerView.ViewHo
     }
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.avatar)
+        @BindView(R.id.avatar)
         ImageView mAvatar;
-        @InjectView(R.id.name_tv)
+        @BindView(R.id.name_tv)
         TextView mNickNameTv;
-        @InjectView(R.id.like_count_tv)
+        @BindView(R.id.like_count_tv)
         TextView mLikeTv;
-        @InjectView(R.id.invite_bubble)
+        @BindView(R.id.invite_bubble)
         View mBubbleIv;
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
     class ItemTypeJoinViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.avatar)
+        @BindView(R.id.avatar)
         ImageView mAvatar;
-        @InjectView(R.id.nick_name)
+        @BindView(R.id.nick_name)
         TextView mNickNameTv;
-        @InjectView(R.id.subject_tv)
+        @BindView(R.id.subject_tv)
         TextView mSubjectTv;
-        @InjectView(R.id.time)
+        @BindView(R.id.time)
         TextView mTimeTv;
-        @InjectView(R.id.like_btn)
+        @BindView(R.id.like_btn)
         ImageView mLikeBtn;
-        @InjectView(R.id.like_tv)
+        @BindView(R.id.like_tv)
         TextView mLikeTv;
-        @InjectView(R.id.like_layout)
+        @BindView(R.id.like_layout)
         View mLikeLayout;
 
         public ItemTypeJoinViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
     class ItemTypeAccessViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.avatar)
+        @BindView(R.id.avatar)
         ImageView mAvatar;
-        @InjectView(R.id.nick_name)
+        @BindView(R.id.nick_name)
         TextView mNickNameTv;
-        @InjectView(R.id.influence_tv)
+        @BindView(R.id.influence_tv)
         TextView mInfluenceTv;
-        @InjectView(R.id.time)
+        @BindView(R.id.time)
         TextView mTimeTv;
-        @InjectView(R.id.access_layout)
+        @BindView(R.id.access_layout)
         LinearLayout mAccessLayout;
 
 
         public ItemTypeAccessViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
     class ItemTypeShareViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.my_team_iv)
+        @BindView(R.id.my_team_iv)
         ImageView mMyTeamIcon;
-        @InjectView(R.id.avatar)
+        @BindView(R.id.avatar)
         ImageView mAvatar;
-        @InjectView(R.id.nick_name)
+        @BindView(R.id.nick_name)
         TextView mNickNameTv;
-        @InjectView(R.id.influence_tv)
+        @BindView(R.id.influence_tv)
         TextView mInfluenceTv;
-        @InjectView(R.id.time)
+        @BindView(R.id.time)
         TextView mTimeTv;
-        @InjectView(R.id.like_btn)
+        @BindView(R.id.like_btn)
         ImageView mLikeBtn;
-        @InjectView(R.id.like_tv)
+        @BindView(R.id.like_tv)
         TextView mLikeTv;
-        @InjectView(R.id.like_layout)
+        @BindView(R.id.like_layout)
         View mLikeLayout;
-        @InjectView(R.id.web_layout)
+        @BindView(R.id.web_layout)
         View mWebLayout;
-        @InjectView(R.id.web_name)
+        @BindView(R.id.web_name)
         TextView mWebNameTv;
-        @InjectView(R.id.h_line)
+        @BindView(R.id.h_line)
         View mHline;
-        @InjectView(R.id.op_icon)
+        @BindView(R.id.op_icon)
         ImageView mOpIv;
 
         public ItemTypeShareViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
     class ItemAskViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.avatar)
+        @BindView(R.id.avatar)
         ImageView mAvatar;
-        @InjectView(R.id.nick_name)
+        @BindView(R.id.nick_name)
         TextView mNickNameTv;
-        @InjectView(R.id.right_op_btn)
+        @BindView(R.id.right_op_btn)
         ImageView mRightOpBtn;
-        @InjectView(R.id.sub_text_view)
+        @BindView(R.id.sub_text_view)
         TextView mSubTv;
-        @InjectView(R.id.content_tv)
+        @BindView(R.id.content_tv)
         TextView mContentTv;
-        @InjectView(R.id.time)
+        @BindView(R.id.time)
         TextView mTimeTv;
-        @InjectView(R.id.sub_image)
+        @BindView(R.id.sub_image)
         ImageView mSubImageView;
 
         public ItemAskViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

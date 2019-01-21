@@ -22,7 +22,7 @@
 //import java.util.List;
 //
 //import butterknife.ButterKnife;
-//import butterknife.InjectView;
+//import butterknife.BindView;
 //import butterknife.Optional;
 //
 ///**
@@ -133,16 +133,16 @@
 //    }
 //
 //    static class PhotoWallViewHolder extends RecyclerView.ViewHolder {
-//        @Optional
-//        @InjectView(R.id.photo_image)
+//
+//        @BindView(R.id.photo_image)
 //        ImageView mImageView;
-//        @Optional
-//        @InjectView(R.id.camera_layout)
+//
+//        @BindView(R.id.camera_layout)
 //        View mCameraLayout;
 //
 //        public PhotoWallViewHolder(View itemView) {
 //            super(itemView);
-//            ButterKnife.inject(this, itemView);
+//            ButterKnife.bind(this, itemView);
 //        }
 //    }
 //

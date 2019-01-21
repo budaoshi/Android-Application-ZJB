@@ -11,8 +11,8 @@ import com.google.zxing.common.BitMatrix;
 
 import java.util.Hashtable;
 
-import rx.Observable;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author sunjianfei
@@ -80,7 +80,7 @@ public class QRCodeUtil {
             try {
                 Bitmap bitmap = createQRCode(url, width);
                 subscriber.onNext(bitmap);
-                subscriber.onCompleted();
+                subscriber.onComplete();
             } catch (WriterException e) {
                 e.printStackTrace();
                 subscriber.onError(e);

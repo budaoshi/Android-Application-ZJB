@@ -19,10 +19,10 @@ import com.idrv.coach.utils.SystemUtil;
 import com.idrv.coach.utils.helper.DialogHelper;
 import com.idrv.coach.utils.helper.UIHelper;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time:2016/8/18
@@ -31,11 +31,11 @@ import rx.Subscription;
  * @author sunjianfei
  */
 public class ApplyInsForDrivingTestFragment extends BaseFragment<DrivingTestInsModel> {
-    @InjectView(R.id.item_owner_name)
+    @BindView(R.id.item_owner_name)
     InputItemView mItemNameView;
-    @InjectView(R.id.item_tel)
+    @BindView(R.id.item_tel)
     InputItemView mItemTelView;
-    @InjectView(R.id.item_card)
+    @BindView(R.id.item_card)
     InputItemView mItemCardView;
 
     @Override
@@ -45,7 +45,7 @@ public class ApplyInsForDrivingTestFragment extends BaseFragment<DrivingTestInsM
 
     @Override
     public void initView(View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         mItemNameView.setInputType(InputType.TYPE_CLASS_TEXT);
         mItemTelView.setInputType(InputType.TYPE_CLASS_PHONE);
         mItemCardView.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -65,7 +65,7 @@ public class ApplyInsForDrivingTestFragment extends BaseFragment<DrivingTestInsM
         mViewModel = new DrivingTestInsModel();
     }
 
-    @OnClick({R.id.next_step,R.id.back})
+    @OnClick({R.id.next_step, R.id.back})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next_step:
@@ -81,7 +81,7 @@ public class ApplyInsForDrivingTestFragment extends BaseFragment<DrivingTestInsM
 
     private void commit() {
         showDialog();
-        Subscription subscription = mViewModel.commit()
+        Disposable subscription = mViewModel.commit()
                 .subscribe(this::onCommitNext, this::onCommitError);
         addSubscription(subscription);
     }
@@ -129,7 +129,7 @@ public class ApplyInsForDrivingTestFragment extends BaseFragment<DrivingTestInsM
                 .progressText(getResources().getString(R.string.commit_now))
                 .onDismissListener(__ -> {
                     if (mSubscription != null) {
-                        mSubscription.unsubscribe();
+                        mSubscription.clear();
                     }
                 }).show();
     }

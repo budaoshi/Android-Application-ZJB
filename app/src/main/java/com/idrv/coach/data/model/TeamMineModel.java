@@ -8,15 +8,15 @@ import com.zjb.volley.core.request.Request;
 import com.zjb.volley.core.request.RequestBuilder;
 import com.zjb.volley.core.response.HttpResponse;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
 
 /**
  * time: 2016/3/22
  * description:
- *  我的团队
+ * 我的团队
  *
  * @author bigflower
  */
@@ -39,6 +39,7 @@ public class TeamMineModel extends BaseModel {
 
     /**
      * 获取教练，签约与否
+     *
      * @return
      */
     public Observable<Boolean> getSignState() {
@@ -56,7 +57,7 @@ public class TeamMineModel extends BaseModel {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private void isSigned(Boolean isSigned){
+    private void isSigned(Boolean isSigned) {
         gIsSigned = isSigned;
     }
 
@@ -78,6 +79,7 @@ public class TeamMineModel extends BaseModel {
                 .doOnNext(this::detectState)
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
     /**
      * 判断教练的类型
      */
@@ -100,7 +102,7 @@ public class TeamMineModel extends BaseModel {
                 gType = TYPE_NOSIGN;
             }
         }
-        return gType ;
+        return gType;
     }
 
 }

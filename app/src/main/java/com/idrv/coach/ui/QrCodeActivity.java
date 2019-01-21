@@ -29,17 +29,18 @@ import com.idrv.coach.utils.helper.ViewUtils;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.soundcloud.android.crop.Crop;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zjb.loader.ZjbImageLoader;
 import com.zjb.volley.core.exception.NetworkError;
 import com.zjb.volley.utils.GsonUtil;
 
 import org.json.JSONObject;
+import org.reactivestreams.Subscription;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * time: 2016/3/18
@@ -49,9 +50,9 @@ import rx.Subscription;
  */
 public class QrCodeActivity extends BaseActivity<QrCodeCoachCardModel> {
 
-    @InjectView(R.id.QrCode_img)
+    @BindView(R.id.QrCode_img)
     ImageView mImageView;
-    @InjectView(R.id.QrCode_bt)
+    @BindView(R.id.QrCode_bt)
     Button mButton;
 
     public static void launch(Context context) {
@@ -68,7 +69,7 @@ public class QrCodeActivity extends BaseActivity<QrCodeCoachCardModel> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_qr_code);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         // 1.初始化ViewModel
         mViewModel = new QrCodeCoachCardModel();
@@ -110,7 +111,7 @@ public class QrCodeActivity extends BaseActivity<QrCodeCoachCardModel> {
 //                    PictureUtil.TakePhoto(this);
 //                })
 //                .show();
-        RxPermissions.getInstance(this)
+        new RxPermissions(this)
                 .request(Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(granted -> {
@@ -146,7 +147,7 @@ public class QrCodeActivity extends BaseActivity<QrCodeCoachCardModel> {
         }
         mProgressDialog = DialogHelper.create(DialogHelper.TYPE_PROGRESS)
                 .progressText(getString(R.string.dialog_uploading)).show();
-        Subscription subscription = mViewModel.getToken()
+        Disposable subscription = mViewModel.getToken()
                 .subscribe(__ -> isFileExit(), this::onError);
         addSubscription(subscription);
     }
@@ -155,7 +156,7 @@ public class QrCodeActivity extends BaseActivity<QrCodeCoachCardModel> {
      * 判断网上该文件是否存在
      */
     private void isFileExit() {
-        Subscription subscription = mViewModel.isFileExit()
+        Disposable subscription = mViewModel.isFileExit()
                 .subscribe(__ -> httpCoachInfo(), __ -> imgUpload());
         addSubscription(subscription);
     }
@@ -164,7 +165,7 @@ public class QrCodeActivity extends BaseActivity<QrCodeCoachCardModel> {
      * 将图片地址上传到服务器
      */
     private void httpCoachInfo() {
-        Subscription subscription = mViewModel.putCoachInfo("qrCode")
+        Disposable subscription = mViewModel.putCoachInfo("qrCode")
                 .subscribe(__ -> onUpLoadSuccess(), this::onError);
         addSubscription(subscription);
     }

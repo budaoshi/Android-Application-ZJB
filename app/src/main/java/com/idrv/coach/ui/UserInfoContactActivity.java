@@ -20,7 +20,7 @@ import com.idrv.coach.utils.helper.ViewUtils;
 import com.zjb.volley.utils.GsonUtil;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time: 2016/3/25
@@ -31,9 +31,9 @@ import butterknife.InjectView;
  */
 public class UserInfoContactActivity extends BaseActivity implements MasterItemView.OnMasterItemClickListener {
 
-    @InjectView(R.id.item_contact_phone)
+    @BindView(R.id.item_contact_phone)
     MasterItemView mPhoneItemView;
-    @InjectView(R.id.item_contact_qrCode)
+    @BindView(R.id.item_contact_qrCode)
     MasterItemView mQrCodeItemView;
 
     public static void launch(Context context) {
@@ -50,7 +50,7 @@ public class UserInfoContactActivity extends BaseActivity implements MasterItemV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_contact_way);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         //1.初始化标题栏
         initToolBar();

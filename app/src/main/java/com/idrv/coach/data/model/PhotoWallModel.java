@@ -26,10 +26,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
 
@@ -53,10 +53,10 @@ public class PhotoWallModel extends BaseModel {
      * @param clearAdapter
      * @return
      */
-    public Observable<List<Picture>> refresh(Action0 clearAdapter) {
+    public Observable<List<Picture>> refresh(Action clearAdapter) {
         time = "";
         return request()
-                .doOnNext(__ -> clearAdapter.call());
+                .doOnNext(__ -> clearAdapter.run());
     }
 
 
@@ -157,7 +157,7 @@ public class PhotoWallModel extends BaseModel {
             try {
                 List<Picture> pictures = compressImageBeforeUpload(pictureList);
                 subscriber.onNext(pictures);
-                subscriber.onCompleted();
+                subscriber.onComplete();
             } catch (Exception e) {
                 subscriber.onError(e);
             }

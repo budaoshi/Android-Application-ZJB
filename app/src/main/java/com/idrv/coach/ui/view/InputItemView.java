@@ -10,7 +10,7 @@ import com.idrv.coach.R;
 import com.idrv.coach.ui.widget.ClearEditText;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * time:2016/3/11
@@ -19,11 +19,11 @@ import butterknife.InjectView;
  * @author sunjianfei
  */
 public class InputItemView extends LinearLayout {
-    @InjectView(R.id.left_tv)
+    @BindView(R.id.left_tv)
     TextView mTextView;
-    @InjectView(R.id.input_edit)
+    @BindView(R.id.input_edit)
     ClearEditText mEditText;
-    @InjectView(R.id.h_line)
+    @BindView(R.id.h_line)
     View mLine;
 
     public InputItemView(Context context) {
@@ -41,7 +41,7 @@ public class InputItemView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     public void setText(int resId) {

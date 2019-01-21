@@ -9,11 +9,9 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.subjects.PublishSubject;
-import rx.subjects.Subject;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 /**
  * time: 2015/8/21
@@ -45,7 +43,7 @@ public class RxBus {
             map = new HashMap<String, Subject>();
             mSubjects.put(pageKey, map);
         }
-        Subject<T, T> subject = map.get(eventKey);
+        Subject<T> subject = map.get(eventKey);
         if (null == subject) {
             subject = PublishSubject.create();
             map.put(eventKey, subject);
@@ -71,39 +69,16 @@ public class RxBus {
 
     public void post(@NonNull final Object tag, @NonNull final Object content) {
         //Map.Entry<String, Map<Object, Subject>
-        Observable.from(mSubjects.entrySet())
-                .map(new Func1<Map.Entry<String, Map<String, Subject>>, Map<String, Subject>>() {
-                    @Override
-                    public Map<String, Subject> call(Map.Entry<String, Map<String, Subject>> stringMapEntry) {
-                        return stringMapEntry.getValue();
+        Observable.fromIterable(mSubjects.entrySet())
+                .map(stringMapEntry -> stringMapEntry.getValue())
+                .filter(stringSubjectMap -> ValidateUtil.isValidate(stringSubjectMap))
+                .map(objectSubjectMap -> objectSubjectMap.get(tag))
+                .subscribe(subject -> {
+                    //防止没有注册观察者，这里空指针异常
+                    if (subject != null) {
+                        subject.onNext(content);
                     }
-                })
-                .filter(new Func1<Map<String, Subject>, Boolean>() {
-                    @Override
-                    public Boolean call(Map<String, Subject> stringSubjectMap) {
-                        return ValidateUtil.isValidate(stringSubjectMap);
-                    }
-                })
-                .map(new Func1<Map<String, Subject>, Subject>() {
-                    @Override
-                    public Subject call(Map<String, Subject> objectSubjectMap) {
-                        return objectSubjectMap.get(tag);
-                    }
-                })
-                .subscribe(new Action1<Subject>() {
-                    @Override
-                    public void call(Subject subject) {
-                        //防止没有注册观察者，这里空指针异常
-                        if (subject != null) {
-                            subject.onNext(content);
-                        }
 
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        throwable.printStackTrace();
-                    }
-                });
+                }, throwable -> throwable.printStackTrace());
     }
 }

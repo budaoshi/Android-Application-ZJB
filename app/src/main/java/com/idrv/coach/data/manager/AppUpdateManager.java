@@ -26,8 +26,8 @@ import com.zjb.volley.download.IDownloadListener;
 
 import java.io.File;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static com.idrv.coach.ZjbApplication.gContext;
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
