@@ -2,6 +2,7 @@ package com.idrv.coach.data.pool;
 
 import com.idrv.coach.bean.event.EventConstant;
 import com.idrv.coach.data.manager.RxBusManager;
+import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.zjb.volley.bean.ErrorCode;
 import com.zjb.volley.core.exception.NetworkError;
 import com.zjb.volley.core.network.NetworkExecutor;
@@ -50,12 +51,12 @@ public class RequestPool {
                     NetworkResponse response = mNetwork.performRequest(request);
                     HttpResponse<T> httpResponse = request.parseNetworkResponse(response);
                     //2.发出事件
-                    if (200 == httpResponse.status) {
+                    if (ErrorCode.SUCCESS.getCode() == httpResponse.status) {
                         subscriber.onNext(httpResponse);
                         subscriber.onComplete();
                     } else {
                         //token 过期
-                        if (httpResponse.status == 453) {
+                        if (httpResponse.status == ErrorCode.ERROR453.getCode()) {
                             RxBusManager.post(EventConstant.KEY_TOKEN_EXPIRED, "");
                         }
                         ErrorCode code = ErrorCode.handleCode(httpResponse);

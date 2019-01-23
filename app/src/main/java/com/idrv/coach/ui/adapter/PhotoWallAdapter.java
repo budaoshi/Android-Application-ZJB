@@ -2,6 +2,7 @@ package com.idrv.coach.ui.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -27,7 +28,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Optional;
 
 /**
  * time:2016/8/9
@@ -170,15 +170,19 @@ public class PhotoWallAdapter extends AbsRecycleAdapter<Picture, RecyclerView.Vi
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.viewpager)
+        @Nullable
         FixedViewPager mViewPager;
 
         @BindView(R.id.pager_layout)
+        @Nullable
         FrameLayout mPagerLayout;
 
         @BindView(R.id.photo_image)
+        @Nullable
         DynamicHeightImageView mImageView;
 
         @BindView(R.id.default_image)
+        @Nullable
         ImageView mDefaultIv;
 
         public ItemViewHolder(View itemView) {

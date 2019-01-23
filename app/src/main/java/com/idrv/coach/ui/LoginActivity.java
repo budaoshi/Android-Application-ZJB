@@ -21,10 +21,8 @@ import com.idrv.coach.utils.helper.UIHelper;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.zjb.volley.core.exception.NetworkError;
 
-import org.reactivestreams.Subscription;
-
-import butterknife.ButterKnife;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;

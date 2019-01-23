@@ -162,7 +162,7 @@ public class User implements Parcelable {
         User user = new User();
         user.setCity("成都");
         user.setContact("15882372099");
-        user.setHeadimgurl("http://7xrj6u.com2.z0.glb.qiniucdn.com/FkccQhRQFujWq_YE4knY4ItfrPUE");
+        user.setHeadimgurl("https://picsum.photos/256");
         user.setInviteCodeId(1);
         user.setNickname("淡蓝色的星期四");
         user.setPhone("15882372099");

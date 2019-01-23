@@ -29,7 +29,8 @@ public class ZjbApplication extends Application {
         gContext = this;
 
         //初始化
-        AppInitManager.getInstance().initializeApp(this);
+        //TODO 考虑到相册权限问题，这里暂时不作初始化
+//        AppInitManager.getInstance().initializeApp(this);
     }
 
     public static void addActivity(Activity activity) {

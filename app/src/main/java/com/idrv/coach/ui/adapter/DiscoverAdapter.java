@@ -1,6 +1,7 @@
 package com.idrv.coach.ui.adapter;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -29,9 +30,8 @@ import com.idrv.coach.utils.helper.ViewUtils;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
 import butterknife.BindView;
-import butterknife.Optional;
+import butterknife.ButterKnife;
 
 /**
  * time:2016/8/4
@@ -148,17 +148,22 @@ public class DiscoverAdapter extends AbsRecycleAdapter<DiscoverItem, RecyclerVie
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.discover_viewpager)
+        @Nullable
         LoopViewPager mViewPager;
 
         @BindView(R.id.default_iv)
+        @Nullable
         ImageView mDefaultIv;
 
         @BindView(R.id.title_tv)
+        @Nullable
         TextView mTitleTv;
         @BindView(R.id.grid_view)
+        @Nullable
         DiscoverGirdLayout mImageGridLayout;
 
         @BindView(R.id.bottom_view)
+        @Nullable
         View mBottomView;
 
         public ItemViewHolder(View itemView) {

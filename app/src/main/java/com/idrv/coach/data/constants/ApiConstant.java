@@ -9,10 +9,11 @@ import com.idrv.coach.utils.PreferenceUtil;
  */
 public interface ApiConstant {
     boolean IS_RELEASE_FLAG = PreferenceUtil.getBoolean(SPConstant.KEY_IS_DEBUG);
-    String HOST_DEVELOP_TEST = "http://test.idrv.com.cn/zjb";
+//    String HOST_DEVELOP_TEST = "http://test.idrv.com.cn/zjb";
+    String HOST_DEVELOP_TEST = "http://rap2api.taobao.org/app/mock/125048/api";
     String HOST_RELEASE = "http://zjb.idrv.com.cn";
-    String HOST_USER_CENTER_DEVELOP_TEST = "http://test.idrv.com.cn/zjb/v1";
-    //        String HOST_USER_CENTER_DEVELOP_TEST = "http://192.168.31.138:4005/v1";
+//    String HOST_USER_CENTER_DEVELOP_TEST = "http://test.idrv.com.cn/zjb/v1";
+    String HOST_USER_CENTER_DEVELOP_TEST = "http://rap2api.taobao.org/app/mock/125048/i";
     String HOST_USER_CENTER_RELEASE = "http://i.idrv.com.cn/v1";
     String HOST = BuildConfig.DEBUG_ENABLE ? (IS_RELEASE_FLAG ? HOST_RELEASE : HOST_DEVELOP_TEST) : HOST_RELEASE;
     String USER_CENTER_HOST = BuildConfig.DEBUG_ENABLE ? HOST_USER_CENTER_DEVELOP_TEST : HOST_USER_CENTER_RELEASE;
@@ -49,13 +50,9 @@ public interface ApiConstant {
     // 绑定手机：/v1/bindPhone
     String API_PUT_BIND_PHONE = USER_CENTER_HOST + "/bindPhone";
 
-
-    // 获取七牛的 Token
-    String API_GET_QINIU_TOKEN = HOST + "/auth/uploadAuth";
-
     //获取首页数据
     String API_GET_HOME_PAGE_DATA = HOST + "/v2/index";
-    //七牛服务器
+    //TODO 七牛服务器
     String API_UPLOAD_QINIU = "http://upload.qiniu.com";
     //提交车险信息
     String API_CAR_INSURANCE = HOST + "/is/post";

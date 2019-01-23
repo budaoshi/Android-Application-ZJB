@@ -276,7 +276,7 @@ public class PhotoWallModel extends BaseModel {
     }
 
     /**
-     * 通过七牛 上传文件
+     * TODO 通过七牛 上传文件
      *
      * @param
      */

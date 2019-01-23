@@ -24,6 +24,7 @@ import com.zjb.volley.core.response.HttpResponse;
 import com.zjb.volley.utils.GsonUtil;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static com.idrv.coach.data.pool.RequestPool.gRequestPool;
@@ -50,6 +51,19 @@ public class LoginModel extends BaseModel {
      * @return
      */
     public Observable<WChatUserInfo> getWChatUserInfo(WChatLoginInfo info) {
+        if("fake_wx_access_token".equals(info.getAccessToken())) {
+            return Observable.create(subscriber-> {
+                WChatUserInfo user = new WChatUserInfo();
+                user.setHeadimgurl("https://picsum.photos/256");
+                user.setUnionid("fake_wx_unionid");
+                user.setOpenid(info.getOpenid());
+                user.setCity("Shanghai");
+                user.setProvince("Shanghai");
+                user.setSex(0);
+                subscriber.onNext(user);
+            });
+        }
+
         //1.创建Request
         HttpGsonRequest<WChatUserInfo> mRefreshRequest = RequestBuilder.create(WChatUserInfo.class)
                 .requestMethod(Request.Method.GET)
@@ -73,6 +87,23 @@ public class LoginModel extends BaseModel {
      * @return
      */
     public Observable<User> logIn(WChatUserInfo info) {
+        if("fake_wx_openid".equals(info.getOpenid())) {
+            return Observable.create((ObservableOnSubscribe<User>) subscriber -> subscriber.onNext(User.getFakeUser()))
+                    .doOnNext(this::saveUserInfo)
+                    .doOnNext(user -> {
+                        LoginManager.getInstance().setLoginUser(user);
+                        //登录成功之后,初始化数据库
+                        DBService.init(ZjbApplication.gContext);
+                        //更新占位符基本参数
+                        UrlParserManager.getInstance().updateBaseParams();
+                    })
+                    .doOnNext(user -> {
+                        //绑定个推别名
+                        String alias = EncryptUtil.md5(user.getUid());
+                        PushManager.getInstance().bindAlias(ZjbApplication.gContext, alias);
+                    })
+                    .observeOn(AndroidSchedulers.mainThread());
+        }
         //1.创建Request
         HttpGsonRequest<User> mRefreshRequest = RequestBuilder.create(User.class)
                 .requestMethod(Request.Method.POST)

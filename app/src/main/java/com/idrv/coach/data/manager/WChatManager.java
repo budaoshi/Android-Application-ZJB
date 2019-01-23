@@ -4,10 +4,14 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.idrv.coach.ZjbApplication;
+import com.idrv.coach.bean.WChatUserInfo;
 import com.idrv.coach.bean.share.WChatLoginInfo;
 import com.idrv.coach.data.constants.ShareConstant;
 import com.idrv.coach.data.pool.RequestPool;
 import com.idrv.coach.utils.ValidateUtil;
+import com.idrv.coach.wxapi.WXEntryActivity;
+import com.tencent.mm.a.b;
+import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
@@ -70,10 +74,38 @@ public class WChatManager {
      * 第一步、获得授权的code
      */
     public void requestOauthCode(IWXListener listener, String transaction) {
+        //X: 若微信未安装，则模拟一个用户登陆（考虑到模拟器未安装微信到情况）
         if (!WXAPI.isWXAppInstalled()) {
-            if (listener != null) {
-                listener.wxUnInstall();
-            }
+//            if (listener != null) {
+//                listener.wxUnInstall();
+//            }
+            //模拟用户微信登陆
+            Intent intent = new Intent(ZjbApplication.gContext, WXEntryActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("wx_token_key", "com.tencent.mm.openapi.token");
+
+            final String content = "wx_login_fake";
+            final int sdkVersion = 69000;
+            final String appPackagee = "com.idrv.coach";
+            intent.putExtra("_mmessage_content", content);
+            intent.putExtra("_mmessage_sdkVersion", sdkVersion);
+            intent.putExtra("_mmessage_appPackage", appPackagee);
+
+            StringBuilder cksum = new StringBuilder();
+            cksum.append(content);
+            cksum.append(sdkVersion);
+            cksum.append(appPackagee);
+            cksum.append("mMcShCsTr");
+            intent.putExtra("_mmessage_checksum", b.a(cksum.toString().substring(1, 9).getBytes()).getBytes());
+
+            intent.putExtra("_wxapi_command_type", 1);
+            intent.putExtra("_wxapi_baseresp_errcode", SendAuth.Resp.ErrCode.ERR_OK);
+            intent.putExtra("_wxapi_baseresp_transaction", transaction);
+            intent.putExtra("_wxapi_sendauth_resp_token", "fake_wx_login_code");
+            intent.putExtra("_wxapi_sendauth_resp_state", "OK");
+
+            mTransaction = transaction;
+            ZjbApplication.gContext.startActivity(intent);
             return;
         }
         //1.生成一个此链接的唯一标识，返回的时候会原封不动地返回回来
@@ -96,6 +128,15 @@ public class WChatManager {
      * @param code 上一次获取到的code
      */
     public Observable<WChatLoginInfo> login(String code) {
+        if("fake_wx_login_code".equals(code)) {
+            //模拟的登陆用户
+            return Observable.create(subscriber -> {
+                WChatLoginInfo info = new WChatLoginInfo();
+                info.setAccessToken("fake_wx_access_token");
+                info.setOpenid("fake_wx_openid");
+                subscriber.onNext(info);
+            });
+        }
         HttpGsonRequest<WChatLoginInfo> loginRequest = RequestBuilder.create(WChatLoginInfo.class)
                 .requestMethod(Request.Method.GET)
                 .paramsType(RequestBuilder.TYPE_NO_NEED_BASE)

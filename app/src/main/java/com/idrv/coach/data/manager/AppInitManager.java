@@ -126,7 +126,7 @@ public class AppInitManager {
         if (TextUtils.isEmpty(eid)) {
             eid = SystemUtil.getMacAddress();
         }
-        PreferenceUtil.putString(SPConstant.KEY_EID, eid);
+        PreferenceUtil.putString(SPConstant.KEY_EID, "eid");
         mSdkEntity.setUid(TextUtils.isEmpty(userId) ? "userid" : userId);
         mSdkEntity.setToken(TextUtils.isEmpty(token) ? "token" : token);
     }
@@ -176,13 +176,13 @@ public class AppInitManager {
     }
 
     /**
-     * 申请 READ_PHONE_STATE 权限,获取IMEI,
+     * 申请 READ_PHONE_STATE 和 READ_EXTERNAL_STORAGE 权限,获取IMEI,
      *
      * @param context
      */
     private void openPhoneStatePerMission(FragmentActivity context) {
         new RxPermissions(context)
-                .request(Manifest.permission.READ_PHONE_STATE)
+                .request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE)
                 .subscribe(granted -> {
                     if (granted) {
                         String eid = SystemUtil.getIMEI();

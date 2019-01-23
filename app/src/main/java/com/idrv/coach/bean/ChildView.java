@@ -64,4 +64,16 @@ public class ChildView {
     public void setSchema(String schema) {
         this.schema = schema;
     }
+
+    @Override
+    public String toString() {
+        return "ChildView{" +
+                "text='" + text + '\'' +
+                ", color='" + color + '\'' +
+                ", icon='" + icon + '\'' +
+                ", areaId=" + areaId +
+                ", align=" + align +
+                ", schema='" + schema + '\'' +
+                '}';
+    }
 }

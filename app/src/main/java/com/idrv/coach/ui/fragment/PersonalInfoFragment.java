@@ -289,7 +289,7 @@ public class PersonalInfoFragment extends BaseFragment<CoachInfoModel> implement
     }
 
     /**
-     * 分享
+     * TODO 分享
      */
     public void share() {
         ShareWebProvider provider = new ShareWebProvider();

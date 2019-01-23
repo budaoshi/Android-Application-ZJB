@@ -53,7 +53,7 @@ public class UpLoadModel extends BaseModel {
         //1.创建Request
         HttpGsonRequest<PhotoUpload> mRefreshRequest = RequestBuilder.create(PhotoUpload.class)
                 .requestMethod(Request.Method.POST)
-                .url(ApiConstant.API_GET_QINIU_TOKEN)
+                .url(ApiConstant.API_UPLOAD_AUTH)
                 .put("etag", mEtagKey)
                 .build();
         //2.进行数据的处理

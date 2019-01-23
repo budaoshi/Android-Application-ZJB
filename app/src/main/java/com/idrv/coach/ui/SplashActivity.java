@@ -105,6 +105,9 @@ public class SplashActivity extends BaseActivity<SplashModel> {
     }
 
     private void initialize(Context context) {
+        //0.获取初始化过程涉及到的权限
+        AppInitManager.getInstance().requestPermission(this);
+
         //1.防止application没有初始化完毕,再次初始化
         AppInitManager.getInstance().initializeApp(context);
         //2.处理初始化

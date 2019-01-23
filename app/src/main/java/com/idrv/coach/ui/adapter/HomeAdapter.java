@@ -11,6 +11,7 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -188,7 +190,7 @@ public class HomeAdapter extends AbsRecycleAdapter<Message, HomeAdapter.ItemView
             if (view instanceof TextView) {
                 //文本
                 TextView mTextView = (TextView) view;
-                int color = TextUtils.isEmpty(childView.getColor()) ? 0xFF000000 : Color.parseColor("#" + childView.getColor());
+                int color = TextUtils.isEmpty(childView.getColor()) ? 0xFF000000 : Color.parseColor(childView.getColor());
                 int gravity = getTextGravity(childView.getAlign());
 
                 //设置文本内容
@@ -212,7 +214,7 @@ public class HomeAdapter extends AbsRecycleAdapter<Message, HomeAdapter.ItemView
 
             } else if (view instanceof NicknameAndAvatarView) {
                 NicknameAndAvatarView nicknameAndAvatarView = (NicknameAndAvatarView) view;
-                int color = TextUtils.isEmpty(childView.getColor()) ? 0xFF000000 : Color.parseColor("#" + childView.getColor());
+                int color = TextUtils.isEmpty(childView.getColor()) ? 0xFF000000 : Color.parseColor(childView.getColor());
                 int gravity = getTextGravity(childView.getAlign());
 
                 nicknameAndAvatarView.setAvatar(childView.getIcon());
