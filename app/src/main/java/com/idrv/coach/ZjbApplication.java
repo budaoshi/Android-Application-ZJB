@@ -3,12 +3,12 @@ package com.idrv.coach;
 import android.app.Activity;
 import android.app.Application;
 
-import com.idrv.coach.data.manager.AppInitManager;
 import com.idrv.coach.utils.ValidateUtil;
 import com.zjb.loader.ZjbImageLoader;
 import com.zjb.volley.Volley;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -34,15 +34,13 @@ public class ZjbApplication extends Application {
     }
 
     public static void addActivity(Activity activity) {
-        if (!ACTIVITIES.contains(activity)) {
+        if (ACTIVITIES.indexOf(activity) < 0) {
             ACTIVITIES.add(activity);
         }
     }
 
     public static void removeActivity(Activity activity) {
-        if (ACTIVITIES.contains(activity)) {
-            ACTIVITIES.remove(activity);
-        }
+        ACTIVITIES.remove(activity);
     }
 
     public static Activity getTop2Activity() {

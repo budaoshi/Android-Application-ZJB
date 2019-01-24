@@ -82,11 +82,11 @@ public class AppInitManager {
         LocalPhotoManager.getInstance().initialize();
 
         //12.初始化TalkData统计
-        TCAgent.init(context);
+//        TCAgent.init(context);
         //13.错误上报,如果是debug模式。关闭错误上报
-        if (DebugUtil.isDebug()) {
-            TCAgent.setReportUncaughtExceptions(true);
-        }
+//        if (DebugUtil.isDebug()) {
+//            TCAgent.setReportUncaughtExceptions(true);
+//        }
 
 //        if (DebugUtil.isDebug()) {
 //            LeakCanary.install(ZjbApplication.gContext);

@@ -27,7 +27,7 @@ public class StatisticsUtil {
      */
     public static void onEvent(String eventId) {
         if (!DebugUtil.isDebug()) {
-            TCAgent.onEvent(ZjbApplication.gContext, eventId);
+//            TCAgent.onEvent(ZjbApplication.gContext, eventId);
         }
     }
 
@@ -37,7 +37,7 @@ public class StatisticsUtil {
             Map<String, String> map = new HashMap<>();
             map.put("uid", uid);
             map.put("nickname", nickname);
-            TCAgent.onEvent(ZjbApplication.gContext, ResHelper.getString(resId), "", map);
+//            TCAgent.onEvent(ZjbApplication.gContext, ResHelper.getString(resId), "", map);
         }
     }
 

@@ -79,13 +79,15 @@ public abstract class BaseActivity<ViewModel> extends AppCompatActivity implemen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //1.将背景设置为透明
         initWindowView();
         super.onCreate(savedInstanceState);
         mCompositeSubscription = new CompositeDisposable();
-        //1.将背景设置为透明
+        //2.将ActionBar的Overflow设置为一直显示
         setOverflowShowingAlways();
         mDestroyed = false;
         ZjbApplication.addActivity(this);
+        //3.设置状态栏颜色
         StatusBarCompat.compat(this, getStatusBarColor());
     }
 
@@ -291,14 +293,14 @@ public abstract class BaseActivity<ViewModel> extends AppCompatActivity implemen
             onLazyLoad();
         }
         // TalkData统计
-        TCAgent.onResume(this);
+//        TCAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         // TalkData统计
-        TCAgent.onPause(this);
+//        TCAgent.onPause(this);
     }
 
     @Override
