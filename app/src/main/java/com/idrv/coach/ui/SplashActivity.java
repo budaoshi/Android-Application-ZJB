@@ -1,5 +1,6 @@
 package com.idrv.coach.ui;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,11 +22,12 @@ import com.idrv.coach.data.model.SplashModel;
 import com.idrv.coach.utils.PreferenceUtil;
 import com.idrv.coach.utils.handler.WeakHandler;
 import com.idrv.coach.utils.helper.ResHelper;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zjb.loader.ZjbImageLoader;
 import com.zjb.volley.utils.GsonUtil;
 
-import butterknife.ButterKnife;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by sunjianfei on 2016/3/7.
@@ -54,20 +56,35 @@ public class SplashActivity extends BaseActivity<SplashModel> {
                 return;
             }
         }
-        //2.初始化
-        initialize(this);
-        //3.显示广告图片
-        initView();
-        //4.执行闪屏alpha动画
-        animateSplash();
-        //5.跳转
-        jump();
+
+        new RxPermissions(this)
+                .request(Manifest.permission.READ_PHONE_STATE
+                        , Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(grant -> {
+            if (grant) {
+                
+                //2.初始化
+                initialize(this);
+                //3.显示广告图片
+                initView();
+                //4.执行闪屏alpha动画
+                animateSplash();
+                //5.跳转
+                jump();
+
+                mViewModel = new SplashModel();
+                mViewModel.getSplashData();
+
+            } else {
+                finish();
+            }
+        });
+
+
     }
 
     @Override
     protected void onLazyLoad() {
-        mViewModel = new SplashModel();
-        mViewModel.getSplashData();
+
     }
 
     @Override
@@ -106,8 +123,7 @@ public class SplashActivity extends BaseActivity<SplashModel> {
 
     private void initialize(Context context) {
         //0.获取初始化过程涉及到的权限
-        AppInitManager.getInstance().requestPermission(this);
-
+        AppInitManager.getInstance().requestPermission(SplashActivity.this);
         //1.防止application没有初始化完毕,再次初始化
         AppInitManager.getInstance().initializeApp(context);
         //2.处理初始化

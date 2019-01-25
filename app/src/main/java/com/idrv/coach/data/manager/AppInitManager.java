@@ -2,6 +2,7 @@ package com.idrv.coach.data.manager;
 
 import android.Manifest;
 import android.content.Context;
+import android.database.Observable;
 import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
@@ -212,7 +213,6 @@ public class AppInitManager {
                 }, Logger::e);
     }
 
-    //TODO 申请权限
     public void requestPermission(FragmentActivity context) {
         openPhoneStatePerMission(context);
         openLocationPermission(context);

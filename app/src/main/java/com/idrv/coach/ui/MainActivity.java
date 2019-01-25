@@ -75,9 +75,9 @@ public class MainActivity extends BaseActivity {
         initView();
         //3.上报登录
         ReportLoginManager.getInstance().report();
-        //注册token过期事件
+        //4.注册token过期事件
         registerEvent();
-        //版本更新
+        //5.版本更新
         AppUpdateManager.newInstance().checkUpdate(false);
     }
 
